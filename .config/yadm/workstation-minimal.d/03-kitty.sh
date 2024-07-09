@@ -38,7 +38,10 @@ _clone_kitty_themes() {
 		_mordu "Kitty themes already found."
 	else
 		_mordu "Cloning kitty-themes."
-		$_ghq get "$__repo" 
+		$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} three times."
 	fi
 }
 # }}} </clone kitty themes>

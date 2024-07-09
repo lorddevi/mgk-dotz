@@ -69,7 +69,10 @@ _clone_tmux_plugins() {
 			$_ghq get -u "$__repo"
 		else
 			_mordu "Could not find ${_plugin}."
-			$_ghq get "$__repo"
+		$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} three times."
 		fi
 
 		_mordu "Checking for ${_plugin} link."

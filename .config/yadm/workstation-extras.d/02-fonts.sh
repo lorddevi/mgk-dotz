@@ -41,7 +41,10 @@ _install_nerd_fonts() {
 		$_ghq get -u --shallow "$__repo"
 	else
 		_mordu_nl "Not Found.  Installing."
-		$_ghq get --shallow "$__repo"
+		$_ghq get --shallow "$__repo" \
+			||	$_ghq get --shallow "$__repo" \
+			||	$_ghq get --shallow "$__repo" \
+			|| _mordu "Failed to download ${__repo} three times."
 	fi
 	
 	_mordu_nl "Checking to see if Nerd Fonts are already installed to ~/.local/share/fonts/."

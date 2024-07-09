@@ -53,10 +53,23 @@ _install_deps() {
 
 # {{{ <clone and make install xcape>
 _install_xcape() {
-	$_ghq get git.mgk.one/x11-input/alols.xcape
+	local __repo="git.mgk.one/x11-input/alols.xcape"
+
+	if $_ghq list | grep -q "$__repo" ; then
+		_mordu "${__repo} already cloned.  Updating."
+		$_ghq get -u "$__repo"
+	else
+		_mordu "Cloning kitty-themes."
+		$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} three times."
+	fi
 
 	cd "${GHQ_ROOT}/git.mgk.one/x11-input/alols.xcape" || exit
+	_mordu "Compiling xcape."
 	make
+	_mordu "Performing make install for xcape."
 	make PREFIX="${HOME}/.local" MANDIR="/share/man/man1" install
 	cd || exit
 

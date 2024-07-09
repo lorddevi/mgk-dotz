@@ -64,7 +64,10 @@ _install_gsu() {
 
 		# Clone the repo.
 		_mordu "Cloning $__repo."
-		$_ghq get $__repo
+		$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} three times."
 
 		# Change to the repo directory, as we need to compile it.
 		cd "$__repo_loc" || exit

@@ -88,7 +88,10 @@ _clone_zsh_plugins() {
 			$_ghq get -u "$__repo"
 		else
 			_mordu "Could not find ${__repo}.  Installing."
-			$_ghq get "$__repo"
+			$_ghq get "$__repo" \
+				|| $_ghq get "$__repo" \
+				|| $_ghq get "$__repo" \
+				|| _mordu "Failed to download ${__repo} three times."
 		fi
 	done
 }

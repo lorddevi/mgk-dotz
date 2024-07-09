@@ -42,7 +42,10 @@ _clone_awesome_copycats() {
 		$_ghq get -u "$__repo"
 	else
 		_mordu_n "..Not found.  Cloning."
-		$_ghq get "$__repo"
+		$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} three times."
 	fi
 }
 # }}} </clone awesome-copycats>

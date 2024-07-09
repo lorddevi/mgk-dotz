@@ -65,7 +65,10 @@ _install_bat_extras() {
 		$_ghq get -u "$__repo"
 	else
 		_mordu_nl "Not Found.  Installing."
-		$_ghq get "$__repo"
+		$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} three times."
 	fi
 
 	# Check if the repo needs to be rebuilt or not.
@@ -90,7 +93,10 @@ _install_and_update_ls_colors() {
 		$_ghq get -u "${__repo}" 
 	else
 		_mordu "Not Found.  Installing."
-		$_ghq get "${__repo}" 
+		$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} three times."
 	fi
 	
 	# Check if the repo needs to be rebuilt or not.
@@ -126,7 +132,10 @@ _install_ugit() {
 		$_ghq get -u "$__repo"
 	else
 		_mordu_nl "Not Found.  Installing."
-		$_ghq get "$__repo"
+		$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} three times."
 	fi
 
 	_mordu_n "Checking for ugit binary link.."

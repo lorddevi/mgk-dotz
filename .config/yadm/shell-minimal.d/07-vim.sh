@@ -41,7 +41,10 @@ _clone_vim_plug() {
 		$_ghq get -u "$__repo"
 	else
 		_mordu_n "Not found.  Cloning."
-		$_ghq get "$__repo"
+		$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} three times."
 	fi
 }
 # }}} </clone vim plug>
@@ -98,7 +101,10 @@ _clone_vim_plugins() {
 			$_ghq get -u "$__repo"
 		else
 			_mordu_nl "..Not found.  Cloning."
-			$_ghq get "$__repo"
+			$_ghq get "$__repo" \
+				|| $_ghq get "$__repo" \
+				|| $_ghq get "$__repo" \
+				|| _mordu "Failed to download ${__repo} three times."
 		fi
 	done
 }

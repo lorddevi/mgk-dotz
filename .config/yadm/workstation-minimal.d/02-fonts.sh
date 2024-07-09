@@ -46,10 +46,14 @@ _install_iosevka_comfy() {
 
 	_mordu_n "Checking for iosevka-comfy.."
 	if $_ghq list | grep -q "$__repo" ; then
-		_mordu_nl "..Found."
+		_mordu_nl "..Found.  Updating."
+		$_ghq get -u "$__repo"
 	else
 		_mordu_nl "Not Found.  Installing."
-		$_ghq get --shallow "$__repo"
+		$_ghq get --shallow "$__repo" \
+		|| $_ghq get --shallow "$__repo" \
+		|| $_ghq get --shallow "$__repo" \
+		|| _mordu "Failed to download ${__repo} 3 times."
 	fi
 	
 	_mordu "Linking font directories from git to share."
@@ -80,7 +84,10 @@ _install_meslo() {
 		$_ghq get -u "$__repo"
 	else
 		_mordu_nl "Not Found.  Installing."
-		$_ghq get "$__repo"
+		$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} 3 times."
 	fi
 	
 	for __font_loc in "${GHQ_ROOT}/${__repo}/"*.ttf ; do

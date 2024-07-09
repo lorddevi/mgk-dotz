@@ -32,141 +32,6 @@ _mordu_nl() {
 _mordu "Starting script."
 # }}} </mordu debug system>
 
-# {{{ <clone tree-sitter>
-_clone_tree-sitter() {
-	local __repo="git.mgk.one/libs-code/tree-sitter.tree-sitter"
-
-	if $_ghq list | grep -q "$__repo" ; then
-		_mordu "Repository ${__repo} already cloned.  Updating."
-		$_ghq get -u "$__repo"
-	else
-		_mordu "Repository ${__repo} not cloned yet.  Cloning"
-		$_ghq get "$__repo"
-	fi
-}
-# }}} </clone tree-sitter>
-
-# {{{ <install tree-sitter>
-_install_tree-sitter() {
-	local __repo="git.mgk.one/libs-code/tree-sitter.tree-sitter"
-
-	cd "${GHQ_ROOT}/${__repo}"
-
-	_mordu "Compiling ${__repo}."
-	make
-	_mordu "Completed compiling ${__repo}."
-
-	_mordu "Installing ${__repo}."
-	sudo make install
-	_mordu "Completed installing ${__repo}"
-}
-# }}} </install tree-sitter>
-
-# {{{ <clone emacs>
-_clone_emacs() {
-	local __repo="git.mgk.one/emacs/gnu.emacs"
-
-	if $_ghq list | grep -q "$__repo" ; then
-		_mordu "Repository ${__repo} already cloned.  Updating."
-		$_ghq get -u "$__repo"
-	else
-		_mordu "Repository ${__repo} not cloned yet.  Cloning"
-		$_ghq get "$__repo"
-	fi
-}
-# }}} </clone emacs>
-
-# {{{ <install deps for emacs>
-_install_deps() {
-	local __required_packages=(wxBase-devel wxGTK-devel libwebp-devel jansson jansson-devel ImageMagick ImageMagick-devel libtree-sitter-devel libtree-sitter tree-sitter-cli)
-
-	for __package in "${__required_packages[@]}" ; do
-		if [[ $(rpm -qi "${__package//\"/}") == "package ${__package//\"/} is not installed"  ]] ; then
-			_mordu "Not installed yet: $__package."
-			local __not_installed_yet+=( "$__package" )
-		else
-			_mordu "Found $__package."
-		fi
-	done
-
-	_mordu "Total not installed yet: ${__not_installed_yet[*]}"
-
-	if (( ${#__not_installed_yet[@]} )); then
-		sudo dnf -y install --allowerasing "${__not_installed_yet[@]}"
-	fi
-
-	_mordu "Completing dependancy install with remaining packages."
-	sudo dnf -y builddep emacs
-}
-# }}} </install deps for emacs>
-
-# {{{ <prepare repo>
-_prepare_emacs_repo() {
-	local __repo="git.mgk.one/emacs/gnu.emacs"
-
-	cd "${GHQ_ROOT}/${__repo}"
-	_mordu "Performing make distclean."
-	make distclean
-	_mordu "Performing make uninstall."
-	make uninstall
-	_mordu "Performing git checkout on branch ${_emacs_branch}."
-	git checkout "$_emacs_branch"
-	_mordu "Pulling most recent changes."
-	git pull
-	_mordu "Ensuring current head is set correctly."
-	git reset --hard HEAD
-}
-# }}} </prepare repo>
-
-# {{{ <configure emacs>
-_configure_emacs_repo() {
-	CC='CFLAGS=-DMAIL_USE_LOCKF -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64  -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer'
-	LDFLAGS='-Wl,-z,relro gcc'
-	PKG_CONFIG_PATH=:/usr/lib64/pkgconfig:/usr/share/pkgconfig
-
-	local __repo="git.mgk.one/emacs/gnu.emacs"
-
-	cd "${GHQ_ROOT}/${__repo}"
-
-	_mordu "Performing autogen."
-	./autogen.sh
-	_mordu "Performing configure."
-	./configure \
-	  --prefix="${HOME}/.local" \
-	  --with-mailutils \
-	  --with-x-toolkit=lucid \
-	  --with-native-compilation \
-		--with-tree-sitter \
-		--with-imagemagick \
-		--without-compress-install \
-	  build_alias=x86_64-redhat-linux-gnu \
-	  host_alias=x86_64-redhat-linux-gnu
-	_mordu "Completed configure."
-}
-# }}} </configure emacs>
-
-# {{{ <compile repo>
-_compile_emacs_repo() {
-	local __repo="git.mgk.one/emacs/gnu.emacs"
-
-	cd "${GHQ_ROOT}/${__repo}"
-	_mordu "Performing compilation process."
-	make -j8
-	_mordu "Complete compile process."
-}
-# }}} </compile repo>
-
-# {{{ <install repo>
-_install_emacs_repo() {
-	local __repo="git.mgk.one/emacs/gnu.emacs"
-
-	cd "${GHQ_ROOT}/${__repo}"
-	_mordu "Performing installation process."
-	make install
-	_mordu "Completed installation process."
-}
-# }}} </install repo>
-
 # {{{ <install emacs using dnf>
 _dnf_install_emacs() {
 	local __required_packages=(emacs-gtk+x11)
@@ -209,7 +74,10 @@ _clone_chemacs() {
 		$_ghq get -u "$__repo"
 	else
 		_mordu "Repository ${__repo} not cloned yet.  Cloning"
-		$_ghq get "$__repo"
+		$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} three times."
 	fi
 }
 # }}} </clone chemacs>
@@ -219,7 +87,7 @@ _move_and_backup_old_configs() {
 	_mordu "Checking for existing emacs configs to backup."
 	if [ -f "${HOME}/.emacs" ]; then
 		_mordu "Found ${HOME}/.emacs, moving to .bak version."
-		mv "${HOME}/.emacs.bak"
+		mv "${HOME}.emacs" "${HOME}/.emacs.bak"
 	fi
 	
 	if [ -d "${HOME}/.emacs.d" ]; then
@@ -254,14 +122,6 @@ _run_emacs_to_bootstrap() {
 
 # {{{ <main loop>
 _main() {
-	_clone_tree-sitter
-	_install_tree-sitter
-	_clone_emacs
-	_install_deps
-	_prepare_emacs_repo
-	_configure_emacs_repo
-	_compile_emacs_repo
-	_install_emacs_repo
 	_dnf_install_emacs
 	_configure_alternates
 	_clone_chemacs

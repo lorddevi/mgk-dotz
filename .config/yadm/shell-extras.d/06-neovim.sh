@@ -30,22 +30,6 @@ _mordu_nl() {
 _mordu "Starting script."
 # }}} </mordu debug system>
 
-# {{{ <clone vim plug>
-_clone_vim_plug() {
-	# Download Vim-Plug if it isn't already.
-	local __repo="git.mgk.one/vim/junegunn.vim-plug"
-
-	_mordu_n "Checking ro cloned ${__repo}.."
-	if $_ghq list | grep -q "$__repo" ; then
-		_mordu_nl "..Found.  Updating."
-		$_ghq get -u "$__repo"
-	else
-		_mordu_n "Not found.  Cloning."
-		$_ghq get "$__repo"
-	fi
-}
-# }}} </clone vim plug>
-
 # {{{ <create autoload directories>
 _create_autoload_directories() {
 	# Make sure the autoload directories exist for vim and nvim.
@@ -96,7 +80,10 @@ _clone_neovim_plugins() {
 			$_ghq get -u "$__repo"
 		else
 			_mordu_nl "..Not found.  Cloning."
-			$_ghq get "$__repo"
+		$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} three times."
 		fi
 	done
 }
@@ -111,12 +98,11 @@ _run_vim_plug_install() {
 
 # {{{ <main loop>
 _main() {
-	_clone_vim_plug
 	_create_autoload_directories
 	_link_vim_plug_to_autoloads
 	_define_neovim_plugins
 	_clone_neovim_plugins
-	_run_vim_plug_install
+	#_run_vim_plug_install
 }
 _main
 # }}} </main loop>
