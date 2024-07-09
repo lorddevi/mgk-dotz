@@ -1,0 +1,43 @@
+[init]
+	defaultBranch = master
+
+[core]
+	askPass = 
+
+[user]
+	email = lord@mgk.one
+	name = Lord_Devi
+
+[gc]
+	reflogExpire = 200
+
+[diff]
+	submodule = log
+
+[status]
+	submodulesummary = 1
+
+[alias]
+	sdiff = !git diff && git submodule foreach 'git diff'
+	spush = push --recurse-submodules=on-demand
+	supdate = submodule update --remote --merge
+	clone-for-worktrees = "!sh $HOME/.local/bin/git-clone-bare-for-worktrees.sh"
+	clone-bare = "!sh $HOME/.local/bin/git-clone-bare.sh"
+
+[submodule]
+	recurse = true
+[pull]
+	rebase = false
+
+[credential]
+	helper = cache --timeout 7200
+
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+
+[ghq]
+	root = ~/proj/git
+	root = ~/.local/opt/git
