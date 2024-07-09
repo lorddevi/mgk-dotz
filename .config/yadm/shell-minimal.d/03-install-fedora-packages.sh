@@ -58,7 +58,7 @@ _install_pkgs() {
 	_mordu "Total not installed yet: ${__not_installed_yet[*]}"
 
 	if (( ${#__not_installed_yet[@]} )); then
-		sudo dnf install "${__not_installed_yet[@]}"
+		sudo dnf -y install "${__not_installed_yet[@]}"
 	fi
 }
 # }}} </install pkgs>
