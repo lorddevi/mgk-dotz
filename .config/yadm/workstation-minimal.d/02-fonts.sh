@@ -31,6 +31,15 @@ _mordu_nl() {
 _mordu "Starting script."
 # }}} </mordu debug system>
 
+# {{{ <make font dir if needed>
+_make_font_dir_if_needed() {
+if [ ! -d "${HOME}/.local/share/fonts" ]; then
+	_mordu "Could not find ${HOME}/.local/share/fonts.  Creating."
+	mkdir -p "${HOME}/.local/share/fonts"
+fi
+}
+# }}} </make font dir if needed>
+
 # {{{ <install iosevka comfy>
 _install_iosevka_comfy() {
 	local __repo="git.mgk.one/fonts/protesilaos.iosevka-comfy"
@@ -63,7 +72,7 @@ _install_iosevka_comfy() {
 
 # {{{ <install powerlevel10k meslo font>
 _install_meslo() {
-	local __repo="git.mgk.one/fonts/romkatv.powerlevel10k-media"
+	local __repo="git.mgk.one/zsh/romkatv.powerlevel10k-media"
 
 	_mordu_n "Checking for powerlevel10k-media.."
 	if $_ghq list | grep -q "$__repo" ; then
@@ -102,6 +111,7 @@ _regen_fonts() {
 
 # {{{ <main loop>
 _main() {
+	_make_font_dir_if_needed
 	_install_iosevka_comfy
 	_install_meslo
 	_regen_fonts
