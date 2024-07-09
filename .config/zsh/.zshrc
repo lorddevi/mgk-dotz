@@ -31,7 +31,7 @@ _mordu "Starting script."
 # {{{ === Source Posix Common interactive.sh ===
 _mordu "Sourcing interactive shell settings from ~/.config/posix-common/interactive.sh."
 source "$HOME"/.config/posix-common/interactive.sh
-LOCATION="zsh/interactive.zsh"
+_location=".config/zsh/interactive.zsh"
 _mordu "Completed sourcing interactive shell settings from ~/.config/posix-common/interactive.sh."
 # }}} === Source Posix Common interactive.sh ===
 
@@ -81,7 +81,7 @@ _mordu "Important annexes loaded."
 # {{{ === Prompt setup. ===
 #_mordu "Sourcing Zsh prompt from ~/.config/zsh/prompt.zsh."
 #source "$HOME"/.config/zsh/prompt.zsh
-#LOCATION="zsh/interactive.zsh"
+#_location=".config/zsh/interactive.zsh"
 #_mordu "Finished sourcing Zsh prompt from ~/.config/zsh/prompt.zsh."
 
 _mordu "Setting prompt to powerlevel10k."

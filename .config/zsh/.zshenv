@@ -31,7 +31,7 @@ _mordu "Starting script."
 # {{{ === Source Posix Common env.sh ===
 _mordu "Sourcing Env Vars from ~/.config/posix-common/env.sh."
 source "$HOME"/.config/posix-common/env.sh
-LOCATION="zsh/env.zsh"
+_location=".config/zsh/env.zsh"
 _mordu "Completed sourcing environment variables from ~/.config/posix-common/env.sh."
 # }}} === Source Posix Common env.sh ===
 
