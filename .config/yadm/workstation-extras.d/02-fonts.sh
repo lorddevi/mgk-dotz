@@ -49,7 +49,7 @@ _install_nerd_fonts() {
 	
 	_mordu_nl "Checking to see if Nerd Fonts are already installed to ~/.local/share/fonts/."
 	if [ ! -d "${HOME}/.local/share/fonts/NerdFonts" ]; then
-		_mordu_nl "Could not locate ${HOME}/.local/share/fonts/NerdFonts."
+		_mordu_nl "Not installed yet: ${HOME}/.local/share/fonts/NerdFonts."
 		_mordu_nl "Running the Nerd Fonts install script."
 		"${GHQ_ROOT}/${__repo}/install.sh" -l
 	else

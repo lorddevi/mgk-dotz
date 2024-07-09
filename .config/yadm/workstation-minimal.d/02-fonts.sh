@@ -34,7 +34,7 @@ _mordu "Starting script."
 # {{{ <make font dir if needed>
 _make_font_dir_if_needed() {
 if [ ! -d "${HOME}/.local/share/fonts" ]; then
-	_mordu "Could not find ${HOME}/.local/share/fonts.  Creating."
+	_mordu "Not linked yet: ${HOME}/.local/share/fonts.  Linking."
 	mkdir -p "${HOME}/.local/share/fonts"
 fi
 }
