@@ -41,8 +41,8 @@ set shortmess=a
 
 call plug#begin()
 
-Plug '~/.local/opt/git/git.mgk.one/bourgeoisbear.clrzr'
-Plug '~/.local/opt/git/git.mgk.one/sunaku.tmux-navigate'
+Plug '~/.local/opt/git/git.mgk.one/vim/bourgeoisbear.clrzr'
+Plug '~/.local/opt/git/git.mgk.one/tmux/sunaku.tmux-navigate'
 
 call plug#end()
 
