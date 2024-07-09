@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+_location=".config/yadm/bootstrap"
+_ghq_root="${HOME}/.local/opt/git"
+_ghq="${HOME}/.local/opt/go/bin/ghq"
+
+# This script is for setting up an initial user environment.  Once yadm has
+# been cloned into the homedir, 'yadm bootstrap' gets ran. Then this script
+# executes.  It should install the correct apps, termcaps, terminfo, etc.
+
+# {{{ <mordu debug system>
+_debug=y # Comment this out to disable debuging.
+
+_blue="\e[34m"
+_magenta="\e[35m"
+_green="\e[92m"
+_cyan="\e[36m"
+_white="\e[97m"
+_end_color="\e[0m"
+
+# Mordu with location.
+_mordu() {
+	[ "$_debug" ] && echo -e "${_blue}>>> ${_magenta}Mordu${_cyan}@${_green}${_location}${_cyan}:${_white} $*${_end_color}"
+}
+
+# Mordu with location and no new line.
+_mordu_n() {
+	[ "$_debug" ] && echo -en "${_blue}>>> ${_magenta}Mordu${_cyan}@${_green}${_location}${_cyan}:${_white} $*${_end_color}"
+}
+
+# Echo with new line to add completion messages to _mordu_n
+_mordu_nl() {
+	[ "$_debug" ] && echo -e "${_white}$*${_end_color}"
+}
+
+_mordu "Starting script."
+# }}} </mordu debug system>
+
+# {{{ <fix ssh perms>
+_fix_ssh_perms() {
+	if [ -d "${HOME}/.ssh" ]; then
+		_mordu "Setting perms to 600 for files in .ssh."
+		find "${HOME}/.ssh" -type f -exec chmod 600 {} +
+		_mordu "Setting perms to 700 for directories in .ssh."
+		find "${HOME}/.ssh" -type d -exec chmod 700 {} +
+		_mordu "Setting perms to 644 for public keys in .ssh."
+		find "${HOME}/.ssh" -type f -name "*.pub" -exec chmod 644 {} +
+	else
+		_mordu "No .ssh found in home dir yet.  Not setting permissions."
+	fi
+}
+# }}} </fix ssh perms>
+
+# {{{ <install functions>
+# The scripts for setting up a minimal shell.
+_shell_minimum_install() {
+	_mordu "Sourcing shell mimimal install scripts."
+	for __app in "${HOME}/.config/yadm/shell-minimal.d/"*.sh ; do
+		_mordu "Processing ${__app}."
+		bash "$__app"
+	done
+}
+
+# The scripts for setting up a minimal workstation.
+_workstation_minimum_install() {
+	_mordu "Sourcing workstation minimal install scripts."
+	for __app in "${HOME}/.config/yadm/workstation-minimal.d/"*.sh ; do
+		_mordu "Processing ${__app}."
+		bash "${__app}"
+	done
+}
+# }}} </install functions>
+
+# {{{ <source installation scripts>
+_source_install_scripts() {
+	# Check if we are a workstation or server/shell only.
+	if type Xorg > /dev/null 2>&1 ; then
+		_mordu "Xorg found.  Bootstraping with a graphical workstation in mind."
+		_shell_minimum_install
+		_workstation_minimum_install
+	else
+		_mordu "Xorg not found.  Bootstraping for a shell only environment."
+		_shell_minimum_install
+	fi
+}
+# }}} </source software installation scripts>
+
+# {{{ <set user shell to zsh>
+_set_shell_zsh() {
+	local _user="$USER"
+	_mordu "Setting users shell to zsh."
+	sudo usermod -s /usr/bin/zsh "$_user"
+}
+# }}} </set user shell to zsh>
+
+# {{{ <garbage collection>
+_gc() {
+	_mordu "Performing some basic garbage collection."
+	rm -rf ~/.cargo ~/.lesshst ~/.viminfo ~/.w3m ~/.wget-hsts ~/.vim
+}
+# }}} </garbage collection>
+
+# {{{ <main loop>
+_main() {
+	_fix_ssh_perms
+	_source_install_scripts
+	_set_shell_zsh
+	_gc
+	_mordu "Bootstrapping complete.  You are going to want to re-login."
+}
+_main
+# }}} </main loop>
+
+_mordu "Completed script."

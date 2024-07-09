@@ -1,0 +1,1 @@
+../shell-minimal.d/02-rpmfusion-setup.sh
