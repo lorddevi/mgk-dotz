@@ -1,26 +1,38 @@
-# ~/.config/bash/interactive.bash
-LOCATION="bash/interactive.bash"
+#!/usr/bin/env bash
+_location=".config/bash/interactive.bash"
 
-# {{{ === Script Debug Settings ===
-#DEBUG=y # Comment this out to disable DEBUGing.
-function _mordu {
-	[ "$DEBUG" ] && echo ">>> Mordu@$LOCATION: $*"
+# {{{ <mordu debug system>
+_debug=y # Comment this out to disable debuging.
+
+_blue="\e[34m"
+_magenta="\e[35m"
+_green="\e[92m"
+_cyan="\e[36m"
+_white="\e[97m"
+_end_color="\e[0m"
+
+# Mordu with location.
+_mordu() {
+	[ "$_debug" ] && echo -e "${_blue}>>> ${_magenta}Mordu${_cyan}@${_green}${_location}${_cyan}:${_white} $*${_end_color}"
 }
 
-function _mordu_n {
-	[ "$DEBUG" ] && echo -n ">>> Mordu@$LOCATION: $*"
+# Mordu with location and no new line.
+_mordu_n() {
+	[ "$_debug" ] && echo -en "${_blue}>>> ${_magenta}Mordu${_cyan}@${_green}${_location}${_cyan}:${_white} $*${_end_color}"
 }
 
-function _mordu_nl {
-	[ "$DEBUG" ] && echo "$*"
+# Echo with new line to add completion messages to _mordu_n
+_mordu_nl() {
+	[ "$_debug" ] && echo -e "${_white}$*${_end_color}"
 }
-_mordu "Beginning processing $LOCATION."
-# }}} === Script Debug Settings ===
+
+_mordu "Starting script."
+# }}} </mordu debug system>
 
 # {{{ === Source Posix Common Interactive Shell Settings ===
 _mordu "Sourcing Interactive Shell settings from ~/.config/posix-common/interactive.sh."
 source "$HOME"/.config/posix-common/interactive.sh
-LOCATION="bash/interactive.bash"
+_location="bash/interactive.bash"
 _mordu "Finished sourcing Interactive Shell settings from ~/.config/posix-common/interactive.sh."
 # }}} === Source Posix Common Interactive Shell Settings ===
 
@@ -41,7 +53,7 @@ fi
 # {{{ === Source prompt.bash ===
 _mordu "Sourcing bash prompt from ~/.config/bash/prompt.bash."
 source "$HOME"/.config/bash/prompt.bash
-LOCATION="bash/interactive.bash"
+_location="bash/interactive.bash"
 _mordu "Finished sourcing bash prompt from ~/.config/bash/prompt.bash."
 # }}} === Source prompt.bash ===
 
@@ -55,4 +67,4 @@ _mordu "Finished sourcing bash prompt from ~/.config/bash/prompt.bash."
 #fi
 # }}} === FZF Completions ===
     
-_mordu "Finished processing $LOCATION."
+_mordu "Finished script."

@@ -1,18 +1,38 @@
-# ~/.config/sh/interactive.sh
-LOCATION="sh/interactive.sh"
+#!/usr/bin/env sh
+_location=".config/sh/interactive.sh"
 
-# {{{ === Script Debug Settings ===
-#DEBUG=y # Comment this out to disable DEBUGing.
+# {{{ <mordu debug system>
+_debug=y # Comment this out to disable debuging.
+
+_blue="\e[34m"
+_magenta="\e[35m"
+_green="\e[92m"
+_cyan="\e[36m"
+_white="\e[97m"
+_end_color="\e[0m"
+
+# Mordu with location.
 _mordu() {
-	[ "$DEBUG" ] && echo ">>> Mordu@$LOCATION: $*"
+	[ "$_debug" ] && echo -e "${_blue}>>> ${_magenta}Mordu${_cyan}@${_green}${_location}${_cyan}:${_white} $*${_end_color}"
 }
-_mordu "Beginning processing $LOCATION."
-# }}} === Script Debug Settings ===
+
+# Mordu with location and no new line.
+_mordu_n() {
+	[ "$_debug" ] && echo -en "${_blue}>>> ${_magenta}Mordu${_cyan}@${_green}${_location}${_cyan}:${_white} $*${_end_color}"
+}
+
+# Echo with new line to add completion messages to _mordu_n
+_mordu_nl() {
+	[ "$_debug" ] && echo -e "${_white}$*${_end_color}"
+}
+
+_mordu "Starting script."
+# }}} </mordu debug system>
 
 # {{{ === Source Posix Common interactive.sh ===
 _mordu "Sourcing Interactive Shell settings from ~/.config/posix-common/interactive.sh."
 . "$HOME"/.config/posix-common/interactive.sh
-LOCATION="sh/interactive.sh"
+_location=".config/sh/interactive.sh"
 _mordu "Finished sourcing Interactive Shell settings from ~/.config/posix-common/interactive.sh."
 # }}} === Source Posix Common interactive.sh ===
 
@@ -42,7 +62,7 @@ export HISTFILE
 # {{{ === Sourcing prompt.sh ===
 _mordu "Sourcing sh prompt from ~/.config/sh/prompt.sh."
 . "$HOME"/.config/sh/prompt.sh
-LOCATION="sh/interactive.sh"
+_location=".config/sh/interactive.sh"
 _mordu "Finished sourcing sh prompt from ~/.config/sh/prompt.sh."
 # }}} === Sourcing prompt.sh ===
 
@@ -62,4 +82,4 @@ _mordu "Enabling Vi mode for command line."
 set -o vi
 # }}} === Enable vi mode for 'sh' ===
 
-_mordu "Finished processing $LOCATION."
+_mordu "Finished script."

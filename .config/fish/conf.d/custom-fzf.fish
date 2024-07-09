@@ -1,21 +1,32 @@
-#~/.config/fish/conf.d/custom-fzf.fish
-set LOCATION "fish/conf.d/custom-fzf.fish"
+#!/usr/bin/env fish
+set _location ".config/fish/conf.d/custom-fzf.fish"
 
-# {{{ === Script Debug Settings ===
-# set -l DEBUG y # Comment this out to disable DEBUGing.
+# {{{ <mordu debug system>
+set _debug y # Comment this out to disable DEBUGing.
+set _blue "\033[34m"
+set _magenta "\033[35m"
+set _green "\033[92m"
+set _cyan "\033[36m"
+set _white "\033[97m"
+set _end_color "\033[0m"
+
+# Mordu with location.
 function _mordu
-	[ "$DEBUG" ] && echo ">>> Mordu@$LOCATION: $argv"
+    set -q _debug; and echo -e "$_blue>>> $_magenta""Mordu""$_cyan@$_green$_location$_cyan:$_white $argv$_end_color"
 end
 
+# Mordu with location and no new line.
 function _mordu_n
-	[ "$DEBUG" ] && echo -n ">>> Mordu@$LOCATION: $argv"
+    set -q _debug; and echo -en "$_blue>>> $_magenta""Mordu""$_cyan@$_green$_location$_cyan:$_white $argv$_end_color"
 end
 
+# Echo with new line to add completion messages to _mordu_n
 function _mordu_nl
-	[ "$DEBUG" ] && echo "$argv"
+    set -q _debug; and echo -e "$_white$argv$_end_color"
 end
-_mordu "Beginning processing $LOCATION."
-# }}} === Script Debug Settings ===
+
+_mordu "Starting script."
+# }}} </mordu debug system>
 
 # {{{ === Function: fzf-cd-widget "Change directory" ===
 # Set up the default, mnemonic key bindings unless the user has chosen to customize them
@@ -177,4 +188,4 @@ if bind -M insert > /dev/null 2>&1
 end
 # }}} === Configure FZF Keybindings ===
 
-_mordu "Finished processing $LOCATION."
+_mordu "Finished script."

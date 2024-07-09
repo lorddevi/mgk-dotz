@@ -1,21 +1,32 @@
-# ~/.config/fish/interactive.fish
-set LOCATION "fish/interactive.fish"
+#!/usr/bin/env fish
+set _location ".config/fish/interactive.fish"
 
-# {{{ === Script Debug Settings ===
-#set -l DEBUG y # Comment this out to disable DEBUGing.
+# {{{ <mordu debug system>
+set _debug y # Comment this out to disable DEBUGing.
+set _blue "\033[34m"
+set _magenta "\033[35m"
+set _green "\033[92m"
+set _cyan "\033[36m"
+set _white "\033[97m"
+set _end_color "\033[0m"
+
+# Mordu with location.
 function _mordu
-	[ "$DEBUG" ] && echo ">>> Mordu@$LOCATION: $argv"
+    set -q _debug; and echo -e "$_blue>>> $_magenta""Mordu""$_cyan@$_green$_location$_cyan:$_white $argv$_end_color"
 end
 
+# Mordu with location and no new line.
 function _mordu_n
-	[ "$DEBUG" ] && echo -n ">>> Mordu@$LOCATION: $argv"
+    set -q _debug; and echo -en "$_blue>>> $_magenta""Mordu""$_cyan@$_green$_location$_cyan:$_white $argv$_end_color"
 end
 
+# Echo with new line to add completion messages to _mordu_n
 function _mordu_nl
-	[ "$DEBUG" ] && echo "$argv"
+    set -q _debug; and echo -e "$_white$argv$_end_color"
 end
-_mordu "Beginning processing $LOCATION."
-# }}} === Script Debug Settings ===
+
+_mordu "Starting script."
+# }}} </mordu debug system>
 
 # {{{ === Source Posix Common Aliases ===
 # Load the posix-common Interactive Shell settings we have setup too.
@@ -30,7 +41,7 @@ _mordu "Beginning processing $LOCATION."
 # >>> DON'T USE THIS BLOCK
 #  _mordu "Sourcing Interactive Shell settings from ~/.config/posix-common/interactive.sh"
 #  replay "source ~/.config/posix-common/interactive.sh"
-#  set -l LOCATION "fish/interactive.fish"
+#  set -l _location "fish/interactive.fish"
 #  _mordu "Finished sourcing Interactive Shell settings from ~/.config/posix-common/interactive.sh"
 # <<< DON'T USE THIS BLOCK
 
@@ -39,10 +50,10 @@ _mordu "Beginning processing $LOCATION."
 #_mordu "Sourcing Aliases from ~/.config/posix-common/aliases.d/*."
 #for alias_file in ~/.config/posix-common/aliases.d/*.sh
 #  _mordu "Sourcing $alias_file."
-#  set -l LOCATION "posix-common/aliases.d/$alias_file"
+#  set -l _location "posix-common/aliases.d/$alias_file"
 #  #replay "source $alias_file"
 #end
-#set -l LOCATION interactive.fish
+#set -l _location interactive.fish
 #_mordu "Finished sourcing Aliases from ~/.config/posix-common/aliases.d/*."
 # <<< USE THIS BLOCK
 # }}} === Source Posix Common Aliases ===
@@ -50,15 +61,15 @@ _mordu "Beginning processing $LOCATION."
 # {{{ === Source Posix Common Environment Variables ===
 #_mordu "Sourcing Common Env Vars from ~/.config/posix-common/env.sh."
 #replay "source ~/.config/posix-common/env.sh"
-#set -l LOCATION "fish/interactive.fish"
+#set -l _location "fish/interactive.fish"
 #_mordu "Finished sourcing Common Env Vars from ~/.config/posix-common/env.sh."
 # }}} === Source Posix Common Environment Variables ===
 
 # {{{ === Source prompt.fish ===
-_mordu "Sourcing Fish prompt from ~/.config/fish/prompt.fish."
+_mordu "Sourcing Fish prompt from .config/fish/prompt.fish."
 source "$HOME"/.config/fish/prompt.fish
-set -l LOCATION "fish/interactive.fish"
-_mordu "Finished sourcing Fish prompt from ~/.config/fish/prompt.fish."
+set -l _location ".config/fish/interactive.fish"
+_mordu "Finished sourcing Fish prompt from .config/fish/prompt.fish."
 # }}} === Source prompt.fish ===
 
 # {{{ === Enable VI Mode ===
@@ -143,4 +154,4 @@ alias sysupdate='dnf mc --refresh && dnf -y update'
 alias lxc='sudo lxc'
 # }}} === Aliases: Sudo ===
     
-_mordu "Finished processing $LOCATION."
+_mordu "Finished script."

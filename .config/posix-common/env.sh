@@ -1,13 +1,33 @@
-# ~/.config/posix-common/env.sh
-LOCATION="posix-common/env.sh"
+#!/usr/bin/env sh
+_location=".config/posix-common/env.sh"
 
-# {{{ === Script Debug Settings ===
-#DEBUG=y # Comment this out to disable DEBUGing.
+# {{{ <mordu debug system>
+_debug=y # Comment this out to disable debuging.
+
+_blue="\e[34m"
+_magenta="\e[35m"
+_green="\e[92m"
+_cyan="\e[36m"
+_white="\e[97m"
+_end_color="\e[0m"
+
+# Mordu with location.
 _mordu() {
-	[ "$DEBUG" ] && echo ">>> Mordu@$LOCATION: $*"
+	[ "$_debug" ] && echo -e "${_blue}>>> ${_magenta}Mordu${_cyan}@${_green}${_location}${_cyan}:${_white} $*${_end_color}"
 }
-_mordu "Beginning processing $LOCATION."
-# }}} === Script Debug Settings ===
+
+# Mordu with location and no new line.
+_mordu_n() {
+	[ "$_debug" ] && echo -en "${_blue}>>> ${_magenta}Mordu${_cyan}@${_green}${_location}${_cyan}:${_white} $*${_end_color}"
+}
+
+# Echo with new line to add completion messages to _mordu_n
+_mordu_nl() {
+	[ "$_debug" ] && echo -e "${_white}$*${_end_color}"
+}
+
+_mordu "Starting script."
+# }}} </mordu debug system>
 
 # {{{ === Set ENV Variable for Sanity Proofing Init ===
 # We need to set $ENV so that if you use shell X as your login shell,
@@ -30,7 +50,7 @@ umask 0077
 # lol)
 _mordu "Sourcing Env Vars from ~/.config/posix-common/env_local.sh."
 . "$HOME"/.config/posix-common/env_local.sh
-LOCATION="posix-common/env.sh"
+_location=".config/posix-common/env.sh"
 _mordu "Finished sourcing Env Vars from ~/.config/posix-common/env_local.sh."
 # }}} === Source Posix Common env_local.sh ===
 
@@ -42,8 +62,8 @@ for env_file in "$HOME"/.config/posix-common/env.d/*.sh; do
 	. "$env_file"
 done
 unset -v env_file
-LOCATION="posix-common/env.sh"
+_location=".config/posix-common/env.sh"
 _mordu "Finished sourcing Env Vars from ~/.config/posix-common/env.d/*.sh."
 # }}} === Source Posix Common env.d/*.sh ===
 
-_mordu "Finished processing $LOCATION."
+_mordu "Finished script."

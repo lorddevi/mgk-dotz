@@ -1,25 +1,36 @@
 # ~/.config/fish/login.fish
-set LOCATION "fish/login.fish"
+set _location ".config/fish/login.fish"
 
 # Intended to be used to run items we want to load only on login shells.
 # Env vars that affect non-interactive shells or interactive shells alike.
 # But perhaps not things like aliases for 'ls' quite yet.
 
-# {{{ === Script Debug Settings ===
-#set -l DEBUG y # Comment this out to disable DEBUGing.
+# {{{ <mordu debug system>
+set _debug y # Comment this out to disable DEBUGing.
+set _blue "\033[34m"
+set _magenta "\033[35m"
+set _green "\033[92m"
+set _cyan "\033[36m"
+set _white "\033[97m"
+set _end_color "\033[0m"
+
+# Mordu with location.
 function _mordu
-	[ "$DEBUG" ] && echo ">>> Mordu@$LOCATION: $argv"
+    set -q _debug; and echo -e "$_blue>>> $_magenta""Mordu""$_cyan@$_green$_location$_cyan:$_white $argv$_end_color"
 end
 
+# Mordu with location and no new line.
 function _mordu_n
-	[ "$DEBUG" ] && echo -n ">>> Mordu@$LOCATION: $argv"
+    set -q _debug; and echo -en "$_blue>>> $_magenta""Mordu""$_cyan@$_green$_location$_cyan:$_white $argv$_end_color"
 end
 
-function _mordu_nlk
-	[ "$DEBUG" ] && echo "$argv"
+# Echo with new line to add completion messages to _mordu_n
+function _mordu_nl
+    set -q _debug; and echo -e "$_white$argv$_end_color"
 end
-_mordu "Beginning processing $LOCATION."
-# }}} === Script Debug Settings ===
+
+_mordu "Starting script."
+# }}} </mordu debug system>
 
 # {{{ === Souce System Posix Profile TODO: FIX ===
 # Load Operating System POSIX environment. Important on Arch, Gentoo
@@ -37,4 +48,4 @@ _mordu "Beginning processing $LOCATION."
 #_mordu "Finished sourcing Login Shell settings from ~/.config/posix-common/login.sh"
 # }}} === Souce User Common Posix Profile ===
 
-_mordu "Finished processing $LOCATION."
+_mordu "Finished script."

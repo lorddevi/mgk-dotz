@@ -1,5 +1,5 @@
-# ~/.config/bash/bashrc
-LOCATION=".config/bash/bashrc"
+#!/usr/bin/env bash
+_location=".config/bash/bashrc"
 
 # This file gets run in two cases:
 # 1. non-login interactive shell
@@ -12,26 +12,38 @@ LOCATION=".config/bash/bashrc"
 #  - https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html
 #  - https://heptapod.host/flowblok/shell-startup/-/blob/branch/default/.bashrc
 
-# {{{ === Script Debug Settings ===
-#DEBUG=y # Comment this out to disable DEBUGing.
-function _mordu {
-	[ "$DEBUG" ] && echo ">>> Mordu@$LOCATION: $*"
+# {{{ <mordu debug system>
+_debug=y # Comment this out to disable debuging.
+
+_blue="\e[34m"
+_magenta="\e[35m"
+_green="\e[92m"
+_cyan="\e[36m"
+_white="\e[97m"
+_end_color="\e[0m"
+
+# Mordu with location.
+_mordu() {
+	[ "$_debug" ] && echo -e "${_blue}>>> ${_magenta}Mordu${_cyan}@${_green}${_location}${_cyan}:${_white} $*${_end_color}"
 }
 
-function _mordu_n {
-	[ "$DEBUG" ] && echo -n ">>> Mordu@$LOCATION: $*"
+# Mordu with location and no new line.
+_mordu_n() {
+	[ "$_debug" ] && echo -en "${_blue}>>> ${_magenta}Mordu${_cyan}@${_green}${_location}${_cyan}:${_white} $*${_end_color}"
 }
 
-function _mordu_nl {
-	[ "$DEBUG" ] && echo "$*"
+# Echo with new line to add completion messages to _mordu_n
+_mordu_nl() {
+	[ "$_debug" ] && echo -e "${_white}$*${_end_color}"
 }
-_mordu "Beginning processing $LOCATION"
-# }}} === Script Debug Settings ===
+
+_mordu "Starting script."
+# }}} </mordu debug system>
 
 # {{{ === Sourcing env.bash ===
 _mordu "Sourcing Env Vars from ~/.config/bash/env.bash."
 source "$HOME"/.config/bash/env.bash
-LOCATION=".config/bash/bashrc"
+_location=".config/bash/bashrc"
 _mordu "Finished sourcing Env Vars from ~/.config/bash/env.bash."
 # }}} === Sourcing env.bash ===
 
@@ -51,8 +63,8 @@ _mordu "Finished sourcing /etc/bashrc."
 # {{{ === Source interactive.bash ===
 _mordu "Sourcing Interactive Shell settings from ~/.config/bash/interactive.bash."
 source "$HOME"/.config/bash/interactive.bash
-LOCATION=".config/bash/bashrc"
+_location=".config/bash/bashrc"
 _mordu "Finished sourcing Interactive Shell settings from ~/.config/bash/interactive.bash."
 # }}} === Source interactive.bash ===
     
-_mordu "Finished processing $LOCATION."
+_mordu "Finished script."

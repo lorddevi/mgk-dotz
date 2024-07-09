@@ -1,27 +1,39 @@
-# ~/.config/bash/profile.bash
-LOCATION="bash/profile.bash"
+#!/usr/bin/env bash
+_location=".config/bash/profile.bash"
 
-# {{{ === Script Debug Settings ===
-#DEBUG=y # Comment this out to disable DEBUGing.
-function _mordu {
-	[ "$DEBUG" ] && echo ">>> Mordu@$LOCATION: $*"
+# {{{ <mordu debug system>
+_debug=y # Comment this out to disable debuging.
+
+_blue="\e[34m"
+_magenta="\e[35m"
+_green="\e[92m"
+_cyan="\e[36m"
+_white="\e[97m"
+_end_color="\e[0m"
+
+# Mordu with location.
+_mordu() {
+	[ "$_debug" ] && echo -e "${_blue}>>> ${_magenta}Mordu${_cyan}@${_green}${_location}${_cyan}:${_white} $*${_end_color}"
 }
 
-function _mordu_n {
-	[ "$DEBUG" ] && echo -n ">>> Mordu@$LOCATION: $*"
+# Mordu with location and no new line.
+_mordu_n() {
+	[ "$_debug" ] && echo -en "${_blue}>>> ${_magenta}Mordu${_cyan}@${_green}${_location}${_cyan}:${_white} $*${_end_color}"
 }
 
-function _mordu_nl {
-	[ "$DEBUG" ] && echo "$*"
+# Echo with new line to add completion messages to _mordu_n
+_mordu_nl() {
+	[ "$_debug" ] && echo -e "${_white}$*${_end_color}"
 }
-_mordu "Beginning processing $LOCATION."
-# }}} === Script Debug Settings ===
+
+_mordu "Starting script."
+# }}} </mordu debug system>
 
 # {{{ === Source env.bash ===
 # 1. Ensure ~/.config/bash/env.bash gets run first
 _mordu "Sourcing Env Vars from ~/.config/bash/env.bash."
 source "$HOME"/.config/bash/env.bash
-LOCATION="bash/profile.bash"
+_location="bash/profile.bash"
 _mordu "Finished sourcing Env Vars from ~/.config/bash/env.bash."
 # }}} === Source env.bash ===
 
@@ -36,7 +48,7 @@ BASH_ENV=
 # {{{ === Source login.bash ===
 _mordu "Sourcing Login Shell settings from ~/.config/bash/login.bash."
 source "$HOME"/.config/bash/login.bash
-LOCATION="bash/profile.bash"
+_location="bash/profile.bash"
 _mordu "Finished sourcing Login Shell settings from ~/.config/bash/login.bash."
 # }}} === Source login.bash ===
 
@@ -45,9 +57,9 @@ _mordu "Finished sourcing Login Shell settings from ~/.config/bash/login.bash."
 if [ "$PS1" ]; then
 	_mordu "Sourcing Interactive Shell settings from ~/.config/bash/interactive.bash."
 	source "$HOME"/.config/bash/interactive.bash
-	LOCATION="bash/profile.bash"
+	_location="bash/profile.bash"
 	_mordu "Finished sourcing Interactive Shell settings from ~/.config/bash/interactive.bash."
 fi
 # }}} === Source interactive.bash ===
 
-_mordu "Finished processing $LOCATION."
+_mordu "Finished script."
