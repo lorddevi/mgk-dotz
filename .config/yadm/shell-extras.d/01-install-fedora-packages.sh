@@ -37,7 +37,7 @@ _define_packages() {
 	_development=(perl nodejs nodejs-npm gcc postgresql zlib-ng-compat-devel \
 	bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel \
 	libffi-devel xz-devel gdbm-libs libnsl2 uuid-devel libuuid-devel python3 \
-	python3-pip ShellCheck hexyl)
+	python3-pip ShellCheck hexyl neovim visidata)
 	_admin=(ansible)
 	_packages=("${_entertainment[@]}" "${_development[@]}" "${_net[@]}" \
 		"${_tools[@]}" "${_admin[@]}")
@@ -67,9 +67,11 @@ _install_pkgs() {
 # {{{ <define pkg groups>
 # Define the package groups you want to install
 _define_pkg_groups() {
-    _pkg_groups=(\
-			"Text-based Internet")
-}
+	_pkg_groups=(\
+		"Container Management" \
+		"Development Tools" \
+		"Text-based Internet")
+	}
 # }}} </define pkg groups>
 
 # {{{ <install pkg groups>

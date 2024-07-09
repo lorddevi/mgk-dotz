@@ -31,8 +31,8 @@ _mordu "Starting script."
 
 # {{{ <define packages>
 _define_packages() {
-	_editors=(neovim vim-enhanced visidata)
-	_shell_utils=(lolcat tmux ripgrep nnn fastfetch zsh moreutils thefuck bat \
+	_editors=(vim-enhanced)
+	_shell_utils=(lolcat tmux ripgrep nnn zsh moreutils thefuck bat \
 		kitty-terminfo eza fd-find fzf zoxide)
 	_entertainment=(fortune-mod)
 	_net=(aria2 wget2 bind-utils NetworkManager-tui traceroute nmap netcat rsync)
@@ -58,7 +58,7 @@ _install_pkgs() {
 	_mordu "Total not installed yet: ${__not_installed_yet[*]}"
 
 	if (( ${#__not_installed_yet[@]} )); then
-		sudo dnf -y install "${__not_installed_yet[@]}"
+		sudo dnf install "${__not_installed_yet[@]}"
 	fi
 }
 # }}} </install pkgs>
@@ -66,12 +66,10 @@ _install_pkgs() {
 # {{{ <define pkg groups>
 # Define the package groups you want to install
 _define_pkg_groups() {
-    _pkg_groups=(\
-			"Container Management" \
-			"Development Tools" \
-			"Standard" \
-			"Hardware Support")
-}
+	_pkg_groups=(\
+		"Standard" \
+		"Hardware Support")
+	}
 # }}} </define pkg groups>
 
 # {{{ <install pkg groups>
