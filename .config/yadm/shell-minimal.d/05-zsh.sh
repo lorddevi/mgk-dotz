@@ -39,7 +39,10 @@ _clone_zinit() {
 
 	if ! $_ghq list | grep -q "$__repo" ; then
 		_mordu "Git cloning zinit."
-		$_ghq get "${__repo}"
+		$_ghq get "${__repo}" \
+			|| $_ghq get "${__repo}" \
+			|| $_ghq get "${__repo}" \
+			_mordu "Git zinit clone failed 3 times."
 	else
 		_mordu "Found repo ${__repo}.  Updating."
 		$_ghq get -u "${__repo}"
@@ -91,11 +94,18 @@ _clone_zsh_plugins() {
 }
 # }}} </clone zsh plugins>
 
+# {{{ <zsh interactive once>
+_zsh_interactive_once() {
+	zsh -i -c 'exit'
+}
+# }}} </zsh interactive once>
+
 # {{{ <main loop>
 _main() {
- _clone_zinit
- _define_zsh_plugins
- _clone_zsh_plugins
+	_clone_zinit
+	_define_zsh_plugins
+	_clone_zsh_plugins
+	_zsh_interactive_once
 }
 _main
 # }}} </main loop>

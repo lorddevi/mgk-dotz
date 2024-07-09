@@ -42,7 +42,10 @@ if [ ! -d $ZINIT_HOME ]; then
 	mkdir -p "$(dirname $ZINIT_HOME)"
 fi
 if [ ! -d $ZINIT_HOME/.git ]; then
-	ghq get git.mgk.one/zsh/zdharma-continuum.zinit.git
+	ghq get git.mgk.one/zsh/zdharma-continuum.zinit.git \
+		|| ghq get git.mgk.one/zsh/zdharma-continuum.zinit.git \
+		|| ghq get git.mgk.one/zsh/zdharma-continuum.zinit.git \
+		|| _mordu "Cloning zinit failed 3 times."
 fi
 
 source "${ZINIT_HOME}/zinit.zsh"
