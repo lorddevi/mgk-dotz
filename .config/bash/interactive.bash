@@ -32,7 +32,7 @@ _mordu "Starting script."
 # {{{ === Source Posix Common Interactive Shell Settings ===
 _mordu "Sourcing Interactive Shell settings from ~/.config/posix-common/interactive.sh."
 source "$HOME"/.config/posix-common/interactive.sh
-_location="bash/interactive.bash"
+_location=".config/bash/interactive.bash"
 _mordu "Finished sourcing Interactive Shell settings from ~/.config/posix-common/interactive.sh."
 # }}} === Source Posix Common Interactive Shell Settings ===
 
@@ -53,7 +53,7 @@ fi
 # {{{ === Source prompt.bash ===
 _mordu "Sourcing bash prompt from ~/.config/bash/prompt.bash."
 source "$HOME"/.config/bash/prompt.bash
-_location="bash/interactive.bash"
+_location=".config/bash/interactive.bash"
 _mordu "Finished sourcing bash prompt from ~/.config/bash/prompt.bash."
 # }}} === Source prompt.bash ===
 

@@ -32,7 +32,7 @@ _mordu "Starting script."
 # {{{ === Source Posix Common login.sh ===
 _mordu "Sourcing Login Shell settings from ~/.config/posix-common/login.sh."
 source "$HOME"/.config/posix-common/login.sh
-_location="bash/login.bash"
+_location=".config/bash/login.bash"
 _mordu "Finished sourcing Login Shell settings from ~/.config/posix-common/login.sh."
 # }}} === Source Posix Common login.sh ===
     

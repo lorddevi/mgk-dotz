@@ -1,21 +1,32 @@
-# ~/.config/zsh/env.zsh
-LOCATION="zsh/env.zsh"
+#!/usr/bin/env zsh
+_location=".config/zsh/env.zsh"
 
-# {{{ === Script Debug Settings ===
-#DEBUG=y # Comment this out to enable DEBUGing.
-function _mordu {
-	[ "$DEBUG" ] && echo ">>> Mordu@$LOCATION: $*"
+# {{{ <mordu debug system>
+_debug=y # Comment this out to disable debugging.
+_blue="\033[34m"
+_magenta="\033[35m"
+_green="\033[92m"
+_cyan="\033[36m"
+_white="\033[97m"
+_end_color="\033[0m"
+
+# Mordu with location.
+_mordu() {
+    [[ -n "$_debug" ]] && echo -e "${_blue}>>> ${_magenta}Mordu${_cyan}@${_green}${_location}${_cyan}:${_white} $*${_end_color}"
 }
 
-function _mordu_n {
-	[ "$DEBUG" ] && echo -n ">>> Mordu@$LOCATION: $*"
+# Mordu with location and no new line.
+_mordu_n() {
+    [[ -n "$_debug" ]] && echo -en "${_blue}>>> ${_magenta}Mordu${_cyan}@${_green}${_location}${_cyan}:${_white} $*${_end_color}"
 }
 
-function _mordu_nl {
-	[ "$DEBUG" ] && echo "$*"
+# Echo with new line to add completion messages to _mordu_n
+_mordu_nl() {
+    [[ -n "$_debug" ]] && echo -e "${_white}$*${_end_color}"
 }
-_mordu "Beginning processing $LOCATION."
-# }}} === Script Debug Settings ===
+
+_mordu "Starting script."
+# }}} </mordu debug system>
 
 # {{{ === Source Posix Common env.sh ===
 _mordu "Sourcing Env Vars from ~/.config/posix-common/env.sh."
@@ -59,7 +70,10 @@ setopt hist_ignore_all_dups  # Don't add duplicate commands to histfile.
 setopt hist_find_no_dups     # Don't recall dupes either.
                              # (Shouldn't be needed but set anyway.)
 setopt append_history        # Append to the history as we go. Not just on logout. 
-setopt share_history         # Share appended history with other terminals.
+#setopt share_history         # Share appended history with other terminals.
+setopt no_share_history      # Disable sharing of appended history.
+setopt no_inc_append_history # Append history lines as they occur.
+unsetopt extended_history
 # }}} === ZSH History settings. ===
 
-_mordu "Finished processing $LOCATION"
+_mordu "Finished script."

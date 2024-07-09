@@ -50,7 +50,7 @@ export HISTFILE
 # {{{ === Source Posix-Common Env Vars ===
 _mordu "Sourcing Env Vars from ~/.config/posix-common/env.sh."
 source "$HOME"/.config/posix-common/env.sh
-_location="bash/env.bash"
+_location=".config/bash/env.bash"
 _mordu "Finished sourcing Env Vars from ~/.config/posix-common/env.sh."
 # }}} === Source Posix-Common Env Vars ===
 

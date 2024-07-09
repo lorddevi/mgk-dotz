@@ -32,7 +32,7 @@ _mordu "Starting script."
 # {{{ === Source Posix Common logout.sh ===
 _mordu "Performing logout actions from ~/.config/posix-common/logout.sh."
 source "$HOME"/.config/posix-common/logout.sh
-_location="bash/logout.bash"
+_location=".config/bash/logout.bash"
 _mordu "Finished sourcing ~/.config/posix-common/logout.sh."
 # }}} === Source Posix Common logout.sh ===
 

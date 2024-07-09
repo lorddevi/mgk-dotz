@@ -43,7 +43,7 @@ _mordu "Starting script."
 if status --is-login
   _mordu "This appears to be a Login Shell.  Sourcing ~/.config/fish/login.fish."
   source "$HOME"/.config/fish/login.fish
-  set -l _location "fish/conf.d/load-posix-profiles.fish"
+  set -l _location ".config/fish/conf.d/load-posix-profiles.fish"
   _mordu "Finished sourcing ~/.config/fish/login.fish."
 end
 # }}} === Source login.fish (If interactive.) ===
@@ -56,7 +56,7 @@ end
 if status --is-interactive
 	_mordu "This appears to be an Interactive Shell.  Sourcing ~/.config/fish/interactive.fish."
 	source "$HOME"/.config/fish/interactive.fish
-    set -l _location "fish/conf.d/load-posix-profiles.fish"
+    set -l _location ".config/fish/conf.d/load-posix-profiles.fish"
 	_mordu "Finished sourcing ~/.config/fish/interactive.fish."
 end
 # }}} === Source interactive.fish (If interactive.) ===
@@ -68,7 +68,7 @@ end
 _mordu "Coupling Fish logout function with ~/.config/posix-common/logout.sh through ~/.config/fish/logout.fish."
 function on_exit --on-event fish_exit
   source "$HOME"/.config/fish/logout.fish
-  set -l _location "fish/conf.d/load-posix-profiles.fish"
+  set -l _location ".config/fish/conf.d/load-posix-profiles.fish"
 end
 # }}} === Source logout.fish (If logging out.) ===
 

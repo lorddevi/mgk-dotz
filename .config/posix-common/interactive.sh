@@ -87,11 +87,11 @@ fi
 
 # {{{ === Post Login Fun i.e. Fortune ===
 # Post-login fun.  Right now just fortune, but would like other.  Disabled temporarily.
-if command -v fortune >/dev/null 2>&1 && command -v lolcat >/dev/null 2>&1; then
-    fortune "${HOME}/.local/share/fortunes/lotr" | lolcat
-elif command -v fortune >/dev/null 2>&1; then
-    fortune "${HOME}/.local/share/fortunes/lotr"
-fi
+#if command -v fortune >/dev/null 2>&1 && command -v lolcat >/dev/null 2>&1; then
+#    fortune "${HOME}/.local/share/fortunes/lotr" | lolcat
+#elif command -v fortune >/dev/null 2>&1; then
+#    fortune "${HOME}/.local/share/fortunes/lotr"
+#fi
 
 #fastfetch --logo-type kitty --kitty ~/.config/posix-common/fastfetch-logo.jpg --logo-height 17 --logo-padding-left 3 --logo-padding-right 1 -s Title:Separator:OS:Kernel:Packages:Processes:CPU:GPU:Memory:LocalIP:Shell:Uptime:Player:Media:Theme:Font
 

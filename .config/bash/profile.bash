@@ -33,7 +33,7 @@ _mordu "Starting script."
 # 1. Ensure ~/.config/bash/env.bash gets run first
 _mordu "Sourcing Env Vars from ~/.config/bash/env.bash."
 source "$HOME"/.config/bash/env.bash
-_location="bash/profile.bash"
+_location=".config/bash/profile.bash"
 _mordu "Finished sourcing Env Vars from ~/.config/bash/env.bash."
 # }}} === Source env.bash ===
 
@@ -48,7 +48,7 @@ BASH_ENV=
 # {{{ === Source login.bash ===
 _mordu "Sourcing Login Shell settings from ~/.config/bash/login.bash."
 source "$HOME"/.config/bash/login.bash
-_location="bash/profile.bash"
+_location=".config/bash/profile.bash"
 _mordu "Finished sourcing Login Shell settings from ~/.config/bash/login.bash."
 # }}} === Source login.bash ===
 
@@ -57,7 +57,7 @@ _mordu "Finished sourcing Login Shell settings from ~/.config/bash/login.bash."
 if [ "$PS1" ]; then
 	_mordu "Sourcing Interactive Shell settings from ~/.config/bash/interactive.bash."
 	source "$HOME"/.config/bash/interactive.bash
-	_location="bash/profile.bash"
+	_location=".config/bash/profile.bash"
 	_mordu "Finished sourcing Interactive Shell settings from ~/.config/bash/interactive.bash."
 fi
 # }}} === Source interactive.bash ===
