@@ -36,9 +36,9 @@ _clone_stumpwm() {
 	# Ensure it is already downloaded.
 	local __repo="git.mgk.one/x11-wm/stumpwm.stumpwm"
 
-	_mordu_n "Checking for StumpWM.."
+	_mordu "Checking for StumpWM.."
 	if $_ghq list | grep -q "$__repo" ; then
-		_mordu_nl "..Found.  Updating."
+		_mordu "Found StumpWM.  Updating."
 		$_ghq get -u "$__repo"
 	else
 		_mordu_n "..Not found.  Cloning."
@@ -52,9 +52,11 @@ _clone_stumpwm() {
 
 # {{{ <compile and install stumpwm>
 _compile_and_install_stumpwm() {
+	local __repo="git.mgk.one/x11-wm/stumpwm.stumpwm"
+
 	if ! command -v stumpwm > /dev/null 2>&1; then
 		_mordu "StumpWM binary not found.  Compiling and installing."
-		cd "${GHQ_ROOT}/git.mgk.one/x11-wm/stumpwm.stumpwm" || exit
+		cd "${GHQ_ROOT}/${__repo}" || exit
 		./autogen || exit
 		./configure || exit
 		make || exit
