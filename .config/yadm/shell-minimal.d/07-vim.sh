@@ -104,13 +104,6 @@ _clone_vim_plugins() {
 }
 # }}} <clone vim plugins>
 
-# {{{ <running vim plug install>
-_run_vim_plug_install() {
-	_mordu "Calling PlugInstall for vim."
-	vim +PlugInstall +qall
-}
-# }}} </running vim plug install>
-
 # {{{ <main loop>
 _main() {
 	_clone_vim_plug
@@ -118,7 +111,6 @@ _main() {
 	_link_vim_plug_to_autoloads
 	_define_vim_plugins
 	_clone_vim_plugins
-	_run_vim_plug_install
 }
 _main
 # }}} </main loop>
