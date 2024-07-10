@@ -50,7 +50,7 @@ _fetch_sbcl_info() {
 	_mordu "Fetching info on what the latest version of sbcl is."
 	_api_response=$(curl -s "https://api.github.com/repos/sbcl/sbcl/releases/latest")
 	
-	__mordu "Assembling SBCL variables."
+	_mordu "Assembling SBCL variables."
 	# Extract the tag name from the API response
 	_tag_name=$(echo "$_api_response" | grep -o '"tag_name": "[^"]*' | cut -d'"' -f4)
 	
