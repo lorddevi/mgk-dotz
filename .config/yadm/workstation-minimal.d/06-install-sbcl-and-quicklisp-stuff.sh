@@ -137,8 +137,8 @@ _run_quicklisp_install_script() {
     sbcl --load ~/.local/opt/src/quicklisp.lisp --eval "(quicklisp-quickstart:install :path \"${HOME}/.local/opt/quicklisp/\")" --eval '(quit)'
 
     # Load the installed Quicklisp and install additional packages
-    sbcl --eval "(load \"${HOME}/.local/opt/quicklisp/setup.lisp\")" \
-         --eval '(quit)'
+    #sbcl --eval "(load \"${HOME}/.local/opt/quicklisp/setup.lisp\")" \
+    #     --eval '(quit)'
 
     _mordu "Quicklisp install script finished processing."
 }
