@@ -164,7 +164,7 @@ _install_quicklisp() {
 	if [ $? -eq 1 ]; then
 	    # Install Quicklisp if it is not installed
 			_mordu "Quiclisp not installed yet.  Installing."
-	    #_run_quicklisp_install_script
+	    _run_quicklisp_install_script
 	else
 	    _mordu "Quicklisp is already installed. No need to install."
 	fi
@@ -198,7 +198,7 @@ _main() {
 	# Install Quicklisp
 	_download_quicklisp
 	_install_quicklisp
-	_install_quicklisp_packages
+	#_install_quicklisp_packages
 }
 _main
 # }}} </main loop>
