@@ -184,6 +184,42 @@ _install_quicklisp_packages() {
 }
 # }}} </install quicklisp packages>
 
+# {{{ <configure /etc/sbclrc>
+_configure_etc_sbclrc() {
+	# Define the block of code to add
+	block_to_add='(require :asdf)
+	(let ((default-init-file (funcall sb-ext:*userinit-pathname-function*)))
+	   (unless (or (null default-init-file)
+	               (typep default-init-file '"'stream'"')
+	               (uiop:file-exists-p default-init-file))
+	     (setf sb-ext:*userinit-pathname-function*
+	           (lambda () (uiop:xdg-config-home #P"'"sbcl/init.lisp"'")))))'
+	
+	# Path to /etc/sbclrc
+	sbclrc_path="/etc/sbclrc"
+	
+	# Check if /etc/sbclrc exists
+	if [ -f "$sbclrc_path" ]; then
+	    echo "$sbclrc_path exists."
+	    # Check if the string "default-init-file" is already in /etc/sbclrc
+	    if grep -q "default-init-file" "$sbclrc_path"; then
+	        _mordu "The block of code has already been added to $sbclrc_path."
+	    else
+	        _mordu "Appending the block of code to $sbclrc_path."
+	        # Append the block of code with a leading blank line
+	        sudo bash -c "echo -e '\n$block_to_add' >> $sbclrc_path"
+	        _mordu "Block of code appended to $sbclrc_path."
+	    fi
+	else
+	    _mordu "$sbclrc_path does not exist. Creating the file and adding the block of code."
+	    # Create the file and add the block of code
+	    sudo bash -c "echo '$block_to_add' > $sbclrc_path"
+	    _mordu "$sbclrc_path created and block of code added."
+	fi
+}
+
+# }}} </configure /etc/sbclrc>
+
 # {{{ <new install quicklisp>
 _new_install_quicklisp() {
 	sbcl --load ~/.local/opt/src/quicklisp.lisp \
@@ -208,6 +244,7 @@ _main() {
 
 	# Install Quicklisp
 	_download_quicklisp
+	_configure_etc_sbclrc
 	_new_install_quicklisp
 	#_install_quicklisp
 	#_install_quicklisp_packages
