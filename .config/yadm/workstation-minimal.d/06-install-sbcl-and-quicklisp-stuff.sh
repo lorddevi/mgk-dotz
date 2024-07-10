@@ -50,6 +50,7 @@ _fetch_sbcl_info() {
 	_mordu "Fetching info on what the latest version of sbcl is."
 	_api_response=$(curl -s "https://api.github.com/repos/sbcl/sbcl/releases/latest")
 	
+	__mordu "Assembling SBCL variables."
 	# Extract the tag name from the API response
 	_tag_name=$(echo "$_api_response" | grep -o '"tag_name": "[^"]*' | cut -d'"' -f4)
 	
@@ -58,9 +59,11 @@ _fetch_sbcl_info() {
 	
 	# Get the current installed version of SBCL
 	_current_sbcl_version=$(sbcl --version | awk '{print $2}')
+	_mordu "Current SBCL Version: ${_current_sbcl_version}."
 	
 	# The new version to install
 	_new_sbcl_version=$(echo "$_tag_name" | cut -d'-' -f2)
+	_mordu "The New SBCL Version: ${_new_sbcl_version}."
 }
 # }}} </fetch sbcl info>
 
