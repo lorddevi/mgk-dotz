@@ -57,7 +57,7 @@ _compile_and_install_stumpwm() {
 	if ! command -v stumpwm > /dev/null 2>&1; then
 		_mordu "StumpWM binary not found.  Compiling and installing."
 		cd "${GHQ_ROOT}/${__repo}" || exit
-		./autogen || exit
+		./autogen.sh || exit
 		./configure || exit
 		make || exit
 		sudo make install || exit
