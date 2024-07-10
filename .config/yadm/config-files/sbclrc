@@ -1,0 +1,7 @@
+(require :asdf)
+(let ((default-init-file (funcall sb-ext:*userinit-pathname-function*)))
+   (unless (or (null default-init-file)
+               (typep default-init-file 'stream)
+               (uiop:file-exists-p default-init-file))
+     (setf sb-ext:*userinit-pathname-function*
+           (lambda () (uiop:xdg-config-home #P"sbcl/init.lisp")))))
