@@ -188,7 +188,7 @@ _install_quicklisp_packages() {
 _new_install_quicklisp() {
 	sbcl --load ~/.local/opt/src/quicklisp.lisp \
 		--eval "(quicklisp-quickstart:install :path \"${HOME}/.local/opt/quicklisp/\")" \
-		--eval '(ql:quickload "clx")'
+		--eval '(ql:quickload "clx")' \
 		--eval '(ql:quickload "cl-ppcre")' \
 		--eval '(ql:quickload "alexandria")' \
 		--eval '(quit)'
