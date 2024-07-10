@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-_location=".config/yadm/shell-extras.d/05-install-sbcl-and-quicklisp-stuff.sh"
+_location=".config/yadm/shell-extras.d/06-install-sbcl-and-quicklisp-stuff.sh"
 
 # {{{ <mordu debug system>
 _debug=y # Comment this out to disable debuging.
@@ -163,7 +163,8 @@ _install_quicklisp() {
 	# Check the exit code of the previous command
 	if [ $? -eq 1 ]; then
 	    # Install Quicklisp if it is not installed
-	    _run_quicklisp_install_script
+			_mordu "Quiclisp not installed yet.  Installing."
+	    #_run_quicklisp_install_script
 	else
 	    _mordu "Quicklisp is already installed. No need to install."
 	fi
