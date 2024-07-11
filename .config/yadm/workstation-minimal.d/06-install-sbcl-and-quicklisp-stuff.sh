@@ -58,8 +58,10 @@ _fetch_sbcl_info() {
 	_download_url="http://prdownloads.sourceforge.net/sbcl/${_tag_name}-x86-64-linux-binary.tar.bz2"
 	
 	# Get the current installed version of SBCL
-	_current_sbcl_version=$(sbcl --version | awk '{print $2}')
-	_mordu "Current SBCL Version: ${_current_sbcl_version}."
+	if command -v sbcl > /dev/null 2>&1; then
+		_current_sbcl_version=$(sbcl --version | awk '{print $2}')
+		_mordu "Current SBCL Version: ${_current_sbcl_version}."
+	fi
 	
 	# The new version to install
 	_new_sbcl_version=$(echo "$_tag_name" | cut -d'-' -f2)
@@ -110,15 +112,23 @@ _version_gt() {
 }
 
 _install_sbcl() {
-	if [ "$_current_sbcl_version" == "$_new_sbcl_version" ]; then
-	    _mordu "SBCL is already up-to-date with version ${_current_sbcl_version}."
-	elif _version_gt "$_new_sbcl_version" "$_current_sbcl_version"; then
-	    _mordu "A newer version of SBCL is available. Installing version ${_new_sbcl_version}..."
-	    # Place your installation code here
-			_run_sbcl_install_script
-	else
-	    _mordu "Current SBCL version ${_current_sbcl_version} is newer than the version to install ${_new_sbcl_version}."
-	fi
+    # Check if the current version is unset or empty
+    if [ -z "$_current_sbcl_version" ]; then
+        _mordu "No current SBCL version detected. Installing version ${_new_sbcl_version}..."
+        # Place your installation code here
+        _run_sbcl_install_script
+        return
+    fi
+
+    if [ "$_current_sbcl_version" == "$_new_sbcl_version" ]; then
+        _mordu "SBCL is already up-to-date with version ${_current_sbcl_version}."
+    elif _version_gt "$_new_sbcl_version" "$_current_sbcl_version"; then
+        _mordu "A newer version of SBCL is available. Installing version ${_new_sbcl_version}..."
+        # Place your installation code here
+        _run_sbcl_install_script
+    else
+        _mordu "Current SBCL version ${_current_sbcl_version} is newer than the version to install ${_new_sbcl_version}."
+    fi
 }
 # }}} </install sbcl>
 
