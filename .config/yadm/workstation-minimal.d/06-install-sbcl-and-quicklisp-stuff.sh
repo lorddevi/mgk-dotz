@@ -134,16 +134,16 @@ _install_sbcl() {
 
 # {{{ <configure /etc/sbclrc>
 _configure_etc_sbclrc() {
-	_sbclrc_path="/etc/sbclrc"
+	local __sbclrc_path="/etc/sbclrc"
 	
 	# Check if /etc/sbclrc exists
-	if [ -f "$_sbclrc_path" ]; then
-		_mordu "$sbclrc_path already exists.  Not copying config."
+	if [ -f "$__sbclc_path" ]; then
+		_mordu "$__sbclc_path already exists.  Not copying config."
 	else
-		_mordu "$sbclrc_path does not exist.  Copying over config."
-		sudo cp "${HOME}"/.config/yadm/config-files/sbclrc /etc
-		sudo chown root:root /etc/sbclrc
-		sudo chmod go+r /etc/sbclrc
+		_mordu "$__sbclc_path does not exist.  Copying over config."
+		sudo cp "${HOME}"/.config/yadm/config-files/sbclrc "$__sbclc_path"
+		sudo chown root:root "$__sbclc_path"
+		sudo chmod go+r "$__sbclc_path"
 	fi
 }
 
