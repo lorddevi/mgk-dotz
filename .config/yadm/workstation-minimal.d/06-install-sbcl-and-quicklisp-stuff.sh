@@ -186,11 +186,13 @@ _install_quicklisp() {
 	
 	# Check the exit code of the previous command
 	if [ $? -eq 1 ]; then
-	    # Install Quicklisp if it is not installed
-			_mordu "Quicklisp not installed yet.  Installing."
-			_quicklisp_install_function
+		# Install Quicklisp if it is not installed
+		_mordu "Quicklisp not installed yet.  Installing."
+		_quicklisp_install_function
 	else
-	    _mordu "Quicklisp is already installed. No need to install."
+		_mordu "Quicklisp is already installed.  No need to install.  Updating."
+		sbcl --eval '(ql:update-client)' \
+			--eval '(quit)'
 	fi
 }
 # }}} </install quicklisp>
