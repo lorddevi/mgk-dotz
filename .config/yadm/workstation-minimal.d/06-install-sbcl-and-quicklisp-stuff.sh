@@ -143,6 +143,7 @@ _configure_etc_sbclrc() {
 		_mordu "$sbclrc_path does not exist.  Copying over config."
 		sudo cp "${HOME}"/.config/yadm/config-files/sbclrc /etc
 		sudo chown root:root /etc/sbclrc
+		sudo chmod go+r /etc/sbclrc
 	fi
 }
 
