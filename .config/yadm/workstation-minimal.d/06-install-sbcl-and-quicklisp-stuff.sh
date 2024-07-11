@@ -122,6 +122,33 @@ _install_sbcl() {
 }
 # }}} </install sbcl>
 
+# {{{ <configure /etc/sbclrc>
+_configure_etc_sbclrc() {
+	_sbclrc_path="/etc/sbclrc"
+	
+	# Check if /etc/sbclrc exists
+	if [ -f "$_sbclrc_path" ]; then
+		_mordu "$sbclrc_path already exists.  Not copying config."
+	else
+		_mordu "$sbclrc_path does not exist.  Copying over config."
+		sudo cp "${HOME}"/.config/yadm/config-files/sbclrc /etc
+		sudo chown root:root /etc/sbclrc
+	fi
+}
+
+# }}} </configure /etc/sbclrc>
+
+# {{{ <quicklisp install function>
+_quicklisp_install_function() {
+	sbcl --load ~/.local/opt/src/quicklisp.lisp \
+		--eval "(quicklisp-quickstart:install :path \"${HOME}/.local/opt/quicklisp/\")" \
+		--eval '(ql:quickload "clx")' \
+		--eval '(ql:quickload "cl-ppcre")' \
+		--eval '(ql:quickload "alexandria")' \
+		--eval '(quit)'
+}
+# }}} </quicklisp install function>
+
 # {{{ <download quicklisp>
 _download_quicklisp() {
 	_mordu "Downloading quicklisp."
@@ -129,20 +156,6 @@ _download_quicklisp() {
 		https://beta.quicklisp.org/quicklisp.lisp
 }
 # }}} </download quicklisp>
-
-# {{{ <run quicklisp install script>
-_run_quicklisp_install_script() {
-    _mordu "Running quicklisp install script."
-
-    sbcl --load ~/.local/opt/src/quicklisp.lisp --eval "(quicklisp-quickstart:install :path \"${HOME}/.local/opt/quicklisp/\")" --eval '(quit)'
-
-    # Load the installed Quicklisp and install additional packages
-    #sbcl --eval "(load \"${HOME}/.local/opt/quicklisp/setup.lisp\")" \
-    #     --eval '(quit)'
-
-    _mordu "Quicklisp install script finished processing."
-}
-# }}} </run quicklisp install script>
 
 # {{{ <install quicklisp>
 _install_quicklisp() {
@@ -164,52 +177,12 @@ _install_quicklisp() {
 	if [ $? -eq 1 ]; then
 	    # Install Quicklisp if it is not installed
 			_mordu "Quiclisp not installed yet.  Installing."
-	    #_run_quicklisp_install_script
+			_quicklisp_install_function
 	else
 	    _mordu "Quicklisp is already installed. No need to install."
 	fi
 }
 # }}} </install quicklisp>
-
-# {{{ <install quicklisp packages>
-_install_quicklisp_packages() {
-    _mordu "Install quicklisp packages."
-
-    sbcl --eval '(ql:quickload "clx")' \
-         --eval '(ql:quickload "cl-ppcre")' \
-         --eval '(ql:quickload "alexandria")' \
-         --eval '(quit)'
-
-    _mordu "Quicklisp packages installed."
-}
-# }}} </install quicklisp packages>
-
-# {{{ <configure /etc/sbclrc>
-_configure_etc_sbclrc() {
-	_sbclrc_path="/etc/sbclrc"
-	
-	# Check if /etc/sbclrc exists
-	if [ -f "$_sbclrc_path" ]; then
-		_mordu "$sbclrc_path already exists.  Not copying config."
-	else
-		_mordu "$sbclrc_path does not exist.  Copying over config."
-		sudo cp "${HOME}"/.config/yadm/config-files/sbclrc /etc
-		sudo chown root:root /etc/sbclrc
-	fi
-}
-
-# }}} </configure /etc/sbclrc>
-
-# {{{ <new install quicklisp>
-_new_install_quicklisp() {
-	sbcl --load ~/.local/opt/src/quicklisp.lisp \
-		--eval "(quicklisp-quickstart:install :path \"${HOME}/.local/opt/quicklisp/\")" \
-		--eval '(ql:quickload "clx")' \
-		--eval '(ql:quickload "cl-ppcre")' \
-		--eval '(ql:quickload "alexandria")' \
-		--eval '(quit)'
-}
-# }}} </new install quicklisp>
 
 # {{{ <main loop>
 _main() {
@@ -221,13 +194,11 @@ _main() {
 	_download_latest_sbcl
 	_extract_sbcl
 	_install_sbcl
+	_configure_etc_sbclrc
 
 	# Install Quicklisp
 	_download_quicklisp
-	_configure_etc_sbclrc
-	_new_install_quicklisp
-	#_install_quicklisp
-	#_install_quicklisp_packages
+	_install_quicklisp
 }
 _main
 # }}} </main loop>
