@@ -137,13 +137,13 @@ _configure_etc_sbclrc() {
 	local __sbclrc_path="/etc/sbclrc"
 	
 	# Check if /etc/sbclrc exists
-	if [ -f "$__sbclc_path" ]; then
-		_mordu "$__sbclc_path already exists.  Not copying config."
+	if [ -f "$__sbclrc_path" ]; then
+		_mordu "$__sbclrc_path already exists.  Not copying config."
 	else
-		_mordu "$__sbclc_path does not exist.  Copying over config."
-		sudo cp "${HOME}"/.config/yadm/config-files/sbclrc "$__sbclc_path"
-		sudo chown root:root "$__sbclc_path"
-		sudo chmod go+r "$__sbclc_path"
+		_mordu "$__sbclrc_path does not exist.  Copying over config."
+		sudo cp "${HOME}"/.config/yadm/config-files/sbclrc "$__sbclrc_path"
+		sudo chown root:root "$__sbclrc_path"
+		sudo chmod go+r "$__sbclrc_path"
 	fi
 }
 
@@ -187,7 +187,7 @@ _install_quicklisp() {
 	# Check the exit code of the previous command
 	if [ $? -eq 1 ]; then
 	    # Install Quicklisp if it is not installed
-			_mordu "Quiclisp not installed yet.  Installing."
+			_mordu "Quicklisp not installed yet.  Installing."
 			_quicklisp_install_function
 	else
 	    _mordu "Quicklisp is already installed. No need to install."
