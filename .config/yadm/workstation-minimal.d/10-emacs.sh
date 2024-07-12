@@ -112,6 +112,14 @@ _link_chemacs_to_config() {
 }
 # }}} </link chemacs to .config/emacs>
 
+# {{{ <tangle emacs config>
+_tangle_emacs_config() {
+	_mordu "Changing to directory ${HOME}/.config/chemacs/profiles/default."
+	cd "${HOME}/.config/chemacs/profiles/default" || exit
+	_mordu "Performing tangle by running retangle.sh."
+	bash retangle.sh
+}
+# }}} </tangle emacs config>
 # {{{ <run emacs to bootstrap>
 _run_emacs_to_bootstrap() {
 	_mordu "Bootstrapping emacs with an initial dry run."
@@ -127,6 +135,7 @@ _main() {
 	_clone_chemacs
 	_move_and_backup_old_configs
 	_link_chemacs_to_config
+	_tangle_emacs_config
 	_run_emacs_to_bootstrap
 }
 _main
