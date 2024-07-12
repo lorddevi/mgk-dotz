@@ -117,9 +117,10 @@ _tangle_emacs_config() {
 	_mordu "Changing to directory ${HOME}/.config/chemacs/profiles/default."
 	cd "${HOME}/.config/chemacs/profiles/default" || exit
 	_mordu "Performing tangle by running retangle.sh."
-	bash retangle.sh
+	bash re-tangle.sh
 }
 # }}} </tangle emacs config>
+
 # {{{ <run emacs to bootstrap>
 _run_emacs_to_bootstrap() {
 	_mordu "Bootstrapping emacs with an initial dry run."
