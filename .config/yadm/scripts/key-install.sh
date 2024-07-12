@@ -109,6 +109,7 @@ _check_for_xdg_gnupg() {
 # {{{ <decrypt and import>
 _decrypt_and_import() {
 	local __repo="git.mgk.one/ld/keys"
+	export GPG_TTY="$(tty)"
 
 	_mordu "Preforming decrypt and secret key import."
 	_mordu "You will be asked for a passphrase."
