@@ -29,6 +29,22 @@ _mordu_nl() {
 _mordu "Starting script."
 # }}} </mordu debug system>
 
+# {{{ <set dnf to us servers only>
+_set_dnf_to_us_servers_only() {
+	# Iterate over each *.repo file in /etc/yum.repos.d/
+	_mordu "Appending &country=US to the end of all metalink= entries."
+	for _repo_file in /etc/yum.repos.d/*.repo; do
+		# Use sudo to edit the file.
+		_mordu "Setting country to US for ${_repo_file}."
+		sudo sed -i -e '/^metalink=/ {
+		# Check if the line ends with &country=US, if not, append it.
+		/&country=US$/! s/$/\&country=US/
+	}' "$_repo_file"
+done
+}
+
+# }}} </set dnf to us servers only>
+
 # {{{ <define packages>
 _define_packages() {
 	_editors=(vim-enhanced)
@@ -37,7 +53,7 @@ _define_packages() {
 	_entertainment=(fortune-mod)
 	_net=(aria2 wget2 bind-utils NetworkManager-tui traceroute nmap netcat rsync)
 	_development=(git make autoconf automake patch bzip2 xz findutils \
-		python-devel git-crypt cmake)
+		python-devel git-crypt cmake libtool)
 	_system=(htop bpytop diskonaut chkconfig uu_shred pinentry)
 	_packages=("${_editors[@]}" "${_shell_utils[@]}" "${_entertainment[@]}" \
 		"${_development[@]}" "${_net[@]}" "${_system[@]}")
@@ -101,16 +117,17 @@ _install_pkg_groups() {
 # }}} </install pkg groups>
 
 # {{{ <main loop>
-_main() {
+#_main() {
 	# Install Fedora packages.
-	_define_packages
-	_install_pkgs "${_packages[@]}"
+	_set_dnf_to_us_servers_only
+	#_define_packages
+	#_install_pkgs "${_packages[@]}"
 
-	# Install Fedora package groups
-	_define_pkg_groups
-	_install_pkg_groups "${_pkg_groups[@]}"
-}
-_main
+	## Install Fedora package groups
+	#_define_pkg_groups
+	#_install_pkg_groups "${_pkg_groups[@]}"
+#}
+#_main
 # }}} </main loop>
 
 _mordu "Completed script."
