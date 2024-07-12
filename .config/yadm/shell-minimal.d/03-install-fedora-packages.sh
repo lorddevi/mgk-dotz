@@ -37,7 +37,7 @@ _define_packages() {
 	_entertainment=(fortune-mod)
 	_net=(aria2 wget2 bind-utils NetworkManager-tui traceroute nmap netcat rsync)
 	_development=(git make autoconf automake patch bzip2 xz findutils git-crypt)
-	_system=(htop bpytop diskonaut chkconfig uu_shred)
+	_system=(htop bpytop diskonaut chkconfig uu_shred pinentry)
 	_packages=("${_editors[@]}" "${_shell_utils[@]}" "${_entertainment[@]}" \
 		"${_development[@]}" "${_net[@]}" "${_system[@]}")
 }

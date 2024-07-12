@@ -2,6 +2,7 @@
 _location=".config/yadm/scripts/install-key.sh"
 export GHQ_ROOT="${HOME}/.local/opt/git"
 _ghq="${HOME}/.local/opt/go/bin/ghq"
+export GNUPGHOME="${HOME}/.config/gnupg"
 
 # {{{ <mordu debug system>
 _debug=y # Comment this out to disable debuging.
@@ -49,9 +50,37 @@ _clone_keys() {
 }
 # }}} </clone keys>
 
+# {{{ <install deps if needed>
+_install_deps_if_needed() {
+_install_pkgs() {
+	local __required_packages=(gnupg pinentry)
+
+	for __package in "${__required_packages[@]}" ; do
+		if [[ $(rpm -qi "${__package//\"/}") == "package ${__package//\"/} is not installed"  ]] ; then
+			_mordu "Not installed yet: ${__package}."
+			__not_installed_yet+=( "$__package" )
+		else
+			_mordu "Already installed: ${__package}."
+		fi
+	done
+	_mordu "Total not installed yet: ${__not_installed_yet[*]}"
+
+	if (( ${#__not_installed_yet[@]} )); then
+		sudo dnf -y install "${__not_installed_yet[@]}"
+	fi
+}
+}
+# }}} </install deps if needed>
+
+# {{{ <use ncurses pinentry>
+_use_ncurses_pinentry() {
+	echo "pinentry-program /usr/bin/pinentry-curses" | sudo tee /etc/gnupg/gpg-agent.conf
+}
+# }}} </use ncurses pinentry>
+
 # {{{ <check for home gnupg>
 _check_for_home_gnupg() {
-	if [ -d ${HOME}/.gnupg ]; then
+	if [ -d "${HOME}/.gnupg" ]; then
 		if [ -z "$(ls -A "${HOME}/.gnupg")" ]; then
 			_mordu "${HOME}/.gnpg exists and is empty.  Deleting."
 			rmdir "${HOME}/.gnupg"
@@ -88,6 +117,7 @@ _list_keys() {
 # {{{ <main loop>
 _main() {
 	_clone_keys
+	_install_deps_if_needed
 	_check_for_home_gnupg
 	_decrypt_and_import
 	_list_keys
