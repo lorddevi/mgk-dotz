@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-_location=".config/yadm/workstation-minimal.d/08-gsu.sh"
+_location=".config/yadm/workstation-minimal.d/09-gsu.sh"
 export GHQ_ROOT="${HOME}/.local/opt/git"
 _ghq="${HOME}/.local/opt/go/bin/ghq"
 

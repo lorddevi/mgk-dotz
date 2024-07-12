@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-_location=".config/yadm/workstation-minimal.d/06-stumpwm.sh"
+_location=".config/yadm/workstation-minimal.d/07-stumpwm.sh"
 export GHQ_ROOT="${HOME}/.local/opt/git"
 _ghq="${HOME}/.local/opt/go/bin/ghq"
 

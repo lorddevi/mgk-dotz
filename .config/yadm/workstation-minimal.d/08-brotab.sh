@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-_location=".config/yadm/workstation-minimal.d/07-brotab.sh"
+_location=".config/yadm/workstation-minimal.d/08-brotab.sh"
 
 # {{{ <mordu debug system>
 _debug=y # Comment this out to disable debuging.

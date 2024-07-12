@@ -52,7 +52,6 @@ _clone_keys() {
 
 # {{{ <install deps if needed>
 _install_deps_if_needed() {
-_install_pkgs() {
 	local __required_packages=(gnupg pinentry)
 
 	for __package in "${__required_packages[@]}" ; do
@@ -69,7 +68,6 @@ _install_pkgs() {
 		sudo dnf -y install "${__not_installed_yet[@]}"
 	fi
 }
-}
 # }}} </install deps if needed>
 
 # {{{ <use ncurses pinentry>
@@ -82,16 +80,31 @@ _use_ncurses_pinentry() {
 _check_for_home_gnupg() {
 	if [ -d "${HOME}/.gnupg" ]; then
 		if [ -z "$(ls -A "${HOME}/.gnupg")" ]; then
-			_mordu "${HOME}/.gnpg exists and is empty.  Deleting."
+			_mordu "${HOME}/.gnupg exists and is empty.  Deleting."
 			rmdir "${HOME}/.gnupg"
 		else
-			_mordu "${HOME}/.gnpg exists and is not empty."
+			_mordu "${HOME}/.gnupg exists and is not empty."
 		fi
 	else
-			_mordu "${HOME}/.gnpg does not exist."
+			_mordu "${HOME}/.gnupg does not exist."
 	fi
 }
 # }}} </check for home gnupg>
+
+# {{{ <check for xdg gnupg>
+_check_for_xdg_gnupg() {
+	if [ -d "${HOME}/.config/gnupg" ]; then
+		if [ -z "$(ls -A "${HOME}/.config/gnupg")" ]; then
+			_mordu "${HOME}/.config/gnupg exists and is empty."
+		else
+			_mordu "${HOME}/.config/gnupg exists and is not empty."
+		fi
+	else
+			_mordu "${HOME}/.config/gnupg does not exist.  Creating."
+			mkdir -p "${HOME}/.config/gnupg"
+	fi
+}
+# }}} </check for xdg gnupg>
 
 # {{{ <decrypt and import>
 _decrypt_and_import() {
@@ -119,6 +132,7 @@ _main() {
 	_clone_keys
 	_install_deps_if_needed
 	_check_for_home_gnupg
+	_check_for_xdg_gnupg
 	_decrypt_and_import
 	_list_keys
 }
