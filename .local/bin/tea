@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Read the token from an external file
+TOKEN=$(cat ${HOME}/.local/keys/tea.key)
+
+# Replace the placeholder with the actual token
+sed "s/TOKEN_PLACEHOLDER/${TOKEN}/" "${HOME}/.config/tea/config.yml.template" > "${HOME}/.config/tea/config.yml"
+
+sed -i "s/USER_PLACEHOLDER/${USER}/" "${HOME}/.config/tea/config.yml"
+
+# Run the tea command with the generated configuration
+"${HOME}/.local/opt/go/bin/tea" "$@"
+
+# Optionally, remove the generated config file after use
+rm "${HOME}/.config/tea/config.yml"
+

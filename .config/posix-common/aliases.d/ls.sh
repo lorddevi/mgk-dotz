@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-_location=".config/posix-common/aliases.d/ls-and-lsd.sh"
+_location=".config/posix-common/aliases.d/ls.sh"
 
 # Generally speaking, put items that are intended for INTERACTIVE
 # shells in here.  If it is a setting that might be needed by an piece
@@ -36,9 +36,9 @@ _mordu "Starting script."
 
 # {{{ === Aliases: 'ls' Related ===
 # 'ls' - Colorize if possible, and create shortcuts
-if command -v lsd > /dev/null 2>&1; then # Typically I have this on Linux.
-	_mordu "Found 'lsd', configuring aliases for it."
-	alias ls='lsd -F --color=auto --icon=auto --date relative --size short'
+if command -v exa > /dev/null 2>&1; then # Typically I have this on Linux.
+	_mordu "Found 'exa', configuring aliases for it."
+	alias ls='exa -F --color=auto --icons=auto --group-directories-first'
 	elif command -v colorls > /dev/null ; then # This is OpenBSD usually.
 		alias ls='colorls -FGh'
 	elif [ "$(uname)" = 'Linux' ]; then # If it is Linux we can assume gnu ls.
@@ -48,15 +48,15 @@ if command -v lsd > /dev/null 2>&1; then # Typically I have this on Linux.
 fi
 
 _mordu "Creating 'ls' related aliases."
-alias ll="exa -l"
-alias la="exa -A"
-alias lla="exa -lA"
+alias ll="ls -l"
+alias la="ls -A"
+alias lla="ls -lA"
 
 # 'lt' Tree basically, but for all files minus '.' and '..'.
-# Also with preference for 'lsd --tree' over 'tree -a'
-if command -v lsd > /dev/null ; then # Typically I have this on Linux.
-	_mordu "Creating tree related aliases using lsd'."
-	alias lt='lsd --tree'
+# Also with preference for 'exa --tree' over 'tree -a'
+if command -v exa > /dev/null ; then # Typically I have this on Linux.
+	_mordu "Creating tree related aliases using exa'."
+	alias lt='exa --tree'
 	alias lta='lt -A'
 elif command -v tree > /dev/null ; then
 	alias lt='tree'

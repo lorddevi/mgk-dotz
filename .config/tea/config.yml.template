@@ -1,0 +1,14 @@
+logins:
+- name: git.mgk.one
+  url: https://git.mgk.one
+  token: TOKEN_PLACEHOLDER
+  default: true
+  ssh_host: git.mgk.one
+  ssh_key: ~/.ssh/id_ed25519
+  insecure: false
+  user: USER_PLACEHOLDER
+  created: 1719711102
+preferences:
+  editor: false
+  flag_defaults:
+    remote: ""

@@ -133,6 +133,11 @@ export EDITOR VISUAL
 export FZF_DEFAULT_OPTS="--color=dark --border=rounded"
 # }}} === Shell Related ===
 
+# {{{ <gnupg>
+export GNUPGHOME="${HOME}/.config/gnupg"
+export GPG_TTY="$(tty)"
+# }}} </gnupg>
+
 # {{{ === Xorg Related Environment ===
 GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc"
 export GTK2_RC_FILES
