@@ -71,6 +71,21 @@ Add custom load paths and configuration directories.
   (push (locate-user-emacs-file "lisp") load-path)
 #+end_src
 
+** Set Paths For Things
+Add custom load paths and configuration directories.
+
+#+name: set-paths-for-things
+#+begin_src emacs-lisp
+  ;;;;;;;;;;;;;;;;
+  ;; set-paths-for-things
+  ;;;;;;;;;;;;;;;;
+  ;; Set the main emacs directory.
+  (setq user-emacs-directory "~/.config/chemacs/profiles/mgk/")
+
+  ;; Set the location for the .org-id-locations file.
+  (setq org-id-locations-file (expand-file-name ".org-id-locations" user-emacs-directory))
+#+end_src
+
 ** Hide Frame Until Loaded
 By default when Emacs is ran, it will load and pop up instantly, and
 then will begin loading plugins and themes etc.
@@ -3951,6 +3966,7 @@ name: tangle_early-init.el
 #+begin_src emacs-lisp :noweb yes :tangle ./early-init.el
   <<garbage-collection>>
   <<config-load-paths>>
+  <<set-paths-for-things>>
   <<hide-frame-until-loaded>>
   <<default-frame-settings>>
   <<native-comp-load-path>>
