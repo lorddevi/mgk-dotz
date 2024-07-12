@@ -112,10 +112,10 @@ _link_chemacs_to_config() {
 
 	# To avoid an annoying error message about org-id-locations not being found
 	# during tangle, we will just create this file here.  It werks. :P
-	if [ ! -f "${HOME}/.config/emacs/.org-id-locations" ]; then
-		_mordu "Could not find ${HOME}/.config/emacs/.org-id-locations file.  Creating."
-		touch "${HOME}/.config/emacs/.org-id-locations"
-	fi
+	#if [ ! -f "${HOME}/.config/emacs/.org-id-locations" ]; then
+	#	_mordu "Could not find ${HOME}/.config/emacs/.org-id-locations file.  Creating."
+	#	touch "${HOME}/.config/emacs/.org-id-locations"
+	#fi
 }
 # }}} </link chemacs to .config/emacs>
 
