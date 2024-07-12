@@ -39,8 +39,8 @@ _set_dnf_to_us_servers_only() {
 		sudo sed -i -e '/^metalink=/ {
 		# Check if the line ends with &country=US, if not, append it.
 		/&country=US$/! s/$/\&country=US/
-	}' "$_repo_file"
-done
+		}' "$_repo_file"
+	done
 }
 
 # }}} </set dnf to us servers only>
@@ -117,17 +117,17 @@ _install_pkg_groups() {
 # }}} </install pkg groups>
 
 # {{{ <main loop>
-#_main() {
+_main() {
 	# Install Fedora packages.
 	_set_dnf_to_us_servers_only
-	#_define_packages
-	#_install_pkgs "${_packages[@]}"
+	_define_packages
+	_install_pkgs "${_packages[@]}"
 
-	## Install Fedora package groups
-	#_define_pkg_groups
-	#_install_pkg_groups "${_pkg_groups[@]}"
-#}
-#_main
+	# Install Fedora package groups
+	_define_pkg_groups
+	_install_pkg_groups "${_pkg_groups[@]}"
+}
+_main
 # }}} </main loop>
 
 _mordu "Completed script."
