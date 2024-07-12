@@ -3834,10 +3834,6 @@ like.
 #+name: vterm
 #+begin_src emacs-lisp :noweb yes
   (setup (:straight vterm multi-vterm)
-    (:straight
-     (vterm :type git :host github :repo "akermu/emacs-libvterm"
-            :files ("CMakeLists.txt" "Makefile" "src/*.c" "src/*.h" "vterm.el")
-            :build (:not compile )))
     (require 'vterm)
     (require 'multi-vterm)
     ;; Default to insert state.
