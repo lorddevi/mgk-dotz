@@ -75,6 +75,45 @@
 ;;  (1 t t :restore "emacs-editing-dump" :title "...xdvi")
 ;;  (0 t t :create "emacs-dump" :class "Emacs"))
 
+;; The below function leverages run-or-raise-prefer-group to either launch
+;; Icecat, if it is not already running, or else focus the Icecat window, and
+;; successive calls will cycle through multiple Icecat windows/windows if more
+;; than one Icecat window exists. This is extremely useful as it’s much less
+;; cognitively-tasking than figuring out which window number Icecat currently
+;; is associated with.
+(defun run-or-raise-prefer-group (cmd win-cls)
+  "If there are windows in the same class, cycle in those. Otherwise call
+run-or-raise with group search t."
+  (let ((windows (group-windows (current-group))))
+    (if (member win-cls (mapcar #'window-class windows) :test #'string-equal)
+	(run-or-raise cmd `(:class ,win-cls) nil T)
+	(run-or-raise cmd `(:class ,win-cls) T T))))
+
+;;(defcommand run-or-raise-emacsclient () ()
+;;		(run-or-raise-prefer-group "emacs" "Emacs"))
+(defcommand run-or-raise-emacs () ()
+		(run-or-raise-prefer-group "emacs" "Emacs"))
+
+;;(defcommand decide-on-emacsclient () ()
+;; (if (equal (run-shell-command "pgrep \"emacsclient\"" t) "")
+;;     (run-shell-command "emacsclient -c")
+;;     (run-or-raise-emacsclient)))
+;;
+;;(define-key *root-map* (kbd "s-e") "decide-on-emacsclient")
+;;(define-key *root-map* (kbd "C-e") "decide-on-emacsclient")
+;;(define-key *root-map* (kbd "e") "decide-on-emacsclient")
+
+(define-key *root-map* (kbd "e") "run-or-raise-emacs")
+
+;;(defcommand emacsclient-launch () ()
+;;  (run-shell-command "emacsclient -c"))
+;;
+;;(define-key *root-map* (kbd "s-E") "emacsclient-launch")
+;;(define-key *root-map* (kbd "C-E") "emacsclient-launch")
+;;(define-key *root-map* (kbd "E") "emacsclient-launch")
+
+
 ;; Autostart apps
 (run-shell-command "picom")
 (run-shell-command "reset-kb")
+;;(run-shell-command "emacs --daemon")

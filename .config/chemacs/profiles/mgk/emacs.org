@@ -2669,8 +2669,8 @@ fonts and their attributes as determined by any context you care to.
   ;; Set fixed pitch face.
   (set-face-attribute 'fixed-pitch nil
                       ;;:font "TerminessTTF Nerd Font Mono"
-                      ;;:font "JetBrainsMono Nerd Font Mono"
-                      :font "Iosevka Comfy"
+                      :font "JetBrainsMono Nerd Font"
+                      ;;:font "Iosevka Comfy"
                       :width 'regular
                       :weight 'regular
                       :height 1.0)

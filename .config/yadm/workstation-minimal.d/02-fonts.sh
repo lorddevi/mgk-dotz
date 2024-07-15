@@ -74,6 +74,30 @@ _install_iosevka_comfy() {
 }
 # }}} </install iosevka comfy>
 
+# {{{ <install lexend>
+_install_lexend() {
+	local __repo="git.mgk.one/fonts/mgk.lexend"
+
+	_mordu "Checking for ${__repo}.."
+	if $_ghq list | grep -q "$__repo" ; then
+		_mordu "Found it.  Updating."
+		$_ghq get -u "$__repo"
+	else
+		_mordu "Not Found.  Installing."
+		$_ghq get --shallow "$__repo" \
+		|| $_ghq get --shallow "$__repo" \
+		|| $_ghq get --shallow "$__repo" \
+		|| _mordu "Failed to download ${__repo} 3 times."
+	fi
+	
+	_mordu "Linking font directories from git to share."
+	if [ ! -d "${HOME}/.local/share/fonts/lexend" ]; then
+		ln -sr "${GHQ_ROOT}/${__repo}/fonts" \
+			"${HOME}/.local/share/fonts/lexend"
+	fi
+}
+# }}} </install lexend>
+
 # {{{ <install powerlevel10k meslo font>
 _install_meslo() {
 	local __repo="git.mgk.one/zsh/romkatv.powerlevel10k-media"
@@ -120,6 +144,7 @@ _regen_fonts() {
 _main() {
 	_make_font_dir_if_needed
 	_install_iosevka_comfy
+	_install_lexend
 	_install_meslo
 	_regen_fonts
 }

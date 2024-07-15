@@ -52,7 +52,7 @@ _define_packages() {
 		kitty-terminfo eza fd-find fzf zoxide)
 	_entertainment=(fortune-mod)
 	_net=(aria2 wget2 bind-utils NetworkManager-tui traceroute nmap netcat rsync)
-	_development=(git make autoconf automake patch bzip2 xz findutils \
+	_development=(git git-lfs make autoconf automake patch bzip2 xz findutils \
 		python-devel git-crypt cmake libtool)
 	_system=(htop bpytop diskonaut chkconfig uu_shred pinentry)
 	_packages=("${_editors[@]}" "${_shell_utils[@]}" "${_entertainment[@]}" \
@@ -119,7 +119,7 @@ _install_pkg_groups() {
 # {{{ <main loop>
 _main() {
 	# Install Fedora packages.
-	_set_dnf_to_us_servers_only
+	#_set_dnf_to_us_servers_only
 	_define_packages
 	_install_pkgs "${_packages[@]}"
 
