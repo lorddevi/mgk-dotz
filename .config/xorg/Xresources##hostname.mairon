@@ -1,0 +1,11 @@
+! ~/.config/xorg/Xresources.mairon
+! Author: Lord_Devi
+! Description: This is an Xresources file for Mairon.
+Xcursor.size: 64 
+Xft.dpi: 192
+!Xft.dpi: 96
+
+!Emacs.font: JetBrainsMono Nerd Font-12
+
+! Include common settings
+#include "$HOME/.config/xorg/Xresources.common"

@@ -1,0 +1,12 @@
+! ~/.config/xorg/Xresources.baraddur
+! Author: Lord_Devi
+! Description: This is an Xresources file for Barad-dur.
+
+Xcursor.size: 64
+!Xft.dpi: 192
+Xft.dpi: 96
+
+Emacs.font: JetBrainsMono Nerd Font-16
+
+! Color Theme: This gets used by terminals like xterm and urxvt.
+#include ".config/xorg/Xresources.common"

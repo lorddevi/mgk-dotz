@@ -1,0 +1,11 @@
+! ~/.config/xorg/Xresources.xenophon
+! Author: Lord_Devi
+! Description: This is an Xresources file for Xenophon.
+Xcursor.size: 64
+!Xft.dpi: 192
+Xft.dpi: 96
+
+Emacs.font: JetBrainsMono Nerd Font-9
+
+! Include common settings
+#include ".config/xorg/Xresources.common"

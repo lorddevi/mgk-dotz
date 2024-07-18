@@ -1,0 +1,25 @@
+! ~/.config/xorg/Xresources
+! Author: Lord_Devi
+! Description: This is the common Xresources settings file.
+
+! Add some font config defaults for applications that dont support
+! the Fontconfig server.
+Xft.hinting: 1
+Xft.hintstyle: hintfull
+Xft.antialias: 1
+Xft.rgba: rgb
+
+! Color Theme: This gets used by terminals like xterm and urxvt.
+#include "theme.xrdb"
+
+! Escape sequence adjustment for adding custom keybindings.
+!XTerm*metaSendsEscape: true
+!XTerm*eightBitInput:   false
+!
+!! Keybindings for tmux/vim pane shifting.
+!XTerm*Translations: #override \
+!	Ctrl ~Meta Shift <Key>h   :string("\033[104;5u")	\n\
+!	Ctrl ~Meta Shift <Key>l   :string("\033[108;5u")	\n\
+!	Ctrl ~Meta Shift <Key>j   :string("\033[106;5u")	\n\
+!	Ctrl ~Meta Shift <Key>k   :string("\033[107;5u")	\n\
+!	Ctrl ~Meta Shift <Key>\   :string("\033[92;5u")

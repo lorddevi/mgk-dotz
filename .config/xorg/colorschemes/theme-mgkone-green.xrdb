@@ -1,0 +1,42 @@
+! ~/.config/xorg/theme-mgkone-green.xrdb
+! Author: Lord_Devi
+! Description: My first attempt at a custom color theme. 
+
+! special
+*foreground:   #00ba67
+*background:   #141a19
+*cursorColor:  #ac0303
+*selection_foreground: #0e130e
+*selection_background: #2abd89
+
+! black
+*color0:       #30352e
+*color8:       #5d675a
+
+! red
+*color1:       #ac0303
+*color9:       #fb4444
+
+! green
+*color2:       #077506
+*color10:      #00bb00
+
+! yellow
+*color3:       #b0a30e
+*color11:      #def112
+
+! blue
+*color4:       #1763be
+*color12:      #129ae7
+
+! magenta
+*color5:       #946c9e
+*color13:      #dd73fb
+
+! cyan
+*color6:       #06989a
+*color14:      #34e2e2
+
+! white
+*color7:       #1f8f67
+*color15:      #2abd89

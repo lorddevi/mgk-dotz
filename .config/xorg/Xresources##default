@@ -1,0 +1,11 @@
+! ~/.config/xorg/Xresources##default
+! Author: Lord_Devi
+! Description: This is the defualt Xresources.
+
+Xcursor.size: 64
+Xft.dpi: 96
+
+Emacs.font: JetBrainsMono Nerd Font-16
+
+! Color Theme: This gets used by terminals like xterm and urxvt.
+#include ".config/xorg/Xresources.common"
