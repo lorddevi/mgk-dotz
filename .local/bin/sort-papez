@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+
+# Configuration
+CONFIG_FILE="$HOME/.config/mgk-bg/mgk-bg.conf"
+SOURCE_DIR="$HOME/pix/papez"
+TALL_DIR="$HOME/.local/share/mgk-bg/tall"
+WIDE_DIR="$HOME/.local/share/mgk-bg/wide"
+
+# Create directories if they don't exist
+mkdir -p "$TALL_DIR" "$WIDE_DIR"
+
+# Function to read the config file
+read_config() {
+    if [[ -f "$CONFIG_FILE" ]]; then
+        source "$CONFIG_FILE"
+    else
+        echo "Config file not found: $CONFIG_FILE"
+        exit 1
+    fi
+}
+
+# Function to get the active theme
+get_theme() {
+    local theme=""
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            --theme)
+                theme="$2"
+                shift
+                ;;
+            *)
+                ;;
+        esac
+        shift
+    done
+
+    if [[ -z "$theme" ]]; then
+        theme=$theme_config
+    fi
+
+    echo "$theme"
+}
+
+# Function to clear existing links
+clear_links() {
+    rm -f "$TALL_DIR"/*
+    rm -f "$WIDE_DIR"/*
+}
+
+# Spinner function
+spinner() {
+    local pid=$!
+    local delay=0.1
+    local spinstr='|/-\'
+    while [ "$(ps a | awk '{print $1}' | grep "$pid")" ]; do
+        local temp=${spinstr#?}
+        printf " [%c]  " "$spinstr"
+        spinstr=$temp${spinstr%"$temp"}
+        sleep $delay
+        printf "\b\b\b\b\b\b"
+    done
+    printf "    \b\b\b\b"
+}
+
+# Function to link images based on their dimensions
+link_images() {
+    local theme=$1
+    local directories=("${!2}")
+    local total_images=0
+
+    # Calculate the total number of images to process
+    for dir in "${directories[@]}"; do
+        total_images=$((total_images + $(find "$SOURCE_DIR/$dir" -type f | wc -l)))
+    done
+
+    echo "Total images to process: $total_images"
+
+    local processed_images=0
+
+    for dir in "${directories[@]}"; do
+        for img in "$SOURCE_DIR/$dir"/*; do
+            if [[ -f "$img" ]]; then
+                dimensions=$(identify -format "%wx%h" "$img" 2>/dev/null)
+                if [[ -n "$dimensions" ]]; then
+                    width=${dimensions%x*}
+                    height=${dimensions#*x}
+
+                    if (( height > width )); then
+                        ln -sf "$img" "$TALL_DIR"
+                    elif (( width > height )); then
+                        ln -sf "$img" "$WIDE_DIR"
+                    else
+                        ln -sf "$img" "$TALL_DIR"
+                        ln -sf "$img" "$WIDE_DIR"
+                    fi
+                    processed_images=$((processed_images + 1))
+                    printf "\rProcessing images... %d/%d" "$processed_images" "$total_images"
+                fi
+            fi
+        done
+    done
+    echo -e "\nImage processing complete."
+}
+
+# Main script execution
+read_config
+theme=$(get_theme "$@")
+
+echo "Selected theme: $theme"
+
+# Clear existing links
+echo "Clearing existing links..."
+clear_links
+
+case "$theme" in
+    sfw)
+        directories=("${sfw_dirs[@]}")
+        ;;
+    nsfw)
+        directories=("${nsfw_dirs[@]}")
+        ;;
+    *)
+        echo "Unknown theme: $theme"
+        exit 1
+        ;;
+esac
+
+# Link images with a spinner and progress indicator
+link_images "$theme" directories[@] & spinner
+
+echo "Images sorted for theme: $theme"
+

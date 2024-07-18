@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+
+# Set DEBUG variable
+# Uncomment the following line to enable debug output
+# DEBUG=y
+
+# Function to print debug information
+debug() {
+    if [ ! -z "$DEBUG" ]; then
+        echo "$@"
+    fi
+}
+
+# Variables
+display_info=($(xrandr --listactivemonitors | grep x | awk '{print $1 ","  $3 ","  $4}' | sed s/:// | sed 's|/[0-9]\+x|x|' | sed 's|/[^,]*,|,|'))
+monitorCount=${#display_info[@]}
+
+# Directories for wallpapers
+wide_dir="$HOME/.local/share/mgk-bg/wide"
+tall_dir="$HOME/.local/share/mgk-bg/tall"
+
+# Function to set background for each monitor
+setmonitors_bg() {
+    if [ ! -d "$wide_dir" ] || [ -z "$(ls -A $wide_dir)" ]; then
+        echo "Wide directory $wide_dir does not exist or is empty."
+        exit 1
+    fi
+    
+    if [ ! -d "$tall_dir" ] || [ -z "$(ls -A $tall_dir)" ]; then
+        echo "Tall directory $tall_dir does not exist or is empty."
+        exit 1
+    fi
+    
+    for (( count=0; count<monitorCount; count++ )); do
+        # Extract head number, resolution, and display identifier
+        head_number=$(echo "${display_info[count]}" | cut -d',' -f1)
+        resolution=$(echo "${display_info[count]}" | cut -d',' -f2)
+        display_id=$(echo "${display_info[count]}" | cut -d',' -f3)
+        width=$(echo $resolution | cut -d'x' -f1)
+        height=$(echo $resolution | cut -d'x' -f2)
+        
+        # Debugging: print width and height
+        debug "Debug: Display $head_number - $display_id has resolution $resolution (Width: $width, Height: $height)"
+        
+        # Determine the directory based on display orientation
+        if [ $width -gt $height ]; then
+            image_dir=$wide_dir
+            orientation="wide"
+        else
+            image_dir=$tall_dir
+            orientation="tall"
+        fi
+        
+        # Echo the detected display and resolution for verification
+        debug "Display $head_number: $display_id with resolution $resolution (Width: $width, Height: $height)"
+        debug "Using directory: $image_dir for $orientation display"
+        
+        # Select a random background file, follow symbolic links
+        bg=$(find -L "$image_dir" -type f | shuf -n 1)
+        if [ -z "$bg" ]; then
+            echo "No background file found in $image_dir."
+            exit 1
+        fi
+        
+        # Set the wallpaper using nitrogen and suppress errors
+        debug "Setting background for $display_id (head=$head_number): $bg"
+        nitrogen "$bg" --set-zoom --head=$head_number 2>/dev/null
+    done
+}
+
+# Run the function to set wallpapers
+setmonitors_bg
+

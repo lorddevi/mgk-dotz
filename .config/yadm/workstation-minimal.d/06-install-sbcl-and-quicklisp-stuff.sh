@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 _location=".config/yadm/shell-extras.d/06-install-sbcl-and-quicklisp-stuff.sh"
+export GHQ_ROOT="${HOME}/.local/opt/git"
+_ghq="${HOME}/.local/opt/go/bin/ghq"
 
 # {{{ <mordu debug system>
 _debug=y # Comment this out to disable debuging.
@@ -156,6 +158,10 @@ _quicklisp_install_function() {
 		--eval '(ql:quickload "clx")' \
 		--eval '(ql:quickload "cl-ppcre")' \
 		--eval '(ql:quickload "alexandria")' \
+		--eval '(ql:quickload "xembed")' \
+		--eval '(ql:quickload "swank")' \
+		--eval '(ql:quickload "quicklisp-slime-hel")' \
+		--eval '(ql:quickload "zpng")' \
 		--eval '(quit)'
 }
 # }}} </quicklisp install function>
@@ -197,6 +203,33 @@ _install_quicklisp() {
 }
 # }}} </install quicklisp>
 
+# {{{ <clone and make install clx-truetype>
+_install_clx-truetype() {
+	local __repo="git.mgk.one/common-lisp/goose121.clx-truetype"
+
+	if $_ghq list | grep -q "$__repo" ; then
+		_mordu "${__repo} already cloned.  Updating."
+		$_ghq get -u "$__repo"
+	else
+		_mordu "Cloning ${__repo}."
+		$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} three times."
+	fi
+
+	_mordu "Linking clx-truetype."
+	ln -s "${GHQ_ROOT}/${__repo}" \
+		"${HOME}/.local/opt/quicklisp/local-projects/clx-truetype"
+
+	#ln -s /home/ld/.local/opt/git/git.mgk.one/common-lisp/goose121.clx-truetype /home/ld/.local/opt/quicklisp/local-projects/clx-truetype
+
+	sbcl --eval '(ql:quickload :clx-truetype)' \
+		--eval '(xft:cache-fonts)' \
+		--eval '(quit)'
+}
+# }}} </clone and make install clx-truetype>
+
 # {{{ <main loop>
 _main() {
 	# Prep install area.
@@ -212,6 +245,7 @@ _main() {
 	# Install Quicklisp
 	_download_quicklisp
 	_install_quicklisp
+	_install_clx-truetype
 }
 _main
 # }}} </main loop>

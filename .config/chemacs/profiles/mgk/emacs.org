@@ -2661,7 +2661,8 @@ fonts and their attributes as determined by any context you care to.
   (set-face-attribute 'default nil
                       ;;:font "TerminessTTF Nerd Font Mono"
                       ;;:font "JetBrainsMono Nerd Font Mono"
-                      :font "Iosevka Comfy"
+                      ;;:font "Iosevka Comfy"
+                      :font "Lexend Nerd Font"
                       :width 'regular
                       :weight 'regular
                       :height 140)
@@ -2677,9 +2678,10 @@ fonts and their attributes as determined by any context you care to.
 
   ;; Set variable pitch face.
   (set-face-attribute 'variable-pitch nil
-                      :font "Iosevka Comfy Duo"
+                      ;;:font "Iosevka Comfy Duo"
                       ;;:font "Iosevka Comfy"
                       ;;:font "TerminessTTF Nerd Font"
+                      :font "Lexend Nerd Font"
                       :width 'regular
                       :weight 'regular
                       :height 1.0)
@@ -3122,9 +3124,9 @@ please.
   (setup (:straight org-superstar)
     (:hook-into org-mode)
     (:option
-     org-superstar-headline-bullets-list
+     ;;org-superstar-headline-bullets-list
      ;;'(127761 127762 127763 127764 127765 127766 127767 127768) ;; Phases of the moon
-     '(127765 127766 127767 127768 127761 127762 127763 127764) ;; Phases of the moon
+     ;;'(127765 127766 127767 127768 127761 127762 127763 127764) ;; Phases of the moon
      ;;'(19904 19937 19958 19954 19964 19932 19939 19935) ;; I-Ching
      ;;'(128608 128609 128610 128611 128612 128613 128614 128615) ;; Vines
      ;;'(128592 128593 128594 128595 128596 128597 128598 128599) ;; Leafs
@@ -3957,6 +3959,55 @@ Of course I have to find a way to play muds with Emacs too.
                                              (goto-address-mode t))))          ;; ... clickable links
 #+end_src
 
+** Slime / Swank / StumpWM
+This is for interacting with StumpWM.
+
+#+name: slime-swank-stumpwm
+#+begin_src emacs-lisp
+  ;;(load (expand-file-name "~/.local/opt/quicklisp/slime-helper.el"))
+  ;;  ;; Replace "sbcl" with the path to your implementation
+  ;;  (setq inferior-lisp-program "/usr/local/bin/sbcl")
+
+  (load (expand-file-name "~/.local/opt/quicklisp/slime-helper.el"))
+  ;; Replace "sbcl" with the path to your implementation
+  (setq inferior-lisp-program "sbcl")
+
+  ;; In my case /path/to/quicklisp is ~/quicklisp
+;;  (defvar quicklisp-path "~/.local/opt/quicklisp")
+;;  ;;
+;;  ;; Load slime-helper, this sets up various autoloads:
+;;  ;;
+;;  (load (concat quicklisp-path "/slime-helper"))
+;;  ;;
+;;  ;; Set up slime with whatever modules you decide to use:
+;;  ;;
+;;  (slime-setup '(slime-fancy slime-mrepl slime-banner slime-tramp
+;;  			   slime-xref-browser slime-highlight-edits
+;;  			   slime-sprof))
+;;  ;;
+;;  ;; Decide where to put a slime scratch file, if you want one, and set
+;;  ;; it up with:
+;;  ;;
+;;  (setf slime-scratch-file "~/.local/opt/quicklisp/.slime-scratch.lisp")
+;;  ;;
+;;  ;; Unfortunately there is no hook for the slime-scratch mode so if you
+;;  ;; want to automatically enable/disable various minor modes in the
+;;  ;; slime scratch buffer you must do something like:
+;;  ;;
+;;  (defadvice slime-scratch
+;;      (after slime-scratch-adjust-modes () activate compile)
+;;    (turn-some-mode-off)
+;;    (turn-some-other-mode-on))
+#+end_src
+
+** Emacs Client / Server
+Without this, emacs can take a while to start.  We definitely want this.
+
+#+name: server-start
+#+begin_src emacs-lisp
+(server-start)
+#+end_src
+
 * Tangle The Emacs Config
 Here is the central tangle.  I organize all the tangles together here
 for easy load order control and visualization.
@@ -4109,6 +4160,7 @@ name: tangle_early-init.el
   <<undo-tree>>
   <<vagrant-tramp>>
   <<magit>>
+  <<slime-swank-stumpwm>>
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Terminals
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -4121,6 +4173,10 @@ name: tangle_early-init.el
   ;; Usefull Functions
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   <<insert-zero-width-space>>
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Emacs Client / Server
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  <<server-start>>
 #+end_src
 
 #+RESULTS: tangle_init.el

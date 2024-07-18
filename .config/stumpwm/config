@@ -5,6 +5,20 @@
 
 (in-package :stumpwm)
 
+(ql:quickload :clx-truetype)
+(load-module "ttf-fonts")
+
+(setq clx-truetype::*font-dirs*
+      (append (list (namestring (merge-pathnames ".local/share/fonts" (user-homedir-pathname))))
+	      clx-truetype::*font-dirs*))
+
+(xft:cache-fonts)
+(set-font (make-instance 'xft:font
+                          :family "Lexend Nerd Font"
+                          :subfamily "Regular"
+                          :size 32
+                          :antialias t))
+
 ;; change the prefix key to something else
 ;;(set-prefix-key (kbd "C-z"))
 
@@ -38,7 +52,8 @@
 ;;(define-key *root-map* (kbd "i") "imdb")
 
 ;; Message window font
-(set-font "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15")
+;;(set-font "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15")
+;;(set-font "-*-lucida-*-*-*-*-34-*-*-*-*-*-*-*")
 
 ;;; Define window placement policy...
 
@@ -89,31 +104,53 @@ run-or-raise with group search t."
 	(run-or-raise cmd `(:class ,win-cls) nil T)
 	(run-or-raise cmd `(:class ,win-cls) T T))))
 
-;;(defcommand run-or-raise-emacsclient () ()
-;;		(run-or-raise-prefer-group "emacs" "Emacs"))
-(defcommand run-or-raise-emacs () ()
-		(run-or-raise-prefer-group "emacs" "Emacs"))
+(defcommand run-or-raise-emacsclient () ()
+  (run-or-raise-prefer-group "emacs" "Emacs"))
 
-;;(defcommand decide-on-emacsclient () ()
-;; (if (equal (run-shell-command "pgrep \"emacsclient\"" t) "")
-;;     (run-shell-command "emacsclient -c")
-;;     (run-or-raise-emacsclient)))
-;;
+(defcommand decide-on-emacsclient () ()
+ (if (equal (run-shell-command "pgrep \"emacsclient\"" t) "")
+     (run-shell-command "emacsclient -c")
+     (run-or-raise-emacsclient)))
+
 ;;(define-key *root-map* (kbd "s-e") "decide-on-emacsclient")
 ;;(define-key *root-map* (kbd "C-e") "decide-on-emacsclient")
-;;(define-key *root-map* (kbd "e") "decide-on-emacsclient")
+(define-key *root-map* (kbd "e") "decide-on-emacsclient")
 
-(define-key *root-map* (kbd "e") "run-or-raise-emacs")
+;;(define-key *root-map* (kbd "e") "run-or-raise-emacs")
 
-;;(defcommand emacsclient-launch () ()
-;;  (run-shell-command "emacsclient -c"))
+(defcommand emacsclient-launch () ()
+  (run-shell-command "emacsclient -c"))
 ;;
 ;;(define-key *root-map* (kbd "s-E") "emacsclient-launch")
 ;;(define-key *root-map* (kbd "C-E") "emacsclient-launch")
-;;(define-key *root-map* (kbd "E") "emacsclient-launch")
+(define-key *root-map* (kbd "E") "emacsclient-launch")
+
+;; Slime
+;; This is how we interact with StumpWM using emacs.
+;; Load swank.
+;; *prefix-key* ; swank will kick this off
+;;(load "/path/to/slime/swank-loader.lisp")
+;;(swank-loader:init)
 
 
-;; Autostart apps
+;;(ql:quickload :swank)
+;;(defcommand swank () ()
+;;    (swank:create-server :port 4005
+;;                       :style swank:*communication-style*
+;;                       :dont-close t)
+;;  (echo-string (current-screen) 
+;;	       "Starting swank. M-x slime-connect RET RET, then (in-package stumpwm)."))
+;;(swank)
+;;
+;;;; Autostart apps
 (run-shell-command "picom")
 (run-shell-command "reset-kb")
-;;(run-shell-command "emacs --daemon")
+(run-shell-command "emacs --daemon")
+
+;; Wallpaper stuff
+;; Function to run the background setting script
+(defun run-bg-script ()
+  (run-shell-command "~/.local/bin/mgk-bg"))
+
+;; Set up a timer to call run-bg-script every 10 seconds
+(run-with-timer 10 10 'run-bg-script)

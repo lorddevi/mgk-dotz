@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-_location=".config/yadm/workstation-minimal.d/01-install-fedora-packages.sh"
 
 # {{{ <mordu debug system>
 _debug=y # Comment this out to disable debuging.
@@ -32,7 +31,7 @@ _mordu "Starting script."
 # {{{ <define packages>
 _define_packages() {
 	_packages=(blueman firefox ffmpeg vlc-plugin-pipewire vlc-plugin-ffmpeg \
-		feh mpv awesome kitty nitrogen)
+		feh mpv awesome kitty nitrogen xscreensaver)
 	}
 # }}} </define packages>
 
