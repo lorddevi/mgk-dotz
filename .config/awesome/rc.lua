@@ -59,6 +59,29 @@ end
 
 -- }}}
 
+-- {{{ Autostart windowless processes
+
+-- This function will run once every time Awesome is started
+local function run_once(cmd_arr)
+    for _, cmd in ipairs(cmd_arr) do
+        awful.spawn.with_shell(string.format("pgrep -u $USER -fx '%s' > /dev/null || (%s)", cmd, cmd))
+    end
+end
+
+run_once({ "urxvtd", "unclutter -root" }) -- comma-separated entries
+
+-- This function implements the XDG autostart specification
+--[[
+awful.spawn.with_shell(
+    'if (xrdb -query | grep -q "^awesome\\.started:\\s*true$"); then exit; fi;' ..
+    'xrdb -merge <<< "awesome.started:true";' ..
+    -- list each of your autostart commands, followed by ; inside single quotes, followed by ..
+    'dex --environment Awesome --autostart --search-paths "$XDG_CONFIG_DIRS/autostart:$XDG_CONFIG_HOME/autostart"' -- https://github.com/jceb/dex
+)
+--]]
+
+-- }}}
+
 -- {{{ Variable definitions
 
 local themes = {
@@ -71,45 +94,43 @@ local themes = {
     "powerarrow-dark", -- 7
     "rainbow",         -- 8
     "steamburn",       -- 9
-    "vertex",          -- 10
-    "mgk-h4x0r"        -- 11
+    "vertex"           -- 10
 }
 
-local chosen_theme = themes[11]
+local chosen_theme = themes[5]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
-local terminal     = "kitty"
+local terminal     = "urxvtc"
 local vi_focus     = false -- vi-like client focus https://github.com/lcpz/awesome-copycats/issues/275
 local cycle_prev   = true  -- cycle with only the previously focused client or all https://github.com/lcpz/awesome-copycats/issues/274
---local editor       = os.getenv("EDITOR") or "emacs"
-local editor       = "emacs"
-local browser      = "firefox"
+local editor       = os.getenv("EDITOR") or "nvim"
+local browser      = "librewolf"
 
 awful.util.terminal = terminal
 awful.util.tagnames = { "1", "2", "3", "4", "5" }
 awful.layout.layouts = {
+    awful.layout.suit.floating,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
-    awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
-    awful.layout.suit.corner.ne,
-    awful.layout.suit.corner.sw,
-    awful.layout.suit.corner.se,
-    lain.layout.cascade,
-    lain.layout.cascade.tile,
-    lain.layout.centerwork,
-    lain.layout.centerwork.horizontal,
-    lain.layout.termfair,
-    lain.layout.termfair.center,
-    awful.layout.suit.floating
+    --awful.layout.suit.fair,
+    --awful.layout.suit.fair.horizontal,
+    --awful.layout.suit.spiral,
+    --awful.layout.suit.spiral.dwindle,
+    --awful.layout.suit.max,
+    --awful.layout.suit.max.fullscreen,
+    --awful.layout.suit.magnifier,
+    --awful.layout.suit.corner.nw,
+    --awful.layout.suit.corner.ne,
+    --awful.layout.suit.corner.sw,
+    --awful.layout.suit.corner.se,
+    --lain.layout.cascade,
+    --lain.layout.cascade.tile,
+    --lain.layout.centerwork,
+    --lain.layout.centerwork.horizontal,
+    --lain.layout.termfair,
+    --lain.layout.termfair.center
 }
 
 lain.layout.termfair.nmaster           = 3
@@ -202,17 +223,17 @@ end)
 -- {{{ Screen
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
---screen.connect_signal("property::geometry", function(s)
---    -- Wallpaper
---    if beautiful.wallpaper then
---        local wallpaper = beautiful.wallpaper
---        -- If wallpaper is a function, call it with the screen
---        if type(wallpaper) == "function" then
---            wallpaper = wallpaper(s)
---        end
---        gears.wallpaper.maximized(wallpaper, s, true)
---    end
---end)
+screen.connect_signal("property::geometry", function(s)
+    -- Wallpaper
+    if beautiful.wallpaper then
+        local wallpaper = beautiful.wallpaper
+        -- If wallpaper is a function, call it with the screen
+        if type(wallpaper) == "function" then
+            wallpaper = wallpaper(s)
+        end
+        gears.wallpaper.maximized(wallpaper, s, true)
+    end
+end)
 
 -- No borders when rearranging only 1 non-floating or maximized client
 screen.connect_signal("arrange", function (s)
@@ -249,8 +270,8 @@ globalkeys = mytable.join(
               {description = "destroy all notifications", group = "hotkeys"}),
     -- Take a screenshot
     -- https://github.com/lcpz/dots/blob/master/bin/screenshot
-    --awful.key({ altkey }, "p", function() os.execute("screenshot") end,
-    --          {description = "take a screenshot", group = "hotkeys"}),
+    awful.key({ altkey }, "p", function() os.execute("screenshot") end,
+              {description = "take a screenshot", group = "hotkeys"}),
 
     -- X screen locker
     awful.key({ altkey, "Control" }, "l", function () os.execute(scrlocker) end,
@@ -275,18 +296,18 @@ globalkeys = mytable.join(
               {description = "view  previous nonempty", group = "tag"}),
 
     -- Default client focus
-    --awful.key({ altkey,           }, "j",
-    --    function ()
-    --        awful.client.focus.byidx( 1)
-    --    end,
-    --    {description = "focus next by index", group = "client"}
-    --),
-    --awful.key({ altkey,           }, "k",
-    --    function ()
-    --        awful.client.focus.byidx(-1)
-    --    end,
-    --    {description = "focus previous by index", group = "client"}
-    --),
+    awful.key({ altkey,           }, "j",
+        function ()
+            awful.client.focus.byidx( 1)
+        end,
+        {description = "focus next by index", group = "client"}
+    ),
+    awful.key({ altkey,           }, "k",
+        function ()
+            awful.client.focus.byidx(-1)
+        end,
+        {description = "focus previous by index", group = "client"}
+    ),
 
     -- By-direction client focus
     awful.key({ modkey }, "j",
@@ -409,12 +430,12 @@ globalkeys = mytable.join(
               {description = "dropdown application", group = "launcher"}),
 
     -- Widgets popups
-    --awful.key({ altkey, }, "c", function () if beautiful.cal then beautiful.cal.show(7) end end,
-    --          {description = "show calendar", group = "widgets"}),
-    --awful.key({ altkey, }, "h", function () if beautiful.fs then beautiful.fs.show(7) end end,
-    --          {description = "show filesystem", group = "widgets"}),
-    --awful.key({ altkey, }, "w", function () if beautiful.weather then beautiful.weather.show(7) end end,
-    --          {description = "show weather", group = "widgets"}),
+    awful.key({ altkey, }, "c", function () if beautiful.cal then beautiful.cal.show(7) end end,
+              {description = "show calendar", group = "widgets"}),
+    awful.key({ altkey, }, "h", function () if beautiful.fs then beautiful.fs.show(7) end end,
+              {description = "show filesystem", group = "widgets"}),
+    awful.key({ altkey, }, "w", function () if beautiful.weather then beautiful.weather.show(7) end end,
+              {description = "show weather", group = "widgets"}),
 
     -- Screen brightness
     awful.key({ }, "XF86MonBrightnessUp", function () os.execute("xbacklight -inc 10") end,
@@ -423,88 +444,86 @@ globalkeys = mytable.join(
               {description = "-10%", group = "hotkeys"}),
 
     -- ALSA volume control
-    --awful.key({ altkey }, "Up",
-    --    function ()
-    --        os.execute(string.format("amixer -q set %s 1%%+", beautiful.volume.channel))
-    --        beautiful.volume.update()
-    --    end,
-    --    {description = "volume up", group = "hotkeys"}),
-    --awful.key({ altkey }, "Down",
-    --    function ()
-    --        os.execute(string.format("amixer -q set %s 1%%-", beautiful.volume.channel))
-    --        beautiful.volume.update()
-    --    end,
-    --    {description = "volume down", group = "hotkeys"}),
-    --awful.key({ altkey }, "m",
-    --    function ()
-    --        os.execute(string.format("amixer -q set %s toggle", beautiful.volume.togglechannel or beautiful.volume.channel))
-    --        beautiful.volume.update()
-    --    end,
-    --    {description = "toggle mute", group = "hotkeys"}),
-    --awful.key({ altkey, "Control" }, "m",
-    --    function ()
-    --        os.execute(string.format("amixer -q set %s 100%%", beautiful.volume.channel))
-    --        beautiful.volume.update()
-    --    end,
-    --    {description = "volume 100%", group = "hotkeys"}),
-    --awful.key({ altkey, "Control" }, "0",
-    --    function ()
-    --        os.execute(string.format("amixer -q set %s 0%%", beautiful.volume.channel))
-    --        beautiful.volume.update()
-    --    end,
-    --    {description = "volume 0%", group = "hotkeys"}),
+    awful.key({ altkey }, "Up",
+        function ()
+            os.execute(string.format("amixer -q set %s 1%%+", beautiful.volume.channel))
+            beautiful.volume.update()
+        end,
+        {description = "volume up", group = "hotkeys"}),
+    awful.key({ altkey }, "Down",
+        function ()
+            os.execute(string.format("amixer -q set %s 1%%-", beautiful.volume.channel))
+            beautiful.volume.update()
+        end,
+        {description = "volume down", group = "hotkeys"}),
+    awful.key({ altkey }, "m",
+        function ()
+            os.execute(string.format("amixer -q set %s toggle", beautiful.volume.togglechannel or beautiful.volume.channel))
+            beautiful.volume.update()
+        end,
+        {description = "toggle mute", group = "hotkeys"}),
+    awful.key({ altkey, "Control" }, "m",
+        function ()
+            os.execute(string.format("amixer -q set %s 100%%", beautiful.volume.channel))
+            beautiful.volume.update()
+        end,
+        {description = "volume 100%", group = "hotkeys"}),
+    awful.key({ altkey, "Control" }, "0",
+        function ()
+            os.execute(string.format("amixer -q set %s 0%%", beautiful.volume.channel))
+            beautiful.volume.update()
+        end,
+        {description = "volume 0%", group = "hotkeys"}),
 
     -- MPD control
-    --awful.key({ altkey, "Control" }, "Up",
-    --    function ()
-    --        os.execute("mpc toggle")
-    --        beautiful.mpd.update()
-    --    end,
-    --    {description = "mpc toggle", group = "widgets"}),
-    --awful.key({ altkey, "Control" }, "Down",
-    --    function ()
-    --        os.execute("mpc stop")
-    --        beautiful.mpd.update()
-    --    end,
-    --    {description = "mpc stop", group = "widgets"}),
-    --awful.key({ altkey, "Control" }, "Left",
-    --    function ()
-    --        os.execute("mpc prev")
-    --        beautiful.mpd.update()
-    --    end,
-    --    {description = "mpc prev", group = "widgets"}),
-    --awful.key({ altkey, "Control" }, "Right",
-    --    function ()
-    --        os.execute("mpc next")
-    --        beautiful.mpd.update()
-    --    end,
-    --    {description = "mpc next", group = "widgets"}),
-    --awful.key({ altkey }, "0",
-    --    function ()
-    --        local common = { text = "MPD widget ", position = "top_middle", timeout = 2 }
-    --        if beautiful.mpd.timer.started then
-    --            beautiful.mpd.timer:stop()
-    --            common.text = common.text .. lain.util.markup.bold("OFF")
-    --        else
-    --            beautiful.mpd.timer:start()
-    --            common.text = common.text .. lain.util.markup.bold("ON")
-    --        end
-    --        naughty.notify(common)
-    --    end,
-    --    {description = "mpc on/off", group = "widgets"}),
+    awful.key({ altkey, "Control" }, "Up",
+        function ()
+            os.execute("mpc toggle")
+            beautiful.mpd.update()
+        end,
+        {description = "mpc toggle", group = "widgets"}),
+    awful.key({ altkey, "Control" }, "Down",
+        function ()
+            os.execute("mpc stop")
+            beautiful.mpd.update()
+        end,
+        {description = "mpc stop", group = "widgets"}),
+    awful.key({ altkey, "Control" }, "Left",
+        function ()
+            os.execute("mpc prev")
+            beautiful.mpd.update()
+        end,
+        {description = "mpc prev", group = "widgets"}),
+    awful.key({ altkey, "Control" }, "Right",
+        function ()
+            os.execute("mpc next")
+            beautiful.mpd.update()
+        end,
+        {description = "mpc next", group = "widgets"}),
+    awful.key({ altkey }, "0",
+        function ()
+            local common = { text = "MPD widget ", position = "top_middle", timeout = 2 }
+            if beautiful.mpd.timer.started then
+                beautiful.mpd.timer:stop()
+                common.text = common.text .. lain.util.markup.bold("OFF")
+            else
+                beautiful.mpd.timer:start()
+                common.text = common.text .. lain.util.markup.bold("ON")
+            end
+            naughty.notify(common)
+        end,
+        {description = "mpc on/off", group = "widgets"}),
 
     -- Copy primary to clipboard (terminals to gtk)
-    --awful.key({ modkey }, "c", function () awful.spawn.with_shell("xsel | xsel -i -b") end,
-    --          {description = "copy terminal to gtk", group = "hotkeys"}),
+    awful.key({ modkey }, "c", function () awful.spawn.with_shell("xsel | xsel -i -b") end,
+              {description = "copy terminal to gtk", group = "hotkeys"}),
     -- Copy clipboard to primary (gtk to terminals)
-    --awful.key({ modkey }, "v", function () awful.spawn.with_shell("xsel -b | xsel") end,
-    --          {description = "copy gtk to terminal", group = "hotkeys"}),
+    awful.key({ modkey }, "v", function () awful.spawn.with_shell("xsel -b | xsel") end,
+              {description = "copy gtk to terminal", group = "hotkeys"}),
 
     -- User programs
     awful.key({ modkey }, "q", function () awful.spawn(browser) end,
               {description = "run browser", group = "launcher"}),
-    awful.key({ modkey }, "a", function () awful.spawn(editor) end,
-              {description = "run editor", group = "launcher"}),
 
     -- Default
     --[[ Menubar
@@ -758,7 +777,7 @@ client.connect_signal("request::titlebars", function(c)
         end)
     )
 
-    awful.titlebar(c, { size = 32 }) : setup {
+    awful.titlebar(c, { size = 16 }) : setup {
         { -- Left
             awful.titlebar.widget.iconwidget(c),
             buttons = buttons,
@@ -775,8 +794,8 @@ client.connect_signal("request::titlebars", function(c)
         { -- Right
             awful.titlebar.widget.floatingbutton (c),
             awful.titlebar.widget.maximizedbutton(c),
-            --awful.titlebar.widget.stickybutton   (c),
-            --awful.titlebar.widget.ontopbutton    (c),
+            awful.titlebar.widget.stickybutton   (c),
+            awful.titlebar.widget.ontopbutton    (c),
             awful.titlebar.widget.closebutton    (c),
             layout = wibox.layout.fixed.horizontal()
         },
@@ -785,40 +804,31 @@ client.connect_signal("request::titlebars", function(c)
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
---client.connect_signal("mouse::enter", function(c)
---    c:emit_signal("request::activate", "mouse_enter", {raise = vi_focus})
---end)
+client.connect_signal("mouse::enter", function(c)
+    c:emit_signal("request::activate", "mouse_enter", {raise = vi_focus})
+end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
--- }}}
-
--- {{{ Autorun Programs
--- Source: https://maketecheasier.com/startup-applications-awesomewm/
-autorun = true
-autorunApps =
-{
-        "unclutter",
-				"reset-kb",
-        "xset r rate 400 50",
-        "xset s off -dpms",
-        "copyq",
-        "blueman-applet",
-        'xsettingsd --config="$HOME/.config/xorg/xsettingsd"',
-				'xrandr-setup',
-				'start-barrier',
-				'start-pasystray',
-        "picom"
-				--"barrierc -f --debug INFO --log ~/.local/log/barrier.log 10.1.0.20"
-        --"picom --experimental-backends"
-}
-if autorun then
-        for app = 1, #autorunApps do
-                awful.util.spawn(autorunApps[app])
-        end
+-- switch to parent after closing child window
+local function backham()
+    local s = awful.screen.focused()
+    local c = awful.client.focus.history.get(s, 0)
+    if c then
+        client.focus = c
+        c:raise()
+    end
 end
---- }}} Autorun Programs
+
+-- attach to minimized state
+client.connect_signal("property::minimized", backham)
+-- attach to closed state
+client.connect_signal("unmanage", backham)
+-- ensure there is always a selected client during tag switching or logins
+tag.connect_signal("property::selected", backham)
+
+-- }}}
 
 -- {{{ Background Randomizer
 local countdown = gears.timer {
