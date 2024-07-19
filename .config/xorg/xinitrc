@@ -1,3 +1,18 @@
-xrdb -merge ~/.Xresources
+#!/usr/bin/env bash
 
+xrdb -merge ~/.config/xorg/Xresources
+
+# Execute commands based on the hostname
+if [ "$HOSTNAME" = "orthanc" ]; then
+    exec /usr/bin/awesome
+elif [ "$HOSTNAME" = "barad-dur" ]; then
+    exec /usr/bin/awesome
+elif [ "$HOSTNAME" = "angband" ]; then
+    exec /usr/bin/awesome
+elif [ "$HOSTNAME" = "mairon" ]; then
+    #exec /usr/bin/awesome
+		exec /usr/bin/dbus-launch --exit-with-session /usr/local/bin/stumpwm
+else
+    exec /usr/bin/awesome
+fi.
 exec /usr/bin/dbus-launch --exit-with-session /usr/local/bin/stumpwm
