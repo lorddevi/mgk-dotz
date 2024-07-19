@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# {{{ <is barrier is running>
+_is_barrier_running() {
+	if ! pgrep -x "barrierc" > /dev/null
+	then
+		echo "Barrier is not running yet."
+		_start_barrier
+	fi
+}
+# }}} </is barrier is running>
+
+# {{{ <start barrier>
+_start_barrier() {
+	# Execute commands based on the hostname
+	#barrierc -f --debug INFO --log ~/.local/log/barrier.log 10.1.0.20
+	#barrier &
+	if [ "$HOSTNAME" = "orthanc" ]; then
+		echo "Starting barrier."
+		#barrier &
+	elif [ "$HOSTNAME" = "barad-dur" ]; then
+		echo "No need for barrier here."
+	elif [ "$HOSTNAME" = "angband" ]; then
+		echo "Starting barrier."
+		#barrier &
+	elif [ "$HOSTNAME" = "mairon" ]; then
+		echo "No need for barrier here."
+	else
+		echo "No need for barrier here."
+	fi
+}
+# }}} </start barrier>
+
+# {{{ <main loop>
+_main() {
+	_is_barrier_running
+}
+# }}} </main loop>
