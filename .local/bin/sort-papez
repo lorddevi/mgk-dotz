@@ -47,21 +47,6 @@ clear_links() {
     rm -f "$WIDE_DIR"/*
 }
 
-# Spinner function
-spinner() {
-    local pid=$!
-    local delay=0.1
-    local spinstr='|/-\'
-    while [ "$(ps a | awk '{print $1}' | grep "$pid")" ]; do
-        local temp=${spinstr#?}
-        printf " [%c]  " "$spinstr"
-        spinstr=$temp${spinstr%"$temp"}
-        sleep $delay
-        printf "\b\b\b\b\b\b"
-    done
-    printf "    \b\b\b\b"
-}
-
 # Function to link images based on their dimensions
 link_images() {
     local theme=$1
@@ -85,6 +70,9 @@ link_images() {
                     width=${dimensions%x*}
                     height=${dimensions#*x}
 
+                    processed_images=$((processed_images + 1))
+                    echo "Processing image: $processed_images/$total_images: $img: $width x $height"
+
                     if (( height > width )); then
                         ln -sf "$img" "$TALL_DIR"
                     elif (( width > height )); then
@@ -93,13 +81,15 @@ link_images() {
                         ln -sf "$img" "$TALL_DIR"
                         ln -sf "$img" "$WIDE_DIR"
                     fi
-                    processed_images=$((processed_images + 1))
-                    printf "\rProcessing images... %d/%d" "$processed_images" "$total_images"
+                else
+                    echo "Unable to identify dimensions for $img"
                 fi
+            else
+                echo "Not a valid file: $img"
             fi
         done
     done
-    echo -e "\nImage processing complete."
+    echo "Image processing complete."
 }
 
 # Main script execution
@@ -125,8 +115,7 @@ case "$theme" in
         ;;
 esac
 
-# Link images with a spinner and progress indicator
-link_images "$theme" directories[@] & spinner
+# Link images with progress indicator
+link_images "$theme" directories[@]
 
 echo "Images sorted for theme: $theme"
-
