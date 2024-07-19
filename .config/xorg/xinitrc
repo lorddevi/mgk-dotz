@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
+HOSTNAME=$(hostname)
 
 xrdb -merge ~/.config/xorg/Xresources
+
 
 # Execute commands based on the hostname
 if [ "$HOSTNAME" = "orthanc" ]; then
@@ -15,4 +17,3 @@ elif [ "$HOSTNAME" = "mairon" ]; then
 else
     exec /usr/bin/awesome
 fi.
-exec /usr/bin/dbus-launch --exit-with-session /usr/local/bin/stumpwm
