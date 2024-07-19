@@ -114,7 +114,7 @@ _decrypt_and_import() {
 	_mordu "Preforming decrypt and secret key import."
 	_mordu "You will be asked for a passphrase."
 	_mordu "If there are problems, ensure the environment variable GPG_TTY is set to \$\(tty\)."
-	GPG_TTY="$(tty)" gpg --decrypt "${GHQ_ROOT}/${__repo}"/keys/secret-key.gpg.enc | gpg --import
+	GPG_TTY="$(tty)" gpg --decrypt --pinentry-mode=loopback "${GHQ_ROOT}/${__repo}"/keys/secret-key.gpg.enc | gpg --import --pinentry-mode=loopback
 	_mordu "Finished running import."
 }
 # }}} </decrypt and import>
