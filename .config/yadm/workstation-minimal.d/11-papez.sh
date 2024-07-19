@@ -77,6 +77,7 @@ _sort_papez() {
 _main() {
     _clone_papez
 		_link_papez
+		_sort_papez
 }
 _main
 # }}} </main loop>
