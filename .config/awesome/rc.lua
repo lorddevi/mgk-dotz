@@ -62,13 +62,13 @@ end
 -- {{{ Autostart windowless processes
 
 -- This function will run once every time Awesome is started
-local function run_once(cmd_arr)
-    for _, cmd in ipairs(cmd_arr) do
-        awful.spawn.with_shell(string.format("pgrep -u $USER -fx '%s' > /dev/null || (%s)", cmd, cmd))
-    end
-end
-
-run_once({ "urxvtd", "unclutter -root" }) -- comma-separated entries
+---local function run_once(cmd_arr)
+---    for _, cmd in ipairs(cmd_arr) do
+---        awful.spawn.with_shell(string.format("pgrep -u $USER -fx '%s' > /dev/null || (%s)", cmd, cmd))
+---    end
+---end
+---
+---run_once({ "urxvtd", "unclutter -root" }) -- comma-separated entries
 
 -- This function implements the XDG autostart specification
 --[[
@@ -100,11 +100,11 @@ local themes = {
 local chosen_theme = themes[5]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
-local terminal     = "urxvtc"
+local terminal     = "alacritty"
 local vi_focus     = false -- vi-like client focus https://github.com/lcpz/awesome-copycats/issues/275
 local cycle_prev   = true  -- cycle with only the previously focused client or all https://github.com/lcpz/awesome-copycats/issues/274
-local editor       = os.getenv("EDITOR") or "nvim"
-local browser      = "librewolf"
+local editor       = os.getenv("EDITOR") or "emacs"
+local browser      = "firefox"
 
 awful.util.terminal = terminal
 awful.util.tagnames = { "1", "2", "3", "4", "5" }
@@ -829,6 +829,30 @@ client.connect_signal("unmanage", backham)
 tag.connect_signal("property::selected", backham)
 
 -- }}}
+
+-- {{{ Autorun Programs
+-- Source: https://maketecheasier.com/startup-applications-awesomewm/
+autorun = true
+autorunApps =
+{
+        "unclutter",
+				"reset-kb",
+        "xset r rate 400 50",
+        "xset s off -dpms",
+        "copyq",
+        "blueman-applet",
+        'xsettingsd --config="$HOME/.config/xorg/xsettingsd"',
+				'xrandr-setup',
+				'start-barrier',
+				'start-pasystray',
+        "picom"
+}
+if autorun then
+        for app = 1, #autorunApps do
+                awful.util.spawn(autorunApps[app])
+        end
+end
+--- }}} Autorun Programs
 
 -- {{{ Background Randomizer
 local countdown = gears.timer {

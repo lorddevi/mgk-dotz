@@ -32,7 +32,7 @@ _mordu "Starting script."
 _define_packages() {
 	_packages=(blueman firefox ffmpeg vlc-plugin-pipewire vlc-plugin-ffmpeg \
 		feh mpv awesome kitty nitrogen xscreensaver alacritty ImageMagick \
-		xsettingsd)
+		xsettingsd pasystray copyq unclutter-xfixes)
 	}
 # }}} </define packages>
 
