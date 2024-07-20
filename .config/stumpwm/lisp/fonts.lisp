@@ -5,7 +5,7 @@
 (ql:quickload :clx-truetype)
 (load-module "ttf-fonts")
 
-(defvar *font-size* 16 "Default font size")
+(defvar *font-size* 10 "Default font size")
 
 (defun get-hostname ()
   "Get the hostname and trim all whitespace, including newlines."
@@ -21,7 +21,7 @@
             ((string-equal hostname "angband") 16)
             ((string-equal hostname "mairon") 24)
             ((string-equal hostname "barad-dur") 16)
-            (t 16)))))
+            (t 10)))))
 
 (defun set-font-safely ()
   "Attempt to set the JetBrainsMono NF font, with error handling."
