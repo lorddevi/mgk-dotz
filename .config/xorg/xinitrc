@@ -16,5 +16,6 @@ elif [ "$HOSTNAME" = "mairon" ]; then
     #exec /usr/bin/awesome
 		exec /usr/bin/dbus-launch --exit-with-session /usr/local/bin/stumpwm
 else
-    exec /usr/bin/awesome
+    #exec /usr/bin/awesome
+		exec /usr/bin/dbus-launch --exit-with-session /usr/local/bin/stumpwm
 fi
