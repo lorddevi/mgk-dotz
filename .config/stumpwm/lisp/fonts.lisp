@@ -22,21 +22,32 @@
             ((string-equal hostname "barad-dur") 16)
             (t 16)))))
 
+(defun set-font-safely (font-instance)
+  "Attempt to set the font, falling back to a default if it fails."
+  (handler-case
+      (set-font font-instance)
+    (error (c)
+      (message "Error setting custom font: ~A" c)
+      (message "Falling back to default font")
+      (set-font "-misc-fixed-medium-r-normal--13-120-75-75-c-70-iso8859-1"))))
+
 (defun set-font-on-startup ()
-	(set-font-based-on-hostname)
+  (set-font-based-on-hostname)
+  (setq clx-truetype::*font-dirs*
+        (append (list (namestring (merge-pathnames ".local/share/fonts" (user-homedir-pathname))))
+                clx-truetype::*font-dirs*))
+  (xft:cache-fonts)
+  (let ((font-instance (make-instance 'xft:font
+                                      :family "JetBrainsMono NF"
+                                      :subfamily "Regular"
+                                      :size *font-size*
+                                      :antialias t)))
+    (set-font-safely font-instance))
+  (message "Font set.")
+  (message "Sieg Heil."))
 
-	(setq clx-truetype::*font-dirs*
-				(append (list (namestring (merge-pathnames ".local/share/fonts" (user-homedir-pathname))))
-								clx-truetype::*font-dirs*))
-
-	(xft:cache-fonts)
-  (set-font (make-instance 'xft:font
-                           :family "JetBrainsMono NF"
-                           :subfamily "Regular"
-                           :size *font-size*
-                           :antialias t))
-	(message "Font set.")
-	(message "Sieg Heil."))
+;; Add the function to the start hook
+(add-hook *start-hook* #'set-font-on-startup)
 
 ;; Message window font
 ;;(set-font "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15")
@@ -50,5 +61,3 @@
 ;;                           :size *font-size*
 ;;                           :antialias t)))
 
-;; Add the function to the start hook
-(add-hook *start-hook* #'set-font-on-startup)
