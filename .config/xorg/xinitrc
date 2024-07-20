@@ -3,6 +3,7 @@ HOSTNAME=$(hostname)
 
 xrdb -merge ~/.config/xorg/Xresources
 
+~/.local/bin/xrandr-setup
 
 # Execute commands based on the hostname
 if [ "$HOSTNAME" = "orthanc" ]; then

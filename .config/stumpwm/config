@@ -1,92 +1,17 @@
 ;; vim: set ft=lisp :
 ;; -*-lisp-*-
-;;
-;; Here is a sample .stumpwmrc file
 
 (in-package :stumpwm)
+
 (set-module-dir "~/.local/share/stumpwm/modules")
-(ql:quickload :clx-truetype)
-(load-module "ttf-fonts")
 
-(defvar *font-size* 16 "Default font size")
+(setf *startup-message* nil)
 
-(defun get-hostname ()
-  "Get the hostname and trim all whitespace, including newlines."
-  (let* ((raw-hostname (run-shell-command "hostname" t))
-         (trimmed-hostname (string-trim '(#\Space #\Newline #\Return #\Tab) raw-hostname)))
-    (message "Raw hostname: '~a'" (prin1-to-string raw-hostname))
-    (message "Trimmed hostname: '~a'" (prin1-to-string trimmed-hostname))
-    (message "Hostname length: ~d" (length trimmed-hostname))
-    trimmed-hostname))
+(load "~/.config/stumpwm/lisp/fonts.lisp")
+(load "~/.config/stumpwm/lisp/functions.lisp")
+(load "~/.config/stumpwm/lisp/keymap.lisp")
+(load "~/.config/stumpwm/lisp/autoload.lisp")
 
-(defun set-font-based-on-hostname ()
-  "Set the font size based on the hostname."
-  (let ((hostname (get-hostname)))
-    (message "Comparing hostname: '~a'" (prin1-to-string hostname))
-    (cond
-     ((string-equal hostname "orthanc")
-      (setf *font-size* 16)
-      (message "Matched orthanc, setting font size to 16"))
-     ((string-equal hostname "angband")
-      (setf *font-size* 16)
-      (message "Matched angband, setting font size to 16"))
-     ((string-equal hostname "mairon")
-      (setf *font-size* 32)
-      (message "Matched mairon, setting font size to 32"))
-     ((string-equal hostname "barad-dur")
-      (setf *font-size* 16)
-      (message "Matched barad-dur, setting font size to 16"))
-     (t
-      (setf *font-size* 16)
-      (message "Default case, setting font size to 16")))
-    (message "After comparison, font size is set to: ~a" *font-size*)))
-
-(defun set-font-on-startup ()
-  (message "Starting set-font-on-startup")
-  (set-font-based-on-hostname)
-  (message "Font size after set-font-based-on-hostname: ~a" *font-size*)
-  
-  ;; Ensure the font directories are set correctly
-  (setq clx-truetype::*font-dirs*
-        (append (list (namestring (merge-pathnames ".local/share/fonts" (user-homedir-pathname))))
-                clx-truetype::*font-dirs*))
-  
-  ;; Cache the fonts to avoid repeated disk access
-  (xft:cache-fonts)
-  
-  (message "Setting font with size: ~a" *font-size*)
-  (set-font (make-instance 'xft:font
-                           :family "JetBrainsMono NF"
-                           :subfamily "Regular"
-                           :size *font-size*
-                           :antialias t))
-  (message "Font set complete"))
-
-;; Add the function to the start hook
-(add-hook *start-hook* #'set-font-on-startup)
-
-;; Immediate execution for debugging
-(set-font-on-startup)
-
-;; change the prefix key to something else
-;;(set-prefix-key (kbd "C-z"))
-
-;; prompt the user for an interactive command. The first arg is an
-;; optional initial contents.
-;;(defcommand colon1 (&optional (initial "")) (:rest)
-;;  (let ((cmd (read-one-line (current-screen) ": " :initial-input initial)))
-;;    (when cmd
-;;      (eval-command cmd t))))
-;;
-;;;; Read some doc
-;;(define-key *root-map* (kbd "d") "exec gv")
-;;;; Browse somewhere
-;;(define-key *root-map* (kbd "b") "colon1 exec firefox http://www.")
-;;;; Ssh somewhere
-;;(define-key *root-map* (kbd "C-s") "colon1 exec xterm -e ssh ")
-;;;; Lock screen
-;;(define-key *root-map* (kbd "C-l") "exec xlock")
-;;
 ;;;; Web jump (works for DuckDuckGo and Imdb)
 ;;(defmacro make-web-jump (name prefix)
 ;;  `(defcommand ,(intern name) (search) ((:rest ,(concatenate 'string name " search: ")))
@@ -100,14 +25,7 @@
 ;;(define-key *root-map* (kbd "M-s") "duckduckgo")
 ;;(define-key *root-map* (kbd "i") "imdb")
 
-;; Message window font
-;;(set-font "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15")
-;;(set-font "-*-lucida-*-*-*-*-34-*-*-*-*-*-*-*")
-;; My fav:
-;;(set-font "-Adobe-Courier-Bold-r-Normal-*-34-*-100-100-*-*-*-*")
-;;(set-font "-Misc-Fixed-Medium-R-Normal--20-200-75-75-C-100-ISO10646-1")
 ;;; Define window placement policy...
-
 ;; Clear rules
 (clear-window-placement-rules)
 
@@ -141,48 +59,12 @@
 ;;  (1 t t :restore "emacs-editing-dump" :title "...xdvi")
 ;;  (0 t t :create "emacs-dump" :class "Emacs"))
 
-;; The below function leverages run-or-raise-prefer-group to either launch
-;; Icecat, if it is not already running, or else focus the Icecat window, and
-;; successive calls will cycle through multiple Icecat windows/windows if more
-;; than one Icecat window exists. This is extremely useful as it’s much less
-;; cognitively-tasking than figuring out which window number Icecat currently
-;; is associated with.
-(defun run-or-raise-prefer-group (cmd win-cls)
-  "If there are windows in the same class, cycle in those. Otherwise call
-run-or-raise with group search t."
-  (let ((windows (group-windows (current-group))))
-    (if (member win-cls (mapcar #'window-class windows) :test #'string-equal)
-	(run-or-raise cmd `(:class ,win-cls) nil T)
-	(run-or-raise cmd `(:class ,win-cls) T T))))
-
-(defcommand run-or-raise-emacsclient () ()
-  (run-or-raise-prefer-group "emacs" "Emacs"))
-
-(defcommand decide-on-emacsclient () ()
- (if (equal (run-shell-command "pgrep \"emacsclient\"" t) "")
-     (run-shell-command "emacsclient -c")
-     (run-or-raise-emacsclient)))
-
-;;(define-key *root-map* (kbd "s-e") "decide-on-emacsclient")
-;;(define-key *root-map* (kbd "C-e") "decide-on-emacsclient")
-(define-key *root-map* (kbd "e") "decide-on-emacsclient")
-
-;;(define-key *root-map* (kbd "e") "run-or-raise-emacs")
-
-(defcommand emacsclient-launch () ()
-  (run-shell-command "emacsclient -c"))
-;;
-;;(define-key *root-map* (kbd "s-E") "emacsclient-launch")
-;;(define-key *root-map* (kbd "C-E") "emacsclient-launch")
-(define-key *root-map* (kbd "E") "emacsclient-launch")
-
 ;; Slime
 ;; This is how we interact with StumpWM using emacs.
 ;; Load swank.
 ;; *prefix-key* ; swank will kick this off
 ;;(load "/path/to/slime/swank-loader.lisp")
 ;;(swank-loader:init)
-
 
 ;;(ql:quickload :swank)
 ;;(defcommand swank () ()
@@ -192,16 +74,3 @@ run-or-raise with group search t."
 ;;  (echo-string (current-screen) 
 ;;	       "Starting swank. M-x slime-connect RET RET, then (in-package stumpwm)."))
 ;;(swank)
-;;
-;;;; Autostart apps
-(run-shell-command "picom")
-(run-shell-command "reset-kb")
-(run-shell-command "emacs --daemon")
-
-;; Wallpaper stuff
-;; Function to run the background setting script
-(defun run-bg-script ()
-  (run-shell-command "~/.local/bin/mgk-bg"))
-
-;; Set up a timer to call run-bg-script every 10 seconds
-(run-with-timer 10 10 'run-bg-script)
