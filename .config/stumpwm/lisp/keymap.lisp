@@ -5,21 +5,20 @@
 ;;;;;;;;;;
 ;; Misc
 ;;;;;;;;;;
-;;;; Read some doc
+;; Terminals
 (define-key *root-map* (kbd "c") "exec kitty")
 (define-key *root-map* (kbd "C") "exec alacritty")
-;; Browse somewhere
-(define-key *root-map* (kbd "b") "colon1 exec firefox http://")
+;; Browser (Firefox
+(define-key *root-map* (kbd "b") "exec firefox")
+(define-key *root-map* (kbd "B") "colon1 exec firefox http://")
 ;; Ssh somewhere
 (define-key *root-map* (kbd "C-s") "colon1 exec kitty -e ssh ")
 
 ;;;;;;;;;;
 ;; Emacs
 ;;;;;;;;;;
-;;(define-key *root-map* (kbd "s-e") "decide-on-emacsclient")
-;;(define-key *root-map* (kbd "C-e") "decide-on-emacsclient")
+;; Launch emacsclient if not already loaded.  Otherwise, jump it and
+;; raise it.
 (define-key *root-map* (kbd "e") "decide-on-emacsclient")
-;;(define-key *root-map* (kbd "e") "run-or-raise-emacs")
-;;(define-key *root-map* (kbd "s-E") "emacsclient-launch")
-;;(define-key *root-map* (kbd "C-E") "emacsclient-launch")
+;; Create a brand new emacsclient session if one is already running.
 (define-key *root-map* (kbd "E") "emacsclient-launch")
