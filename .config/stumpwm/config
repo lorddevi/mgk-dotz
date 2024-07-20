@@ -5,6 +5,8 @@
 
 (in-package :stumpwm)
 
+(set-module-dir "~/.local/share/stumpwm/modules")
+
 (ql:quickload :clx-truetype)
 (load-module "ttf-fonts")
 

@@ -160,7 +160,7 @@ _quicklisp_install_function() {
 		--eval '(ql:quickload "alexandria")' \
 		--eval '(ql:quickload "xembed")' \
 		--eval '(ql:quickload "swank")' \
-		--eval '(ql:quickload "quicklisp-slime-hel")' \
+		--eval '(ql:quickload "quicklisp-slime-helper")' \
 		--eval '(ql:quickload "zpng")' \
 		--eval '(quit)'
 }
@@ -205,7 +205,37 @@ _install_quicklisp() {
 
 # {{{ <clone and make install clx-truetype>
 _install_clx-truetype() {
-	local __repo="git.mgk.one/common-lisp/goose121.clx-truetype"
+local __repo="git.mgk.one/common-lisp/goose121.clx-truetype"
+
+if $_ghq list | grep -q "$__repo" ; then
+	_mordu "${__repo} already cloned.  Updating."
+	$_ghq get -u "$__repo"
+else
+	_mordu "Cloning ${__repo}."
+	$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} three times."
+fi
+
+if [ ! -L "${HOME}/.local/opt/quicklisp/local-projects/clx-truetype" ]; then
+	_mordu "Linking clx-truetype."
+	ln -s "${GHQ_ROOT}/${__repo}" \
+		"${HOME}/.local/opt/quicklisp/local-projects/clx-truetype"
+fi
+
+_mordu "Calling ql:quickload on clx-truetype, and refreshing font cache."
+sbcl --eval '(ql:quickload :clx-truetype)' \
+	--eval '(xft:cache-fonts)' \
+	--eval '(quit)'
+	_mordu "Finished refreshing font cache and clx-truetype install."
+}
+# }}} </clone and make install clx-truetype>
+
+# {{{ <clone and install stumpwm-contrib>
+_clone_and_install_stumpwm-contrib() {
+	local __repo="git.mgk.one/x11-wm/stumpwm.stumpwm-contrib"
+	local __share_stumpwm="${HOME}/.local/share/stumpwm"
 
 	if $_ghq list | grep -q "$__repo" ; then
 		_mordu "${__repo} already cloned.  Updating."
@@ -218,17 +248,17 @@ _install_clx-truetype() {
 		|| _mordu "Failed to download ${__repo} three times."
 	fi
 
-	_mordu "Linking clx-truetype."
-	ln -s "${GHQ_ROOT}/${__repo}" \
-		"${HOME}/.local/opt/quicklisp/local-projects/clx-truetype"
+	if [ ! -d "$__share_stumpwm" ]; then
+	    _mordu "Creating ${__share_stumpwm}."
+	    mkdir -p "$__share_stumpwm"
+	fi
 
-	#ln -s /home/ld/.local/opt/git/git.mgk.one/common-lisp/goose121.clx-truetype /home/ld/.local/opt/quicklisp/local-projects/clx-truetype
-
-	sbcl --eval '(ql:quickload :clx-truetype)' \
-		--eval '(xft:cache-fonts)' \
-		--eval '(quit)'
+	if [ ! -L "${__share_stumpwm}/modules" ]; then
+	    _mordu "Linking ${GHQ_ROOT}/${__repo} to ${__share_stumpwm}/modules."
+	    ln -sr "${GHQ_ROOT}/${__repo}" "${__share_stumpwm}/modules"
+	fi
 }
-# }}} </clone and make install clx-truetype>
+# }}} </clone and install stumpwm-contrib>
 
 # {{{ <main loop>
 _main() {
@@ -246,6 +276,7 @@ _main() {
 	_download_quicklisp
 	_install_quicklisp
 	_install_clx-truetype
+	_clone_and_install_stumpwm-contrib
 }
 _main
 # }}} </main loop>
