@@ -14,16 +14,16 @@
 ;;;;;;;;;;
 ;; Applications
 ;;;;;;;;;;
-(define-key *root-map* (kbd "c") "exec kitty")
-(define-key *root-map* (kbd "C") "exec alacritty")
-(define-key *root-map* (kbd "b") "exec firefox")
-(define-key *root-map* (kbd "B") "colon1 exec firefox http://")
-(define-key *root-map* (kbd "C-s") "colon1 exec kitty -e ssh ")
+(define-key *top-map* (kbd "s-c") "exec kitty")
+(define-key *top-map* (kbd "s-C") "exec alacritty")
+(define-key *top-map* (kbd "s-b") "exec firefox")
+;;(define-key *top-map* (kbd "s-B") "colon1 exec firefox http://")
+;;(define-key *top-map* (kbd "s-s") "colon1 exec kitty -e ssh ")
 ;; Launch emacsclient if not already loaded.  Otherwise, jump it and
 ;; raise it.
-(define-key *root-map* (kbd "e") "decide-on-emacsclient")
+(define-key *top-map* (kbd "s-e") "decide-on-emacsclient")
 ;; Create a brand new emacsclient session if one is already running.
-(define-key *root-map* (kbd "E") "emacsclient-launch")
+(define-key *top-map* (kbd "s-E") "emacsclient-launch")
 ;;;;;;;;;;
 ;; Navigation and WM Management
 ;;;;;;;;;;
@@ -86,10 +86,10 @@
 (define-key *root-map* (kbd "M-k") "move-window up")
 (define-key *root-map* (kbd "M-j") "move-window down")
 ;; Navigate focus by direction.
-(define-key *top-map* (kbd "M-l") "move-focus right")
-(define-key *top-map* (kbd "M-h") "move-focus left")
-(define-key *top-map* (kbd "M-k") "move-focus up")
-(define-key *top-map* (kbd "M-j") "move-focus down")
+(define-key *top-map* (kbd "s-l") "move-focus right")
+(define-key *top-map* (kbd "s-h") "move-focus left")
+(define-key *top-map* (kbd "s-k") "move-focus up")
+(define-key *top-map* (kbd "s-j") "move-focus down")
 ;; Vertical Split.
 (define-key *root-map* (kbd "s") "vsplit")
 ;; Horizontal Split.
