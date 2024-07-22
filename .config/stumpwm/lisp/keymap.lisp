@@ -1,13 +1,69 @@
 ;; vim: set ft=lisp :
 ;; -*-lisp-*-
 
-(setf *root-map* (make-sparse-keymap))
-(setf *group-top-map* (make-sparse-keymap))
-(setf *group-root-map* (make-sparse-keymap))
-(setf *tile-group-root-map* (make-sparse-keymap))
-(setf *root-map* (make-sparse-keymap))
-(setf *groups-map* (make-sparse-keymap))
-(setf *exchange-window-map* (make-sparse-keymap))
+;;(setf *root-map* (make-sparse-keymap))
+;;(setf *group-top-map* (make-sparse-keymap))
+;;(setf *group-root-map* (make-sparse-keymap))
+;;(setf *tile-group-root-map* (make-sparse-keymap))
+;;(setf *root-map* (make-sparse-keymap))
+;;(setf *groups-map* (make-sparse-keymap))
+;;(setf *exchange-window-map* (make-sparse-keymap))
+
+(export '(*groups-map*
+          *group-top-maps*
+          *help-map*
+          *help-keys*
+          set-prefix-key))
+
+(defvar *escape-key* (kbd "C-t")
+  "The escape key. Any keymap that wants to hang off the escape key
+should use this specific key struct instead of creating their own
+C-t.")
+
+(defvar *help-keys* '("?" "C-h")
+  "The list of keys used to invoke the help command.")
+
+(defvar *escape-fake-key* (kbd "t")
+  "The binding that sends the fake escape key to the current window.")
+
+(defvar *groups-map* nil
+  "The keymap that group related key bindings sit on. It is bound to @kbd{C-t g} by default.")
+
+(defvar *exchange-window-map* nil
+  "The keymap that exchange-window key bindings sit on. It is bound to @kbd{C-t x} by default.")
+
+(defvar *help-map* nil
+  "Help related bindings hang from this keymap")
+
+(defvar *group-top-maps* '((tile-group *tile-group-top-map*)
+                           (group *group-top-map*))
+  "An alist of the top level maps for each group type. For a given
+group, all maps whose type matches the given group are active. So for
+a tile-group, both the group map and tile-group map are active.
+
+Order is important. Each map is seached in the order they appear in
+the list (inactive maps being skipped). In general the order should go
+from most specific groups to most general groups.")
+
+(defvar *group-top-map* nil)
+(defvar *group-root-map* nil
+  "Commands specific to a group context hang from this keymap.
+It is available as part of the @dnf{prefix map}.")
+(defvar *tile-group-top-map* nil)
+(defvar *tile-group-root-map* nil
+  "Commands specific to a tile-group context hang from this keymap.
+It is available as part of the @dnf{prefix map} when the active group
+is a tile group.")
+
+;; Do it this way so its easier to wipe the map and get a clean one.
+(defmacro fill-keymap (map &rest bindings)
+  `(unless ,map
+     (setf ,map
+           (let ((m (make-sparse-keymap)))
+             ,@(loop for i = bindings then (cddr i)
+                    while i
+                    collect `(define-key m ,(first i) ,(second i)))
+             m))))
 (setf *help-map* (make-sparse-keymap))
 
 (fill-keymap *top-map*
