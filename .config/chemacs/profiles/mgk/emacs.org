@@ -2817,8 +2817,8 @@ use this.
 #+name: alpha-background
 #+begin_src emacs-lisp
   ;; Set background a default opacity of 75.
-  (set-frame-parameter nil 'alpha-background 85) ; For current frame
-  (add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
+  ;;(set-frame-parameter nil 'alpha-background 85) ; For current frame
+  ;;(add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
 
   ;; Add a function for switching between alpha-backgrounds states.
   ;; This function doesn't work and needs replacing.
