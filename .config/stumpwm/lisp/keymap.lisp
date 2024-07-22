@@ -1,6 +1,15 @@
 ;; vim: set ft=lisp :
 ;; -*-lisp-*-
 
+(setf *root-map* (make-sparse-keymap))
+(setf *group-top-map* (make-sparse-keymap))
+(setf *group-root-map* (make-sparse-keymap))
+(setf *tile-group-root-map* (make-sparse-keymap))
+(setf *root-map* (make-sparse-keymap))
+(setf *groups-map* (make-sparse-keymap))
+(setf *exchange-window-map* (make-sparse-keymap))
+(setf *help-map* (make-sparse-keymap))
+
 (fill-keymap *top-map*
   *escape-key* '*root-map*)
 
