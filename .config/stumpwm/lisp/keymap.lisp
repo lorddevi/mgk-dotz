@@ -89,7 +89,7 @@
 (define-key *top-map* (kbd "M-l") "move-focus right")
 (define-key *top-map* (kbd "M-h") "move-focus left")
 (define-key *top-map* (kbd "M-k") "move-focus up")
-(define-key *top-map* (kbd "M-M") "move-focus down")
+(define-key *top-map* (kbd "M-j") "move-focus down")
 ;; Vertical Split.
 (define-key *root-map* (kbd "s") "vsplit")
 ;; Horizontal Split.
