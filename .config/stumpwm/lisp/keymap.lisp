@@ -136,9 +136,9 @@
 (define-key *root-map* (kbd "G") "vgroups")
 ;; }}}  </utility commands>
 ;; {{{  <key maps>
-(define-key *root-map* (kbd "g") *GROUPS-MAP*)
-(define-key *root-map* (kbd "x") *EXCHANGE-WINDOW-MAP*)
-(define-key *root-map* (kbd "h") *HELP-MAP*)
+(define-key *root-map* (kbd "g") '*GROUPS-MAP*)
+(define-key *root-map* (kbd "x") '*EXCHANGE-WINDOW-MAP*)
+(define-key *root-map* (kbd "h") '*HELP-MAP*)
 ;; }}}  </key maps>
 ;; }}} </root map>
 
