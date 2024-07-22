@@ -1,6 +1,7 @@
 ;; vim: set ft=lisp :
 ;; -*-lisp-*-
 
+;; {{{ <clear keymaps>
 ;; Clear keymaps so we can re-build them ourselves.
 (setf *root-map* (make-sparse-keymap))
 (setf *groups-map* (make-sparse-keymap))
@@ -9,41 +10,33 @@
 (setf *tile-group-root-map* (make-sparse-keymap))
 (setf *exchange-window-map* (make-sparse-keymap))
 (setf *root-map* (make-sparse-keymap))
+;; }}} </clear keymaps>
 
 ;; {{{ <root map>
-;;;;;;;;;;
-;; Applications
-;;;;;;;;;;
-(define-key *top-map* (kbd "s-c") "exec kitty")
-(define-key *top-map* (kbd "s-C") "exec alacritty")
-(define-key *top-map* (kbd "s-b") "exec firefox")
-;;(define-key *top-map* (kbd "s-B") "colon1 exec firefox http://")
-;;(define-key *top-map* (kbd "s-s") "colon1 exec kitty -e ssh ")
+;; {{{  <applications>
+(define-key *root-map* (kbd "c") "exec kitty")
+(define-key *root-map* (kbd "C") "exec alacritty")
+(define-key *root-map* (kbd "b") "exec firefox")
+;;(define-key *root-map* (kbd "B") "colon1 exec firefox http://")
+;;(define-key *root-map* (kbd "s") "colon1 exec kitty -e ssh ")
 ;; Launch emacsclient if not already loaded.  Otherwise, jump it and
 ;; raise it.
-(define-key *top-map* (kbd "s-e") "decide-on-emacsclient")
+(define-key *root-map* (kbd "e") "decide-on-emacsclient")
 ;; Create a brand new emacsclient session if one is already running.
-(define-key *top-map* (kbd "s-E") "emacsclient-launch")
-;;;;;;;;;;
-;; Navigation and WM Management
-;;;;;;;;;;
-;; Jump to group by number using root map.
-(define-key *root-map* (kbd "F1") "gselect 1")
-(define-key *root-map* (kbd "F2") "gselect 2")
-(define-key *root-map* (kbd "F3") "gselect 3")
-(define-key *root-map* (kbd "F4") "gselect 4")
-(define-key *root-map* (kbd "F5") "gselect 5")
-(define-key *root-map* (kbd "F6") "gselect 6")
-(define-key *root-map* (kbd "F7") "gselect 7")
-(define-key *root-map* (kbd "F8") "gselect 8")
-(define-key *root-map* (kbd "F9") "gselect 9")
-(define-key *root-map* (kbd "F10") "gselect 10")
-;; Jump between windows in current frame.
-(define-key *root-map* (kbd "C-t") "pull-hidden-other")
+(define-key *root-map* (kbd "E") "emacsclient-launch")
+;; }}}  </applications>
+;; {{{  <navigation>
+;; Navigate focus by direction.
+(define-key *root-map* (kbd "s-l") "move-focus right")
+(define-key *root-map* (kbd "s-h") "move-focus left")
+(define-key *root-map* (kbd "s-k") "move-focus up")
+(define-key *root-map* (kbd "s-j") "move-focus down")
 ;; List windows in current frame.
 (define-key *root-map* (kbd "\'") "frame-windowlist")
 ;; List windows.
 (define-key *root-map* (kbd "\"") "windowlist")
+;; Jump between windows in current frame.
+(define-key *root-map* (kbd "C-t") "pull-hidden-other")
 ;; Next window in current frame.
 (define-key *root-map* (kbd "n") "pull-hidden-next")
 ;; Previous window in current frame.
@@ -69,6 +62,8 @@
 (define-key *root-map* (kbd "8") "select-window-by-number 8")
 (define-key *root-map* (kbd "9") "select-window-by-number 9")
 (define-key *root-map* (kbd "0") "select-window-by-number 0")
+;; }}}  </navigation>
+;; {{{  <window management>
 ;; Pull window by number.
 (define-key *root-map* (kbd "1") "pull-window-by-number 1")
 (define-key *root-map* (kbd "2") "pull-window-by-number 2")
@@ -85,11 +80,8 @@
 (define-key *root-map* (kbd "M-h") "move-window left")
 (define-key *root-map* (kbd "M-k") "move-window up")
 (define-key *root-map* (kbd "M-j") "move-window down")
-;; Navigate focus by direction.
-(define-key *top-map* (kbd "s-l") "move-focus right")
-(define-key *top-map* (kbd "s-h") "move-focus left")
-(define-key *top-map* (kbd "s-k") "move-focus up")
-(define-key *top-map* (kbd "s-j") "move-focus down")
+;; }}}  </window management>
+;; {{{  <frame and split management>
 ;; Vertical Split.
 (define-key *root-map* (kbd "s") "vsplit")
 ;; Horizontal Split.
@@ -104,9 +96,8 @@
 (define-key *root-map* (kbd "P") "place-current-window")
 ;; Place all windows (apply placement rules to it.)
 (define-key *root-map* (kbd "W") "place-existing-windows")
-;;;;;;;;;;
-;; Utility
-;;;;;;;;;;
+;; }}}  </frame and split management>
+;; {{{  <utility commands>
 ;; Exec any shell command.
 (define-key *root-map* (kbd "!") "exec")
 ;; Abort.
@@ -143,22 +134,32 @@
 (define-key *root-map* (kbd ">") "pull-marked")
 ;; List all groups as well as their windows.
 (define-key *root-map* (kbd "G") "vgroups")
-;;;;;;;;;;
-;; Maps
-;;;;;;;;;;
+;; }}}  </utility commands>
+;; {{{  <key maps>
 (define-key *root-map* (kbd "g") *GROUPS-MAP*)
 (define-key *root-map* (kbd "x") *EXCHANGE-WINDOW-MAP*)
 (define-key *root-map* (kbd "h") *HELP-MAP*)
+;; }}}  </key maps>
 ;; }}} </root map>
 
 ;; {{{ <groups map>
-;;;;;;;;;;
-;; Groups
-;;;;;;;;;;
+;; {{{  <group management>
 ;; List groups.
 (define-key *groups-map* (kbd "g") "groups")
 ;; New group.
 (define-key *groups-map* (kbd "c") "gnew")
+;; Move current window to specified group.
+(define-key *groups-map* (kbd "m") "gmove")
+;; Move marked windows to specified group.
+(define-key *groups-map* (kbd "m") "gmove-marked")
+;; Kill current group, moving all housed windows to the next group.
+(define-key *groups-map* (kbd "k") "gkill")
+;; Rename group.
+(define-key *groups-map* (kbd "r") "grename")
+;; }}}  </group management>
+;; {{{  <group navigation>
+;; List groups.
+(define-key *groups-map* (kbd "\"") "grouplist")
 ;; Next group.
 (define-key *groups-map* (kbd "n") "gnext")
 ;; Previous group.
@@ -169,17 +170,8 @@
 (define-key *groups-map* (kbd "P") "gprevious-with-window")
 ;; Move to last active group.
 (define-key *groups-map* (kbd "o") "gother")
-;; List groups.
-(define-key *groups-map* (kbd "\"") "grouplist")
-;; Move current window to specified group.
-(define-key *groups-map* (kbd "m") "gmove")
-;; Move marked windows to specified group.
-(define-key *groups-map* (kbd "m") "gmove-marked")
-;; Kill current group, moving all housed windows to the next group.
-(define-key *groups-map* (kbd "k") "gkill")
-;; Rename group.
-(define-key *groups-map* (kbd "r") "grename")
-
+;; }}}  </group navigation>
+;; {{{  <jump to group by num>
 ;; Jump to group by number using groups map.
 (define-key *groups-map* (kbd "1") "gselect 1")
 (define-key *groups-map* (kbd "2") "gselect 2")
@@ -191,12 +183,10 @@
 (define-key *groups-map* (kbd "8") "gselect 8")
 (define-key *groups-map* (kbd "9") "gselect 9")
 (define-key *groups-map* (kbd "0") "gselect 0")
-;; {{{ </groups map>
+;; }}}  </jump to group by num>
+;; }}} </groups map>
 
 ;; {{{ <exchange window map>
-;;;;;;;;;;
-;; Window Exchanging
-;;;;;;;;;;
 (define-key *exchange-window-map* (kbd "h") "exchange-direction left")
 (define-key *exchange-window-map* (kbd "j") "exchange-direction down")
 (define-key *exchange-window-map* (kbd "k") "exchange-direction up")
@@ -204,13 +194,10 @@
 ;; }}} </exchange window map>
 
 ;; {{{ <help map>
-;;;;;;;;;;
-;; Help Map
-;;;;;;;;;;
 (define-key *help-map* (kbd "v") "describe-variable")
 (define-key *help-map* (kbd "f") "describe-function")
 (define-key *help-map* (kbd "k") "describe-key")
 (define-key *help-map* (kbd "c") "describe-command")
 (define-key *help-map* (kbd "w") "where-is")
-;; {{{ </help map>
+;; }}} </help map>
 
