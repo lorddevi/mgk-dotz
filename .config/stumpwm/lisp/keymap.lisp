@@ -5,14 +5,6 @@
   *escape-key* '*root-map*)
 
 (fill-keymap *root-map*
-  (kbd "c")   "exec xterm"
-  (kbd "C-c") "exec xterm"
-  (kbd "e")   "emacs"
-  (kbd "C-e") "emacs"
-  (kbd "b")   "banish"
-  (kbd "C-b") "banish"
-  (kbd "a")   "time"
-  (kbd "C-a") "time"
   (kbd "!")   "exec"
   (kbd "C-g") "abort"
   *escape-fake-key* "send-escape"
@@ -20,7 +12,6 @@
   (kbd ":")   "eval"
   (kbd "v")   "version"
   (kbd "m")   "lastmsg"
-  (kbd "C-m") "lastmsg"
   (kbd "G")   "vgroups"
   (kbd "g")   '*groups-map*
   (kbd "x")   '*exchange-window-map*
