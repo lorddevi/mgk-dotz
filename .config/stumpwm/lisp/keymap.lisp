@@ -86,10 +86,10 @@
 (define-key *root-map* (kbd "M-k") "move-window up")
 (define-key *root-map* (kbd "M-j") "move-window down")
 ;; Navigate focus by direction.
-(define-key *root-map* (kbd "l") "move-focus right")
-(define-key *root-map* (kbd "h") "move-focus left")
-(define-key *root-map* (kbd "k") "move-focus up")
-(define-key *root-map* (kbd "M") "move-focus down")
+(define-key *top-map* (kbd "M-l") "move-focus right")
+(define-key *top-map* (kbd "M-h") "move-focus left")
+(define-key *top-map* (kbd "M-k") "move-focus up")
+(define-key *top-map* (kbd "M-M") "move-focus down")
 ;; Vertical Split.
 (define-key *root-map* (kbd "s") "vsplit")
 ;; Horizontal Split.
@@ -137,7 +137,7 @@
 (define-key *root-map* (kbd "I") "show-window-properties")
 ;; Mark window.
 (define-key *root-map* (kbd ".") "mark")
-;; Un-Mark window.
+;; Un-Mak window.
 (define-key *root-map* (kbd ",") "clear-window-marks")
 ;; Pull marked windows.
 (define-key *root-map* (kbd ">") "pull-marked")
