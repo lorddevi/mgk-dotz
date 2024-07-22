@@ -2,37 +2,42 @@
 ;; -*-lisp-*-
 
 ;; Clear keymaps so we can re-build them ourselves.
-;;(setf *root-map* (make-sparse-keymap))
-;;(setf *group-top-map* (make-sparse-keymap))
-;;(setf *group-root-map* (make-sparse-keymap))
-;;(setf *tile-group-root-map* (make-sparse-keymap))
-;;(setf *root-map* (make-sparse-keymap))
-;;(setf *groups-map* (make-sparse-keymap))
-;;(setf *exchange-window-map* (make-sparse-keymap))
+(setf *root-map* (make-sparse-keymap))
+(setf *groups-map* (make-sparse-keymap))
+(setf *group-top-map* (make-sparse-keymap))
+(setf *group-root-map* (make-sparse-keymap))
+(setf *tile-group-root-map* (make-sparse-keymap))
+(setf *exchange-window-map* (make-sparse-keymap))
+(setf *root-map* (make-sparse-keymap))
 
+;; {{{ <root map>
 ;;;;;;;;;;
 ;; Applications
 ;;;;;;;;;;
-;; Terminals
 (define-key *root-map* (kbd "c") "exec kitty")
 (define-key *root-map* (kbd "C") "exec alacritty")
-
-;; Browser (Firefox
 (define-key *root-map* (kbd "b") "exec firefox")
 (define-key *root-map* (kbd "B") "colon1 exec firefox http://")
-
-;; Ssh somewhere
-;;(define-key *root-map* (kbd "C-s") "colon1 exec kitty -e ssh ")
-
+(define-key *root-map* (kbd "C-s") "colon1 exec kitty -e ssh ")
 ;; Launch emacsclient if not already loaded.  Otherwise, jump it and
 ;; raise it.
 (define-key *root-map* (kbd "e") "decide-on-emacsclient")
 ;; Create a brand new emacsclient session if one is already running.
 (define-key *root-map* (kbd "E") "emacsclient-launch")
-
 ;;;;;;;;;;
-;; Window & Frame Management
+;; Navigation and WM Management
 ;;;;;;;;;;
+;; Jump to group by number using root map.
+(define-key *root-map* (kbd "F1") "gselect 1")
+(define-key *root-map* (kbd "F2") "gselect 2")
+(define-key *root-map* (kbd "F3") "gselect 3")
+(define-key *root-map* (kbd "F4") "gselect 4")
+(define-key *root-map* (kbd "F5") "gselect 5")
+(define-key *root-map* (kbd "F6") "gselect 6")
+(define-key *root-map* (kbd "F7") "gselect 7")
+(define-key *root-map* (kbd "F8") "gselect 8")
+(define-key *root-map* (kbd "F9") "gselect 9")
+(define-key *root-map* (kbd "F10") "gselect 10")
 ;; Jump between windows in current frame.
 (define-key *root-map* (kbd "C-t") "pull-hidden-other")
 ;; List windows in current frame.
@@ -51,7 +56,6 @@
 ;; user to select which window he wants to bring into focus and zoom
 ;; in to.
 (define-key *root-map* (kbd "RET") "expose")
-
 ;; Select window by number.
 ;; TODO: Can I have these window numbers start at 1 instead of 0
 ;; somehow?
@@ -65,7 +69,6 @@
 (define-key *root-map* (kbd "8") "select-window-by-number 8")
 (define-key *root-map* (kbd "9") "select-window-by-number 9")
 (define-key *root-map* (kbd "0") "select-window-by-number 0")
-
 ;; Pull window by number.
 (define-key *root-map* (kbd "1") "pull-window-by-number 1")
 (define-key *root-map* (kbd "2") "pull-window-by-number 2")
@@ -77,19 +80,16 @@
 (define-key *root-map* (kbd "8") "pull-window-by-number 8")
 (define-key *root-map* (kbd "9") "pull-window-by-number 9")
 (define-key *root-map* (kbd "0") "pull-window-by-number 0")
-
 ;; Move window by direction.
 (define-key *root-map* (kbd "M-l") "move-window right")
 (define-key *root-map* (kbd "M-h") "move-window left")
 (define-key *root-map* (kbd "M-k") "move-window up")
 (define-key *root-map* (kbd "M-j") "move-window down")
-
 ;; Navigate focus by direction.
 (define-key *root-map* (kbd "l") "move-focus right")
 (define-key *root-map* (kbd "h") "move-focus left")
 (define-key *root-map* (kbd "k") "move-focus up")
 (define-key *root-map* (kbd "M") "move-focus down")
-
 ;; Vertical Split.
 (define-key *root-map* (kbd "s") "vsplit")
 ;; Horizontal Split.
@@ -100,21 +100,61 @@
 (define-key *root-map* (kbd "r") "iresize")
 ;; Clear current frame of windows.
 (define-key *root-map* (kbd "-") "fclear")
-
 ;; Place current window (apply placement rules to it.)
 (define-key *root-map* (kbd "P") "place-current-window")
 ;; Place all windows (apply placement rules to it.)
 (define-key *root-map* (kbd "W") "place-existing-windows")
+;;;;;;;;;;
+;; Utility
+;;;;;;;;;;
+;; Exec any shell command.
+(define-key *root-map* (kbd "!") "exec")
+;; Abort.
+(define-key *root-map* (kbd "C-g") "abort")
+;; Send ESC.  Needed for some apps on occassion.
+(define-key *root-map* (kbd "t") "send-escape")
+;; Colon
+(define-key *root-map* (kbd ";") "colon")
+;; Eval a lisp expression using the active stump repl.
+(define-key *root-map* (kbd ":") "eval")
+;; Last message.  View previous messages from stump.
+(define-key *root-map* (kbd "m") "last-message")
+;; Quit with confirmation.
+(define-key *root-map* (kbd "q") "quit-confirm")
+;; Quit without confirmation.
+(define-key *root-map* (kbd "Q") "quit")
+;; Delete window cleanly.
+(define-key *root-map* (kbd "k") "delete-window")
+;; Kill window entirely.
+(define-key *root-map* (kbd "K") "kill-window")
+;; Go fullscreen with current window.
+(define-key *root-map* (kbd "F11") "fullscreen")
+;; Set Window Title.
+(define-key *root-map* (kbd "T") "title")
+;; See Window Info.
+(define-key *root-map* (kbd "i") "info")
+;; See Window Properties.
+(define-key *root-map* (kbd "I") "show-window-properties")
+;; Mark window.
+(define-key *root-map* (kbd ".") "mark")
+;; Un-Mark window.
+(define-key *root-map* (kbd ",") "clear-window-marks")
+;; Pull marked windows.
+(define-key *root-map* (kbd ">") "pull-marked")
+;; List all groups as well as their windows.
+(define-key *root-map* (kbd "G") "vgroups")
+;;;;;;;;;;
+;; Maps
+;;;;;;;;;;
+(define-key *root-map* (kbd "g") *GROUPS-MAP*)
+(define-key *root-map* (kbd "x") *EXCHANGE-WINDOW-MAP*)
+(define-key *root-map* (kbd "h") *HELP-MAP*)
+;; }}} </root map>
 
+;; {{{ <groups map>
 ;;;;;;;;;;
 ;; Groups
 ;;;;;;;;;;
-;; List all groups as well as their windows.
-(define-key *root-map* (kbd "G") "vgroups")
-
-;; *GROUPS-MAP*
-(define-key *root-map* (kbd "g") *GROUPS-MAP*)
-
 ;; List groups.
 (define-key *groups-map* (kbd "g") "groups")
 ;; New group.
@@ -151,80 +191,26 @@
 (define-key *groups-map* (kbd "8") "gselect 8")
 (define-key *groups-map* (kbd "9") "gselect 9")
 (define-key *groups-map* (kbd "0") "gselect 0")
+;; {{{ </groups map>
 
-;; Jump to group by number using root map.
-(define-key *root-map* (kbd "F1") "gselect 1")
-(define-key *root-map* (kbd "F2") "gselect 2")
-(define-key *root-map* (kbd "F3") "gselect 3")
-(define-key *root-map* (kbd "F4") "gselect 4")
-(define-key *root-map* (kbd "F5") "gselect 5")
-(define-key *root-map* (kbd "F6") "gselect 6")
-(define-key *root-map* (kbd "F7") "gselect 7")
-(define-key *root-map* (kbd "F8") "gselect 8")
-(define-key *root-map* (kbd "F9") "gselect 9")
-(define-key *root-map* (kbd "F10") "gselect 10")
-
+;; {{{ <exchange window map>
 ;;;;;;;;;;
 ;; Window Exchanging
 ;;;;;;;;;;
-(define-key *root-map* (kbd "x") *EXCHANGE-WINDOW-MAP*)
 (define-key *exchange-window-map* (kbd "h") "exchange-direction left")
 (define-key *exchange-window-map* (kbd "j") "exchange-direction down")
 (define-key *exchange-window-map* (kbd "k") "exchange-direction up")
 (define-key *exchange-window-map* (kbd "l") "exchange-direction right")
+;; }}} </exchange window map>
 
+;; {{{ <help map>
 ;;;;;;;;;;
 ;; Help Map
 ;;;;;;;;;;
-(define-key *root-map* (kbd "h") *HELP-MAP*)
 (define-key *help-map* (kbd "v") "describe-variable")
 (define-key *help-map* (kbd "f") "describe-function")
 (define-key *help-map* (kbd "k") "describe-key")
 (define-key *help-map* (kbd "c") "describe-command")
 (define-key *help-map* (kbd "w") "where-is")
+;; {{{ </help map>
 
-;;;;;;;;;;
-;; Utility
-;;;;;;;;;;
-;; Exec any shell command.
-(define-key *root-map* (kbd "!") "exec")
-
-;; Abort. (define-key *root-map* (kbd "C-g") "abort")
-
-;; Send ESC.  Needed for some apps on occassion.
-(define-key *root-map* (kbd "t") "send-escape")
-
-;; Colon
-(define-key *root-map* (kbd ";") "colon")
-
-;; Eval a lisp expression using the active stump repl.
-(define-key *root-map* (kbd ":") "eval")
-
-;; Last message.  View previous messages from stump.
-(define-key *root-map* (kbd "m") "last-message")
-
-;; Quit with confirmation.
-(define-key *root-map* (kbd "q") "quit-confirm")
-;; Quit without confirmation.
-(define-key *root-map* (kbd "Q") "quit")
-
-;; Delete window cleanly.
-(define-key *root-map* (kbd "k") "delete-window")
-;; Kill window entirely.
-(define-key *root-map* (kbd "K") "kill-window")
-
-;; Go fullscreen with current window.
-(define-key *root-map* (kbd "F11") "fullscreen")
-
-;; Set Window Title.
-(define-key *root-map* (kbd "T") "title")
-;; See Window Info.
-(define-key *root-map* (kbd "i") "info")
-;; See Window Properties.
-(define-key *root-map* (kbd "I") "show-window-properties")
-;; Mark window.
-(define-key *root-map* (kbd ".") "mark")
-;; Un-Mark window.
-(define-key *root-map* (kbd ",") "clear-window-marks")
-;; Pull marked windows.
-(define-key *root-map* (kbd ">") "pull-marked")
