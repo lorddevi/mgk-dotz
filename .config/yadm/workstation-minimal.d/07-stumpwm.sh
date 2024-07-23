@@ -30,7 +30,7 @@ _mordu_nl() {
 
 _mordu "Starting script."
 # }}} </mordu debug system>
-https://git.mgk.one/x11-wm/landakram.stumpwm-prescient.git
+
 # {{{ <clone stumpwm>
 _clone_stumpwm() {
 	# Ensure it is already downloaded.
