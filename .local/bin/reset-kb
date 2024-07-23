@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+setxkbmap -option
+setxkbmap -option ctrl:swapcaps_hyper
+setxkbmap -option shift:both_capslock
+killall xcape
+xcape -e 'Control_L=Escape'
