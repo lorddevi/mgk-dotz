@@ -17,7 +17,10 @@
 ;;(define-key *root-map* (kbd "c") "exec kitty")
 ;;(define-key *root-map* (kbd "C") "exec alacritty")
 ;;(define-key *root-map* (kbd "b") "exec firefox")
-;;(define-key *root-map* (kbd "B") "colon1 exec firefox http://")
+(mgk-define-key "c" "exec kitty")
+(mgk-define-key "C" "exec alacritty")
+(mgk-define-key "b" "exec firefox")
+;;(mgk-define-key "B" "colon1 exec firefox http://")
 ;;(define-key *root-map* (kbd "s") "colon1 exec kitty -e ssh ")
 ;; Launch emacsclient if not already loaded.  Otherwise, jump it and
 ;; raise it.
