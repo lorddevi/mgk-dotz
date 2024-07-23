@@ -1,10 +1,3 @@
---[[
-
-     Awesome WM configuration template
-     github.com/lcpz
-
---]]
-
 -- {{{ Required libraries
 
 -- If LuaRocks is installed, make sure that packages installed through it are
@@ -59,29 +52,6 @@ end
 
 -- }}}
 
--- {{{ Autostart windowless processes
-
--- This function will run once every time Awesome is started
----local function run_once(cmd_arr)
----    for _, cmd in ipairs(cmd_arr) do
----        awful.spawn.with_shell(string.format("pgrep -u $USER -fx '%s' > /dev/null || (%s)", cmd, cmd))
----    end
----end
----
----run_once({ "urxvtd", "unclutter -root" }) -- comma-separated entries
-
--- This function implements the XDG autostart specification
---[[
-awful.spawn.with_shell(
-    'if (xrdb -query | grep -q "^awesome\\.started:\\s*true$"); then exit; fi;' ..
-    'xrdb -merge <<< "awesome.started:true";' ..
-    -- list each of your autostart commands, followed by ; inside single quotes, followed by ..
-    'dex --environment Awesome --autostart --search-paths "$XDG_CONFIG_DIRS/autostart:$XDG_CONFIG_HOME/autostart"' -- https://github.com/jceb/dex
-)
---]]
-
--- }}}
-
 -- {{{ Variable definitions
 
 local themes = {
@@ -97,23 +67,23 @@ local themes = {
     "vertex"           -- 10
 }
 
-local chosen_theme = themes[5]
+local chosen_theme = themes[7]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
-local terminal     = "alacritty"
+local terminal     = "kitty"
 local vi_focus     = false -- vi-like client focus https://github.com/lcpz/awesome-copycats/issues/275
 local cycle_prev   = true  -- cycle with only the previously focused client or all https://github.com/lcpz/awesome-copycats/issues/274
-local editor       = os.getenv("EDITOR") or "emacs"
+local editor       = "emacsclient -c"
 local browser      = "firefox"
 
 awful.util.terminal = terminal
 awful.util.tagnames = { "1", "2", "3", "4", "5" }
 awful.layout.layouts = {
-    awful.layout.suit.floating,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
+    awful.layout.suit.floating
     --awful.layout.suit.fair,
     --awful.layout.suit.fair.horizontal,
     --awful.layout.suit.spiral,
@@ -171,7 +141,8 @@ awful.util.tasklist_buttons = mytable.join(
      awful.button({ }, 5, function() awful.client.focus.byidx(-1) end)
 )
 
-beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme))
+-- beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme))
+beautiful.init(string.format("%s/.config/awesome/custom-themes/%s/theme.lua", os.getenv("HOME"), chosen_theme))
 
 -- }}}
 
@@ -730,7 +701,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, properties = { titlebars_enabled = false }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -834,19 +805,20 @@ tag.connect_signal("property::selected", backham)
 -- Source: https://maketecheasier.com/startup-applications-awesomewm/
 autorun = true
 autorunApps =
-{
-        "unclutter",
-				"reset-kb",
-        "xset r rate 400 50",
-        "xset s off -dpms",
-        "copyq",
-        "blueman-applet",
-        'xsettingsd --config="$HOME/.config/xorg/xsettingsd"',
-				'xrandr-setup',
-				'start-barrier',
-				'start-pasystray',
-        "picom"
-}
+   {
+      "unclutter",
+      "reset-kb",
+      "xset r rate 400 50",
+      "xset s off -dpms",
+      "copyq",
+      "blueman-applet",
+      'xsettingsd --config="$HOME/.config/xorg/xsettingsd"',
+      'xrandr-setup',
+      'start-barrier',
+      'start-pasystray',
+      'picom',
+      'emacs --daemon'
+   }
 if autorun then
         for app = 1, #autorunApps do
                 awful.util.spawn(autorunApps[app])
