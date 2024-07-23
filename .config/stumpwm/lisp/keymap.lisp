@@ -48,9 +48,9 @@
 (define-key *top-map* (kbd "s-k") "move-focus up")
 (define-key *top-map* (kbd "s-j") "move-focus down")
 ;; List windows in current frame.
-;;(define-key *root-map* (kbd "\'") "frame-windowlist")
+(define-key *root-map* (kbd "\"") "frame-windowlist")
 ;; List windows.
-;;(define-key *root-map* (kbd "\"") "windowlist")
+(define-key *root-map* (kbd "\'") "windowlist")
 ;; Jump between windows in current frame.
 ;;(define-key *root-map* (kbd "C-t") "pull-hidden-other")
 ;; Next window in current frame.
@@ -60,7 +60,7 @@
 ;; Jump to frame using number overlay.
 ;;(define-key *root-map* (kbd "f") "fselect")
 ;; Jump to most recent urgent window.
-;;(define-key *root-map* (kbd "C-u") "next-urgent")
+(define-key *root-map* (kbd "C-u") "next-urgent")
 ;; Lay out all windows in a grid and present numbers on them for the
 ;; user to select which window he wants to bring into focus and zoom
 ;; in to.
