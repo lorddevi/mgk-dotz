@@ -14,22 +14,15 @@
 
 ;; {{{ <root map>
 ;; {{{  <applications>
-;;(define-key *root-map* (kbd "c") "exec kitty")
-;;(define-key *root-map* (kbd "C") "exec alacritty")
-;;(define-key *root-map* (kbd "b") "exec firefox")
 (define-key *top-map* (kbd "s-RET") "exec kitty")
 (mgk-define-key "c" "exec kitty")
 (mgk-define-key "C" "exec alacritty")
 (mgk-define-key "b" "exec firefox")
-;;(mgk-define-key "B" "colon1 exec firefox http://")
-;;(define-key *root-map* (kbd "s") "colon1 exec kitty -e ssh ")
 ;; Launch emacsclient if not already loaded.  Otherwise, jump it and
 ;; raise it.
-;;(define-key *root-map* (kbd "e") "decide-on-emacsclient")
 (mgk-define-key "e" "decide-on-emacsclient")
-(mgk-define-key "E" "emacsclient-launch")
 ;; Create a brand new emacsclient session if one is already running.
-;;(define-key *root-map* (kbd "E") "emacsclient-launch")
+(mgk-define-key "E" "emacsclient-launch")
 ;; }}}  </applications>
 ;; {{{  <navigation>
 ;; General Top Level Bindings
@@ -41,7 +34,6 @@
 ;; Frame cycling
 (define-key *top-map* (kbd "s-TAB") "fnext")
 (define-key *root-map* (kbd "o") "fnext")
-
 (define-key *top-map* (kbd "s-ISO_Left_Tab") "fprev")
 ;; Navigate focus by direction.
 (define-key *top-map* (kbd "s-l") "move-focus right")
@@ -61,16 +53,16 @@
 ;; Select window by number.
 ;; TODO: Can I have these window numbers start at 1 instead of 0
 ;; somehow?
-;;(define-key *root-map* (kbd "1") "select-window-by-number 1")
-;;(define-key *root-map* (kbd "2") "select-window-by-number 2")
-;;(define-key *root-map* (kbd "3") "select-window-by-number 3")
-;;(define-key *root-map* (kbd "4") "select-window-by-number 4")
-;;(define-key *root-map* (kbd "5") "select-window-by-number 5")
-;;(define-key *root-map* (kbd "6") "select-window-by-number 6")
-;;(define-key *root-map* (kbd "7") "select-window-by-number 7")
-;;(define-key *root-map* (kbd "8") "select-window-by-number 8")
-;;(define-key *root-map* (kbd "9") "select-window-by-number 9")
-;;(define-key *root-map* (kbd "0") "select-window-by-number 0")
+(define-key *root-map* (kbd "1") "select-window-by-number 1")
+(define-key *root-map* (kbd "2") "select-window-by-number 2")
+(define-key *root-map* (kbd "3") "select-window-by-number 3")
+(define-key *root-map* (kbd "4") "select-window-by-number 4")
+(define-key *root-map* (kbd "5") "select-window-by-number 5")
+(define-key *root-map* (kbd "6") "select-window-by-number 6")
+(define-key *root-map* (kbd "7") "select-window-by-number 7")
+(define-key *root-map* (kbd "8") "select-window-by-number 8")
+(define-key *root-map* (kbd "9") "select-window-by-number 9")
+(define-key *root-map* (kbd "0") "select-window-by-number 0")
 ;; }}}  </navigation>
 ;; {{{  <window management>
 ;; Pull window by number.
