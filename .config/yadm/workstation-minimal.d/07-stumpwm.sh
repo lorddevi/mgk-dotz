@@ -30,7 +30,7 @@ _mordu_nl() {
 
 _mordu "Starting script."
 # }}} </mordu debug system>
-
+https://git.mgk.one/x11-wm/landakram.stumpwm-prescient.git
 # {{{ <clone stumpwm>
 _clone_stumpwm() {
 	# Ensure it is already downloaded.
@@ -46,6 +46,31 @@ _clone_stumpwm() {
 		|| $_ghq get "$__repo" \
 		|| $_ghq get "$__repo" \
 		|| _mordu "Failed to download ${__repo} three times."
+	fi
+}
+# }}} </clone stumpwm>
+
+# {{{ <clone stumpwm>
+_clone_and_link_stumpwm-prescient() {
+	# Ensure it is already downloaded.
+	local __repo="git.mgk.one/x11-wm/landakram.stumpwm-prescient"
+	local __link_target="${HOME}/.local/opt/quicklisp/local-projects/stumpwm-prescient"
+
+	_mordu "Checking for ${__repo}.."
+	if $_ghq list | grep -q "$__repo" ; then
+		_mordu "Found ${__repo}.  Updating."
+		$_ghq get -u "$__repo"
+	else
+		_mordu_n "..Not found.  Cloning."
+		$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} three times."
+	fi
+
+	if [ ! -L "$__link_target" ]; then
+		_mordu "Creating link to ${__link_target}."
+		ln -sr "${GHQ_ROOT}/${__repo}" "${__link_target}"
 	fi
 }
 # }}} </clone stumpwm>
@@ -72,6 +97,7 @@ _compile_and_install_stumpwm() {
 _main() {
 	_clone_stumpwm
 	_compile_and_install_stumpwm
+	_clone_and_link_stumpwm-prescient
 }
 _main
 # }}} </main loop>
