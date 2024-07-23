@@ -17,6 +17,7 @@
 ;;(define-key *root-map* (kbd "c") "exec kitty")
 ;;(define-key *root-map* (kbd "C") "exec alacritty")
 ;;(define-key *root-map* (kbd "b") "exec firefox")
+(define-key *top-map* (kbd "RET") "exec kitty")
 (mgk-define-key "c" "exec kitty")
 (mgk-define-key "C" "exec alacritty")
 (mgk-define-key "b" "exec firefox")
