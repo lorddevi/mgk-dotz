@@ -43,10 +43,10 @@
 
 (define-key *top-map* (kbd "s-ISO_Left_Tab") "fprev")
 ;; Navigate focus by direction.
-;;(define-key *top-map* (kbd "s-l") "move-focus right")
-;;(define-key *top-map* (kbd "s-h") "move-focus left")
-;;(define-key *top-map* (kbd "s-k") "move-focus up")
-;;(define-key *top-map* (kbd "s-j") "move-focus down")
+(define-key *top-map* (kbd "s-l") "move-focus right")
+(define-key *top-map* (kbd "s-h") "move-focus left")
+(define-key *top-map* (kbd "s-k") "move-focus up")
+(define-key *top-map* (kbd "s-j") "move-focus down")
 ;; List windows in current frame.
 ;;(define-key *root-map* (kbd "\'") "frame-windowlist")
 ;; List windows.
