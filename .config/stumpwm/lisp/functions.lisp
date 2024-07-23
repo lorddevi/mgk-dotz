@@ -43,6 +43,25 @@ run-or-raise with group search t."
   (define-key *top-map* (kbd (concat "s-" key )) command)
   (define-key *root-map* (kbd key) command))
 
+;;; Moving the mouse for me
+;; Used for warping the cursor
+(load-module "beckon")
+(defmacro with-focus-lost (&body body)
+  "Make sure WIN is on the top level while the body is running and
+restore it's always-on-top state afterwords"
+  `(progn (banish)
+          ,@body
+          (when (current-window)
+            (beckon:beckon))))
+
+(defcommand remove-lose-focus () ()
+  "Remove the window without feaking out because of :sloppy *mouse-focus-policy*"
+  (with-focus-lost (remove-split)))
+
+(defcommand fullscreen-and-raise () ()
+  "Fullscreen window and make sure it's on top of all other windows"
+  (with-on-top (stumpwm:current-window) (fullscreen)))
+
 ;;; Splits
 (defcommand hsplit-and-focus () ()
   "create a new frame on the right and focus it."
