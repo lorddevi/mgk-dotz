@@ -51,20 +51,12 @@
 (define-key *root-map* (kbd "\"") "frame-windowlist")
 ;; List windows.
 (define-key *root-map* (kbd "\'") "windowlist")
-;; Jump between windows in current frame.
-;;(define-key *root-map* (kbd "C-t") "pull-hidden-other")
-;; Next window in current frame.
-;;(define-key *root-map* (kbd "n") "pull-hidden-next")
-;; Previous window in current frame.
-;;(define-key *root-map* (kbd "p") "pull-hidden-previous")
-;; Jump to frame using number overlay.
-;;(define-key *root-map* (kbd "f") "fselect")
 ;; Jump to most recent urgent window.
 (define-key *root-map* (kbd "C-u") "next-urgent")
 ;; Lay out all windows in a grid and present numbers on them for the
 ;; user to select which window he wants to bring into focus and zoom
 ;; in to.
-;;(define-key *root-map* (kbd "RET") "expose")
+(define-key *root-map* (kbd "RET") "expose")
 ;; Select window by number.
 ;; TODO: Can I have these window numbers start at 1 instead of 0
 ;; somehow?
