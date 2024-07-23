@@ -37,3 +37,23 @@ run-or-raise with group search t."
 
 (defcommand emacsclient-launch () ()
   (run-shell-command "emacsclient -c"))
+
+;; Bind to top and root map at the same time.
+(defun mgk-define-key (key command)
+  (define-key *top-map* (kbd (concat "s-" key )) command)
+  (define-key *root-map* (kbd key) command))
+
+;;; Splits
+(defcommand hsplit-and-focus () ()
+  "create a new frame on the right and focus it."
+  (with-focus-lost
+   (hsplit)
+   (move-focus :right)))
+
+(defcommand vsplit-and-focus () ()
+  "create a new frame below and focus it."
+  (with-focus-lost
+   (vsplit)
+   (move-focus :down)))
+(define-key *root-map* (kbd "v") "hsplit-and-focus")
+(define-key *root-map* (kbd "s") "vsplit-and-focus")

@@ -21,9 +21,11 @@
 ;;(define-key *root-map* (kbd "s") "colon1 exec kitty -e ssh ")
 ;; Launch emacsclient if not already loaded.  Otherwise, jump it and
 ;; raise it.
-(define-key *root-map* (kbd "e") "decide-on-emacsclient")
+;;(define-key *root-map* (kbd "e") "decide-on-emacsclient")
+(mgk-define-key "e" "decide-on-emacsclient")
+(mgk-define-key "E" "emacsclient-launch")
 ;; Create a brand new emacsclient session if one is already running.
-(define-key *root-map* (kbd "E") "emacsclient-launch")
+;;(define-key *root-map* (kbd "E") "emacsclient-launch")
 ;; }}}  </applications>
 ;; {{{  <navigation>
 ;; Navigate focus by direction.
@@ -82,10 +84,11 @@
 ;;(define-key *root-map* (kbd "M-j") "move-window down")
 ;; }}}  </window management>
 ;; {{{  <frame and split management>
-;; Vertical Split.
-(define-key *root-map* (kbd "s") "vsplit")
-;; Horizontal Split.
-(define-key *root-map* (kbd "S") "hsplit")
+;; Splits
+(mgk-define-key "s" "hsplit-and-focus")
+(mgk-define-key "v" "vsplit-and-focus")
+;;(define-key *root-map* (kbd "s") "vsplit")
+;;(define-key *root-map* (kbd "S") "hsplit")
 ;; Remove currently active frame from split.
 (define-key *root-map* (kbd "R") "remove-split")
 ;; Resize frames.
