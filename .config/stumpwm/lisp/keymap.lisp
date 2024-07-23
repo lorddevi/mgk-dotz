@@ -38,14 +38,14 @@
 (define-key *top-map* (kbd "s-TAB") "fnext")
 (define-key *top-map* (kbd "s-ISO_Left_Tab") "fprev")
 ;; Navigate focus by direction.
-;;(define-key *root-map* (kbd "s-l") "move-focus right")
-;;(define-key *root-map* (kbd "s-h") "move-focus left")
-;;(define-key *root-map* (kbd "s-k") "move-focus up")
-;;(define-key *root-map* (kbd "s-j") "move-focus down")
+(define-key *root-map* (kbd "s-l") "move-focus right")
+(define-key *root-map* (kbd "s-h") "move-focus left")
+(define-key *root-map* (kbd "s-k") "move-focus up")
+(define-key *root-map* (kbd "s-j") "move-focus down")
 ;; List windows in current frame.
-;;(define-key *root-map* (kbd "\'") "frame-windowlist")
+(define-key *root-map* (kbd "\'") "frame-windowlist")
 ;; List windows.
-;;(define-key *root-map* (kbd "\"") "windowlist")
+(define-key *root-map* (kbd "\"") "windowlist")
 ;; Jump between windows in current frame.
 ;;(define-key *root-map* (kbd "C-t") "pull-hidden-other")
 ;; Next window in current frame.
