@@ -9,6 +9,7 @@
 
 (load "~/.config/stumpwm/lisp/fonts.lisp")
 (load "~/.config/stumpwm/lisp/functions.lisp")
+(load "~/.config/stumpwm/lisp/settings.lisp")
 (load "~/.config/stumpwm/lisp/keymap.lisp")
 (load "~/.config/stumpwm/lisp/autoload.lisp")
 

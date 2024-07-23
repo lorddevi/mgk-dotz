@@ -28,6 +28,15 @@
 ;;(define-key *root-map* (kbd "E") "emacsclient-launch")
 ;; }}}  </applications>
 ;; {{{  <navigation>
+;; General Top Level Bindings
+(define-key *top-map* (kbd "s-n") "pull-hidden-next")
+(define-key *top-map* (kbd "s-p") "pull-hidden-previous")
+;; Tab like cycling
+(define-key *top-map* (kbd "s-C-n") "next-in-frame")
+(define-key *top-map* (kbd "s-C-p") "prev-in-frame")
+;; Frame cycling
+(define-key *top-map* (kbd "s-TAB") "fnext")
+(define-key *top-map* (kbd "s-ISO_Left_Tab") "fprev")
 ;; Navigate focus by direction.
 ;;(define-key *root-map* (kbd "s-l") "move-focus right")
 ;;(define-key *root-map* (kbd "s-h") "move-focus left")
