@@ -7,7 +7,7 @@ _location=".config/posix-common/aliases.d/xdg-related.sh"
 # that in common-envs.sh instead.
 
 # {{{ <mordu debug system>
-_debug=y # Comment this out to disable debuging.
+# _debug=y # Comment this out to disable debuging.
 
 _blue="\e[34m"
 _magenta="\e[35m"

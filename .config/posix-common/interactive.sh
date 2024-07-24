@@ -4,7 +4,7 @@ _location=".config/posix-common/interactive.sh"
 # Anything we might expect to want or need in an interactive shell should be added from here somehow.
 
 # {{{ <mordu debug system>
-_debug=y # Comment this out to disable debuging.
+# _debug=y # Comment this out to disable debuging.
 
 _blue="\e[34m"
 _magenta="\e[35m"

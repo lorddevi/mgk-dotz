@@ -2,7 +2,7 @@
 _location=".config/posix-common/logout.sh"
 
 # {{{ <mordu debug system>
-_debug=y # Comment this out to disable debuging.
+# _debug=y # Comment this out to disable debuging.
 
 _blue="\e[34m"
 _magenta="\e[35m"

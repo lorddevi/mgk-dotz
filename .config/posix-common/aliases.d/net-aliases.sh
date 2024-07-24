@@ -4,7 +4,7 @@ _location=".config/posix-common/aliases.d/net-aliases.sh"
 # These are shortcuts for comming networking things I do.
 
 # {{{ <mordu debug system>
-_debug=y # Comment this out to disable debuging.
+# _debug=y # Comment this out to disable debuging.
 
 _blue="\e[34m"
 _magenta="\e[35m"

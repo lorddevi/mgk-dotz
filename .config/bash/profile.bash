@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-_location=".config/bash/profile.bash"
+# _location=".config/bash/profile.bash"
 
 # {{{ <mordu debug system>
 _debug=y # Comment this out to disable debuging.

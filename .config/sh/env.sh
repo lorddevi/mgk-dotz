@@ -4,7 +4,7 @@ _location=".config/sh/env.sh"
 # WARNING: this will not be run for non-login, non-env.shells.
 
 # {{{ <mordu debug system>
-_debug=y # Comment this out to disable debuging.
+# _debug=y # Comment this out to disable debuging.
 
 _blue="\e[34m"
 _magenta="\e[35m"

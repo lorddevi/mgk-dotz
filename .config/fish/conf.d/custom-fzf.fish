@@ -2,7 +2,7 @@
 set _location ".config/fish/conf.d/custom-fzf.fish"
 
 # {{{ <mordu debug system>
-set _debug y # Comment this out to disable DEBUGing.
+# set _debug y # Comment this out to disable DEBUGing.
 set _blue "\033[34m"
 set _magenta "\033[35m"
 set _green "\033[92m"

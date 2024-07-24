@@ -2,7 +2,7 @@
 _location=".config/zsh/interactive.zsh"
 
 # {{{ <mordu debug system>
-_debug=y # Comment this out to disable debugging.
+# _debug=y # Comment this out to disable debugging.
 _blue="\033[34m"
 _magenta="\033[35m"
 _green="\033[92m"
