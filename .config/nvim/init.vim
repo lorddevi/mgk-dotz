@@ -42,8 +42,8 @@ set undodir=$XDG_CACHE_HOME/nvim/undo     | call mkdir(&undodir,   'p', 0700)
 call plug#begin()
 Plug '~/.local/opt/git/git.mgk.one/vim/khaveesh.vim-fish-syntax'
 Plug '~/.local/opt/git/git.mgk.one/nvim/norcalli.nvim-colorizer.lua'
-Plug '~/.local/opt/git/git.mgk.one/nvim/ishan9299.modus-theme-vim'
-Plug '~/.local/opt/git/git.mgk.one/nvim/maxmx03.dracula.nvim', { 'branch': 'vim' }
+""Plug '~/.local/opt/git/git.mgk.one/nvim/ishan9299.modus-theme-vim'
+""Plug '~/.local/opt/git/git.mgk.one/nvim/maxmx03.dracula.nvim', { 'branch': 'vim' }
 
 ""Plug '~/.local/opt/git/christoomey.vim-tmux-navigator'
 Plug '~/.local/opt/git/git.mgk.one/tmux/sunaku.tmux-navigate'
@@ -74,4 +74,4 @@ lua require'colorizer'.setup()
 
 "" Set theme to modus
 ""colorscheme modus-vivendi
-colorscheme dracula
+""colorscheme dracula

@@ -58,9 +58,12 @@ _mordu "Finished sourcing Aliases from ~/.config/posix-common/aliases.d/*."
 
 # {{{ === LS_COLORS === 
 # Sauce: https://github.com/trapd00r/LS_COLORS
-_mordu "Sourcing LS_COLORS from ~/.config/posix-common/lscolors.sh"
-. "$HOME"/.config/posix-common/lscolors.sh
-_mordu "Finished sourcing LS_COLORS from ~/.config/posix-common/lscolors.sh"
+#_mordu "Sourcing LS_COLORS from ~/.config/posix-common/lscolors.sh"
+#. "$HOME"/.config/posix-common/lscolors.sh
+#_mordu "Finished sourcing LS_COLORS from ~/.config/posix-common/lscolors.sh"
+
+# Trying nord dir colors instead:
+test -r ~/.config/posix-common/nord-dir-colors && eval $(dircolors ~/.config/posix-common/nord-dir-colors)
 # }}} === LS_COLORS === 
 
 # {{{ === Configure 'thefuck' as 'uwu'. ===

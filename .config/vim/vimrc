@@ -61,4 +61,4 @@ call plug#end()
 set termguicolors
 
 "" Set colorscheme
-colorscheme industry
+""colorscheme industry

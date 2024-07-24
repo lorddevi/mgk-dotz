@@ -20,18 +20,18 @@ theme.icon_dir                                  = os.getenv("HOME") .. "/.config
 theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/themes/holo/wall.png"
 theme.font                                      = "JetBrainsMono NF 12"
 theme.taglist_font                              = "JetBrainsMono NF 12"
-theme.fg_normal                                 = "#f8f8f2"
-theme.fg_focus                                  = "#AA99FF"
-theme.bg_focus                                  = "#454158"
-theme.bg_normal                                 = "#22212C"
-theme.fg_urgent                                 = "#ff9580"
-theme.bg_urgent                                 = "#a2ff99"
+theme.fg_normal                                 = "#D8DEE9"
+theme.fg_focus                                  = "#BF616A"
+theme.bg_focus                                  = "#2E3440"
+theme.bg_normal                                 = "#242424"
+theme.fg_urgent                                 = "#FFFACD"
+theme.bg_urgent                                 = "#BF616A"
 theme.border_width                              = dpi(5)
-theme.border_normal                             = "#000000"
-theme.border_focus                              = "#454158"
-theme.taglist_fg_focus                          = "#80FFEA"
-theme.tasklist_bg_normal                        = "#222222"
-theme.tasklist_fg_focus                         = "#80FFEA"
+theme.border_normal                             = "#3B4252"
+theme.border_focus                              = "#81A1C1"
+theme.taglist_fg_focus                          = "#A3BE8C"
+theme.tasklist_bg_normal                        = "#242424"
+theme.tasklist_fg_focus                         = "#BF616A"
 theme.menu_height                               = dpi(20)
 theme.menu_width                                = dpi(160)
 theme.menu_icon_size                            = dpi(32)
@@ -97,7 +97,7 @@ theme.titlebar_maximized_button_focus_active    = theme.default_dir.."/titlebar/
 theme.musicplr = string.format("%s -e ncmpcpp", awful.util.terminal)
 
 local markup = lain.util.markup
-local blue   = "#80CCE6"
+local blue   = "#81A1C1"
 local space3 = markup.font("JetBrainsMono NF 3", " ")
 
 -- Clock
@@ -221,18 +221,18 @@ theme.fs = lain.widget.fs({
 
 -- ALSA volume bar
 theme.volume = lain.widget.alsabar({
-    notification_preset = { font = "Monospace 9"},
+    notification_preset = { font = "JetBrainsMono NF 9"},
     --togglechannel = "IEC958,3",
     width = dpi(80), height = dpi(10), border_width = dpi(0),
     colors = {
-        background = "#383838",
-        unmute     = "#80CCE6",
-        mute       = "#FF9F9F"
+        background = "#242424",
+        unmute     = "#81A1C1",
+        mute       = "#BF616A"
     },
 })
 theme.volume.bar.paddings = dpi(0)
 theme.volume.bar.margins = dpi(5)
-local volumewidget = wibox.container.background(theme.volume.bar, theme.bg_focus, gears.shape.rectangle)
+local volumewidget = wibox.container.background(theme.volume.bar, theme.bg_normal, gears.shape.rectangle)
 volumewidget = wibox.container.margin(volumewidget, dpi(0), dpi(0), dpi(5), dpi(5))
 
 -- CPU
@@ -285,7 +285,7 @@ local barcolor  = gears.color({
     type  = "linear",
     from  = { dpi(32), 0 },
     to    = { dpi(32), dpi(32) },
-    stops = { {0, theme.bg_focus}, {0.25, "#505050"}, {1, theme.bg_focus} }
+    stops = { {0, theme.bg_focus}, {0.25, "#4C566A"}, {1, theme.bg_focus} }
 })
 
 function theme.at_screen_connect(s)

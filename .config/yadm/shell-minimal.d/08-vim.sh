@@ -85,6 +85,7 @@ _define_vim_plugins() {
 		git.mgk.one/vim/bourgeoisbear.clrzr \
 		git.mgk.one/vim/khaveesh.vim-fish-syntax \
 		git.mgk.one/vim/tpope.vim-surround \
+		git.mgk.one/vim/nordtheme.vim \
 		git.mgk.one/vim/tpope.vim-repeat)
 }
 # }}} </define vim plugins>

@@ -77,5 +77,14 @@ set clipboard+=unnamedplus
 
 
 """"
-"" keymappings / tools
+"" Vim Plug
 """"
+call plug#begin()
+Plug '~/.local/opt/git/git.mgk.one/vim/nordtheme.vim'
+call plug#end()
+
+
+""""
+"" colorscheme
+""""
+colorscheme nord
