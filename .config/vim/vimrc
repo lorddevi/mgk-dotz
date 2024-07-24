@@ -59,6 +59,3 @@ call plug#end()
 
 "" Enable termguicolors for clrzr.
 set termguicolors
-
-"" Set colorscheme
-""colorscheme industry

@@ -79,12 +79,16 @@ set clipboard+=unnamedplus
 """"
 "" Vim Plug
 """"
-call plug#begin()
-Plug '~/.local/opt/git/git.mgk.one/vim/nordtheme.vim'
-call plug#end()
+""call plug#begin()
+""Plug '~/.local/opt/git/git.mgk.one/vim/nordtheme.vim'
+""Plug '~/.local/opt/git/git.mgk.one/vim/whatyouhide.vim-gotham'
+""call plug#end()
 
 
 """"
 "" colorscheme
 """"
-colorscheme nord
+""colorscheme nord
+""colorscheme gotham256
+set background=dark
+colorscheme solarized

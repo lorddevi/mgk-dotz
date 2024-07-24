@@ -1,6 +1,6 @@
-! ~/.config/xorg/theme-draculapro.xrdb
+! ~/.config/xorg/theme-solarized.xrdb
 ! Author: Lord_Devi
-! Description: Xresources file for the dracula pro color scheme.
+! Description: Xresources file for solarized.
 
 *background: #001e26
 *foreground: #9bc1c2

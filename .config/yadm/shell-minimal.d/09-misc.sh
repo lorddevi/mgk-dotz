@@ -83,6 +83,25 @@ _install_bat_extras() {
 }
 # }}} </install bat extras>
 
+# {{{ <install gotham contrib>
+_install_gotham_contrib() {
+	local __repo="git.mgk.one/x11-misc/whatyouhide.gotham-contrib"
+
+	# Check if the repo already exists or not.
+	_mordu_n "Checking for ${__repo}.."
+	if $_ghq list | grep -q "$__repo" ; then
+		_mordu_nl "..Found.  Updating."
+		$_ghq get -u "$__repo"
+	else
+		_mordu_nl "Not Found.  Installing."
+		$_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| $_ghq get "$__repo" \
+		|| _mordu "Failed to download ${__repo} three times."
+	fi
+}
+# }}} </install gotham contrib>
+
 # {{{ <install and update ls_colors>
 _install_and_update_ls_colors() {
 	local __repo="git.mgk.one/utils-shell/trapd00r.LS_COLORS"
@@ -152,6 +171,7 @@ _install_ugit() {
 # {{{ <main loop>
 _main() {
 	_install_bat_extras
+	_install_gotham_contrib
 	_install_and_update_ls_colors
 	_install_ugit
 }

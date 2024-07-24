@@ -53,7 +53,7 @@ _define_packages() {
 	_entertainment=(fortune-mod)
 	_net=(aria2 wget2 bind-utils NetworkManager-tui traceroute nmap netcat rsync)
 	_development=(git git-lfs make autoconf automake patch bzip2 xz findutils \
-		python-devel git-crypt cmake libtool)
+		python-devel git-crypt cmake libtool luarocks)
 	_system=(htop bpytop diskonaut chkconfig uu_shred pinentry)
 	_packages=("${_editors[@]}" "${_shell_utils[@]}" "${_entertainment[@]}" \
 		"${_development[@]}" "${_net[@]}" "${_system[@]}")

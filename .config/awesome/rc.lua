@@ -65,10 +65,11 @@ local themes = {
     "rainbow",         -- 8
     "steamburn",       -- 9
     "vertex",          -- 10
-    "mgk-holo"         -- 11
+    "mgk-holo",        -- 11
+    "mgk-h4x0r"        -- 12
 }
 
-local chosen_theme = themes[11]
+local chosen_theme = themes[12]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
 local terminal     = "kitty"

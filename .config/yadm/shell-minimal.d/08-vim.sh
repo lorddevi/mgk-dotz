@@ -86,6 +86,8 @@ _define_vim_plugins() {
 		git.mgk.one/vim/khaveesh.vim-fish-syntax \
 		git.mgk.one/vim/tpope.vim-surround \
 		git.mgk.one/vim/nordtheme.vim \
+		git.mgk.one/vim/lifepillar.vim-solarized8 \
+		git.mgk.one/vim/whatyouhide.vim-gotham \
 		git.mgk.one/vim/tpope.vim-repeat)
 }
 # }}} </define vim plugins>
