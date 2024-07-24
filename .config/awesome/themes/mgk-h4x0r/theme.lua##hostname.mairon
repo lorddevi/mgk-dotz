@@ -10,18 +10,18 @@ local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 local theme                                     = {}
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/mgk-h4x0r"
 theme.font                                      = "JetBrainsMono NF 12"
-theme.fg_normal                                 = "#bfbfbf"
-theme.fg_focus                                  = "#e50000"
-theme.bg_normal                                 = "#000000"
-theme.bg_focus                                  = "#000000"
+theme.fg_normal                                 = "#9bc1c2"
+theme.fg_focus                                  = "#6bbe6c"
+theme.bg_normal                                 = "#001e26"
+theme.bg_focus                                  = "#001e26"
 theme.fg_urgent                                 = "#000000"
 theme.bg_urgent                                 = "#FFFFFF"
-theme.border_width                              = dpi(1)
-theme.border_normal                             = "#000000"
-theme.border_focus                              = "#333333"
-theme.taglist_fg_focus                          = "#e5e5e5"
-theme.taglist_bg_focus                          = "#111111"
-theme.taglist_bg_normal                         = "#111111"
+theme.border_width                              = dpi(5)
+theme.border_normal                             = "#003747"
+theme.border_focus                              = "#006388"
+theme.taglist_fg_focus                          = "#fcf4dc"
+theme.taglist_bg_focus                          = "#001e26"
+theme.taglist_bg_normal                         = "#001e26"
 theme.titlebar_bg_normal                        = "#000000"
 theme.titlebar_bg_focus                         = "#000000"
 theme.menu_height                               = dpi(32)
@@ -286,10 +286,10 @@ theme.weather = lain.widget.weather({
 --]]
 
 -- Separators
-local first     = wibox.widget.textbox(markup.font("Terminus 3", " "))
+local first     = wibox.widget.textbox(markup.font("JetBrainsMono NF 3", " "))
 local spr       = wibox.widget.textbox(' ')
-local small_spr = wibox.widget.textbox(markup.font("Terminus 4", " "))
-local bar_spr   = wibox.widget.textbox(markup.font("Terminus 3", " ") .. markup.fontfg(theme.font, "#777777", "|") .. markup.font("Terminus 5", " "))
+local small_spr = wibox.widget.textbox(markup.font("JetBrainsMono NF 4", " "))
+local bar_spr   = wibox.widget.textbox(markup.font("JetBrainsMono NF 3", " ") .. markup.fontfg(theme.font, "#777777", "|") .. markup.font("JetBrainsMono NF 5", " "))
 
 -- Eminent-like task filtering
 local orig_filter = awful.widget.taglist.filter.all
