@@ -19,19 +19,19 @@ theme.default_dir                               = require("awful.util").get_them
 theme.icon_dir                                  = os.getenv("HOME") .. "/.config/awesome/themes/holo/icons"
 theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/themes/holo/wall.png"
 theme.font                                      = "JetBrainsMono NF 12"
-theme.taglist_font                              = "JetBrainsMono NF 8"
-theme.fg_normal                                 = "#FFFFFF"
-theme.fg_focus                                  = "#0099CC"
-theme.bg_focus                                  = "#303030"
-theme.bg_normal                                 = "#242424"
-theme.fg_urgent                                 = "#CC9393"
-theme.bg_urgent                                 = "#006B8E"
-theme.border_width                              = dpi(3)
-theme.border_normal                             = "#252525"
-theme.border_focus                              = "#0099CC"
-theme.taglist_fg_focus                          = "#FFFFFF"
+theme.taglist_font                              = "JetBrainsMono NF 12"
+theme.fg_normal                                 = "#f8f8f2"
+theme.fg_focus                                  = "#AA99FF"
+theme.bg_focus                                  = "#454158"
+theme.bg_normal                                 = "#22212C"
+theme.fg_urgent                                 = "#ff9580"
+theme.bg_urgent                                 = "#a2ff99"
+theme.border_width                              = dpi(5)
+theme.border_normal                             = "#000000"
+theme.border_focus                              = "#454158"
+theme.taglist_fg_focus                          = "#80FFEA"
 theme.tasklist_bg_normal                        = "#222222"
-theme.tasklist_fg_focus                         = "#4CB7DB"
+theme.tasklist_fg_focus                         = "#80FFEA"
 theme.menu_height                               = dpi(20)
 theme.menu_width                                = dpi(160)
 theme.menu_icon_size                            = dpi(32)
@@ -101,16 +101,16 @@ local blue   = "#80CCE6"
 local space3 = markup.font("JetBrainsMono NF 3", " ")
 
 -- Clock
-local mytextclock = wibox.widget.textclock(markup("#FFFFFF", space3 .. "%H:%M   " .. markup.font("Roboto 4", " ")))
+local mytextclock = wibox.widget.textclock(markup("#FFFFFF", space3 .. "%H:%M   " .. markup.font("JetBrainsMono NF 4", " ")))
 mytextclock.font = theme.font
 local clock_icon = wibox.widget.imagebox(theme.clock)
-local clockbg = wibox.container.background(mytextclock, theme.bg_focus, gears.shape.rectangle)
+local clockbg = wibox.container.background(mytextclock, theme.bg_normal, gears.shape.rectangle)
 local clockwidget = wibox.container.margin(clockbg, dpi(0), dpi(3), dpi(5), dpi(5))
 
 -- Calendar
-local mytextcalendar = wibox.widget.textclock(markup.fontfg(theme.font, "#FFFFFF", space3 .. "%d %b " .. markup.font("Roboto 5", " ")))
+local mytextcalendar = wibox.widget.textclock(markup.fontfg(theme.font, "#FFFFFF", space3 .. "%d %b " .. markup.font("JetBrainsMono NF 5", " ")))
 local calendar_icon = wibox.widget.imagebox(theme.calendar)
-local calbg = wibox.container.background(mytextcalendar, theme.bg_focus, gears.shape.rectangle)
+local calbg = wibox.container.background(mytextcalendar, theme.bg_normal, gears.shape.rectangle)
 local calendarwidget = wibox.container.margin(calbg, dpi(0), dpi(0), dpi(5), dpi(5))
 theme.cal = lain.widget.cal({
     attach_to = { mytextclock, mytextcalendar },
@@ -156,16 +156,16 @@ theme.mpd = lain.widget.mpd({
         if mpd_now.state == "play" then
             mpd_now.artist = mpd_now.artist:upper():gsub("&.-;", string.lower)
             mpd_now.title = mpd_now.title:upper():gsub("&.-;", string.lower)
-            widget:set_markup(markup.font("Roboto 4", " ")
+            widget:set_markup(markup.font("JetBrainsMono NF 4", " ")
                               .. markup.font(theme.taglist_font,
                               " " .. mpd_now.artist
                               .. " - " ..
-                              mpd_now.title .. "  ") .. markup.font("Roboto 5", " "))
+                              mpd_now.title .. "  ") .. markup.font("JetBrainsMono NF 5", " "))
             play_pause_icon:set_image(theme.pause)
         elseif mpd_now.state == "pause" then
-            widget:set_markup(markup.font("Roboto 4", " ") ..
+            widget:set_markup(markup.font("JetBrainsMono NF 4", " ") ..
                               markup.font(theme.taglist_font, " MPD PAUSED  ") ..
-                              markup.font("Roboto 5", " "))
+                              markup.font("JetBrainsMono NF 5", " "))
             play_pause_icon:set_image(theme.play)
         else
             widget:set_markup("")
@@ -240,10 +240,10 @@ local cpu_icon = wibox.widget.imagebox(theme.cpu)
 local cpu = lain.widget.cpu({
     settings = function()
         widget:set_markup(space3 .. markup.font(theme.font, "CPU " .. cpu_now.usage
-                          .. "% ") .. markup.font("Roboto 5", " "))
+                          .. "% ") .. markup.font("JetBrainsMono NF 5", " "))
     end
 })
-local cpubg = wibox.container.background(cpu.widget, theme.bg_focus, gears.shape.rectangle)
+local cpubg = wibox.container.background(cpu.widget, theme.bg_normal, gears.shape.rectangle)
 local cpuwidget = wibox.container.margin(cpubg, dpi(0), dpi(0), dpi(5), dpi(5))
 
 -- Net
@@ -251,11 +251,11 @@ local netdown_icon = wibox.widget.imagebox(theme.net_down)
 local netup_icon = wibox.widget.imagebox(theme.net_up)
 local net = lain.widget.net({
     settings = function()
-        widget:set_markup(markup.font("Roboto 1", " ") .. markup.font(theme.font, net_now.received .. " - "
-                          .. net_now.sent) .. markup.font("Roboto 2", " "))
+        widget:set_markup(markup.font("JetBrainsMono NF 1", " ") .. markup.font(theme.font, net_now.received .. " - "
+                          .. net_now.sent) .. markup.font("JetBrainsMono NF 2", " "))
     end
 })
-local netbg = wibox.container.background(net.widget, theme.bg_focus, gears.shape.rectangle)
+local netbg = wibox.container.background(net.widget, theme.bg_normal, gears.shape.rectangle)
 local networkwidget = wibox.container.margin(netbg, dpi(0), dpi(0), dpi(5), dpi(5))
 
 -- Weather
@@ -272,7 +272,7 @@ local mylauncher = awful.widget.button({ image = theme.awesome_icon_launcher })
 mylauncher:connect_signal("button::press", function() awful.util.mymainmenu:toggle() end)
 
 -- Separators
-local first = wibox.widget.textbox('<span font="Roboto 7"> </span>')
+local first = wibox.widget.textbox('<span font="JetBrainsMono NF 7"> </span>')
 local spr_small = wibox.widget.imagebox(theme.spr_small)
 local spr_very_small = wibox.widget.imagebox(theme.spr_very_small)
 local spr_right = wibox.widget.imagebox(theme.spr_right)
@@ -316,7 +316,7 @@ function theme.at_screen_connect(s)
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, awful.util.taglist_buttons, { bg_focus = barcolor })
 
-    mytaglistcont = wibox.container.background(s.mytaglist, theme.bg_focus, gears.shape.rectangle)
+    mytaglistcont = wibox.container.background(s.mytaglist, theme.bg_normal, gears.shape.rectangle)
     s.mytag = wibox.container.margin(mytaglistcont, dpi(0), dpi(0), dpi(5), dpi(5))
 
     -- Create a tasklist widget
@@ -361,7 +361,7 @@ function theme.at_screen_connect(s)
 
     -- Create the bottom wibox
     s.mybottomwibox = awful.wibar({ position = "bottom", screen = s, border_width = dpi(0), height = dpi(32) })
-    s.borderwibox = awful.wibar({ position = "bottom", screen = s, height = dpi(1), bg = theme.fg_focus, x = dpi(0), y = dpi(33)})
+    --s.borderwibox = awful.wibar({ position = "bottom", screen = s, height = dpi(1), bg = theme.fg_focus, x = dpi(0), y = dpi(33)})
 
     -- Add widgets to the bottom wibox
     s.mybottomwibox:setup {

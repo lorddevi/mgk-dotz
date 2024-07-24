@@ -64,6 +64,7 @@ _define_neovim_plugins() {
 	_mordu "Defining neovim plugin list."
 	_neovim_plugins=(\
 		git.mgk.one/nvim/norcalli.nvim-colorizer.lua \
+		git.mgk.one/nvim/maxmx03.dracula.nvim \
 		git.mgk.one/nvim/ishan9299.modus-theme-vim)
 }
 # }}} </define neovim plugins>

@@ -77,6 +77,7 @@ local cycle_prev   = true  -- cycle with only the previously focused client or a
 local editor       = "neovide"
 local browser      = "firefox"
 
+awful.screen.set_auto_dpi_enabled( true )
 awful.util.terminal = terminal
 awful.util.tagnames = { "1", "2", "3", "4" }
 awful.layout.layouts = {
@@ -713,7 +714,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, properties = { titlebars_enabled = false }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
