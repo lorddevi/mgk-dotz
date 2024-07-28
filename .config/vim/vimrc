@@ -59,3 +59,6 @@ call plug#end()
 
 "" Enable termguicolors for clrzr.
 set termguicolors
+
+set background=dark
+colorscheme solarized

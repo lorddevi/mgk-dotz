@@ -1,0 +1,445 @@
+#background_opacity = 1.0
+#dynamic_title = true
+#live_config_reload = true
+#"window.opacity" = 1.0
+
+#[bell]
+#animation = "EaseOutExpo"
+#color = "#ffffff"
+#duration = 1
+
+[colors]
+draw_bold_text_with_bright_colors = false
+
+[cursor]
+style = "Block"
+thickness = 0.15
+unfocused_hollow = true
+vi_mode_style = "None"
+
+[debug]
+log_level = "Warn"
+persistent_logging = false
+print_events = false
+render_timer = false
+
+#[env]
+#TERM = "alacritty"
+#gtk_theme_variant = "None"
+#title = "Alacritty"
+#
+#[env.class]
+#general = "Alacritty"
+#instance = "Alacritty"
+
+[font]
+size = 12.0
+
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
+
+[font.bold_italic]
+family = "JetBrainsMono Nerd Font"
+style = "Bold Italic"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Medium"
+
+# Colors (Solarized Osaka)
+# Source https://github.com/craftzdog/solarized-osaka.nvim
+
+# Default colors
+[colors.primary]
+background = '#001a1d'
+foreground = '#839496'
+
+# Normal colors
+[colors.normal]
+black   = '#073642'
+red     = '#dc322f'
+green   = '#859900'
+yellow  = '#b58900'
+blue    = '#268bd2'
+magenta = '#d33682'
+cyan    = '#2aa198'
+white   = '#eee8d5'
+
+# Bright colors
+[colors.bright]
+black   = '#4c4c4c'
+red     = '#cb4b16'
+green   = '#586e75'
+yellow  = '#657b83'
+blue    = '#839496'
+magenta = '#6c71c4'
+cyan    = '#93a1a1'
+white   = '#fdf6e3'
+
+#[[keyboard.bindings]]
+#action = "Paste"
+#key = "Paste"
+#
+#[[keyboard.bindings]]
+#action = "Copy"
+#key = "Copy"
+#
+#[[keyboard.bindings]]
+#action = "ClearLogNotice"
+#key = "L"
+#mods = "Control"
+#
+#[[keyboard.bindings]]
+#chars = "\f"
+#key = "L"
+#mode = "~Vi"
+#mods = "Control"
+#
+#[[keyboard.bindings]]
+#action = "ScrollPageUp"
+#key = "PageUp"
+#mode = "~Alt"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "ScrollPageDown"
+#key = "PageDown"
+#mode = "~Alt"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "ScrollToTop"
+#key = "Home"
+#mode = "~Alt"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "ScrollToBottom"
+#key = "End"
+#mode = "~Alt"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "ScrollToBottom"
+#key = "Space"
+#mode = "Vi"
+#mods = "Shift|Control"
+#
+#[[keyboard.bindings]]
+#action = "ToggleViMode"
+#key = "Space"
+#mods = "Shift|Control"
+#
+#[[keyboard.bindings]]
+#action = "ClearSelection"
+#key = "Escape"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "ScrollToBottom"
+#key = "I"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "ToggleViMode"
+#key = "I"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "ScrollLineUp"
+#key = "Y"
+#mode = "Vi"
+#mods = "Control"
+#
+#[[keyboard.bindings]]
+#action = "ScrollLineDown"
+#key = "E"
+#mode = "Vi"
+#mods = "Control"
+#
+#[[keyboard.bindings]]
+#action = "ScrollToTop"
+#key = "G"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "ScrollToBottom"
+#key = "G"
+#mode = "Vi"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "ScrollPageUp"
+#key = "B"
+#mode = "Vi"
+#mods = "Control"
+#
+#[[keyboard.bindings]]
+#action = "ScrollPageDown"
+#key = "F"
+#mode = "Vi"
+#mods = "Control"
+#
+#[[keyboard.bindings]]
+#action = "ScrollHalfPageUp"
+#key = "U"
+#mode = "Vi"
+#mods = "Control"
+#
+#[[keyboard.bindings]]
+#action = "ScrollHalfPageDown"
+#key = "D"
+#mode = "Vi"
+#mods = "Control"
+#
+#[[keyboard.bindings]]
+#action = "Copy"
+#key = "Y"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "ClearSelection"
+#key = "Y"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "ClearSelection"
+#key = "Copy"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "ToggleNormalSelection"
+#key = "V"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "ToggleLineSelection"
+#key = "V"
+#mode = "Vi"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "ToggleBlockSelection"
+#key = "V"
+#mode = "Vi"
+#mods = "Control"
+#
+#[[keyboard.bindings]]
+#action = "ToggleSemanticSelection"
+#key = "V"
+#mode = "Vi"
+#mods = "Alt"
+#
+#[[keyboard.bindings]]
+#action = "Open"
+#key = "Return"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "Up"
+#key = "K"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "Down"
+#key = "J"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "Left"
+#key = "H"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "Right"
+#key = "L"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "Up"
+#key = "Up"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "Down"
+#key = "Down"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "Left"
+#key = "Left"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "Right"
+#key = "Right"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "First"
+#key = "Key0"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "Last"
+#key = "Key4"
+#mode = "Vi"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "FirstOccupied"
+#key = "Key6"
+#mode = "Vi"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "High"
+#key = "H"
+#mode = "Vi"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "Middle"
+#key = "M"
+#mode = "Vi"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "Low"
+#key = "L"
+#mode = "Vi"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "SemanticLeft"
+#key = "B"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "SemanticRight"
+#key = "W"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "SemanticRightEnd"
+#key = "E"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "WordLeft"
+#key = "B"
+#mode = "Vi"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "WordRight"
+#key = "W"
+#mode = "Vi"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "WordRightEnd"
+#key = "E"
+#mode = "Vi"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "Bracket"
+#key = "Key5"
+#mode = "Vi"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "SearchForward"
+#key = "Slash"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "SearchBackward"
+#key = "Slash"
+#mode = "Vi"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "SearchNext"
+#key = "N"
+#mode = "Vi"
+#
+#[[keyboard.bindings]]
+#action = "SearchPrevious"
+#key = "N"
+#mode = "Vi"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "Paste"
+#key = "V"
+#mods = "Control|Shift"
+#
+#[[keyboard.bindings]]
+#action = "Copy"
+#key = "C"
+#mods = "Control|Shift"
+#
+#[[keyboard.bindings]]
+#action = "SearchForward"
+#key = "F"
+#mods = "Control|Shift"
+#
+#[[keyboard.bindings]]
+#action = "SearchBackward"
+#key = "B"
+#mods = "Control|Shift"
+#
+#[[keyboard.bindings]]
+#action = "ClearSelection"
+#key = "C"
+#mode = "Vi"
+#mods = "Control|Shift"
+#
+#[[keyboard.bindings]]
+#action = "PasteSelection"
+#key = "Insert"
+#mods = "Shift"
+#
+#[[keyboard.bindings]]
+#action = "ResetFontSize"
+#key = "Key0"
+#mods = "Control"
+#
+#[[keyboard.bindings]]
+#action = "IncreaseFontSize"
+#key = "Equals"
+#mods = "Control"
+#
+#[[keyboard.bindings]]
+#action = "IncreaseFontSize"
+#key = "Add"
+#mods = "Control"
+#
+#[[keyboard.bindings]]
+#action = "DecreaseFontSize"
+#key = "Subtract"
+#mods = "Control"
+#
+#[[keyboard.bindings]]
+#action = "DecreaseFontSize"
+#key = "Minus"
+#mods = "Control"
+#
+#[[mouse.bindings]]
+#action = "PasteSelection"
+#mouse = "Middle"
+#
+#[scrolling]
+#history = 10000
+#multiplier = 3
+#
+#[selection]
+#save_to_clipboard = false
+#semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"

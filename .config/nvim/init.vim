@@ -45,6 +45,7 @@ Plug '~/.local/opt/git/git.mgk.one/nvim/norcalli.nvim-colorizer.lua'
 ""Plug '~/.local/opt/git/git.mgk.one/nvim/ishan9299.modus-theme-vim'
 ""Plug '~/.local/opt/git/git.mgk.one/nvim/maxmx03.dracula.nvim'
 ""Plug '~/.local/opt/git/git.mgk.one/nvim/maxmx03.solarized.nvim'
+Plug '~/.local/opt/git/git.mgk.one/nvim/craftzdog.solarized-osaka.nvim'
 ""Plug '~/.local/opt/git/git.mgk.one/vim/lifepillar.vim-solarized8', { 'branch': 'neovim' }
 
 
@@ -81,3 +82,4 @@ lua require'colorizer'.setup()
 ""colorscheme solarized8_high
 
 ""colorscheme solarized
+colorscheme solarized-osaka

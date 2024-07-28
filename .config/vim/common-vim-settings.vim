@@ -90,5 +90,5 @@ set clipboard+=unnamedplus
 """"
 ""colorscheme nord
 ""colorscheme gotham256
-set background=dark
-colorscheme solarized
+""set background=dark
+""colorscheme solarized
