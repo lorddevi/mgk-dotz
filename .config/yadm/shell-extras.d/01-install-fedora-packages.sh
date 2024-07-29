@@ -70,6 +70,7 @@ _define_pkg_groups() {
 	_pkg_groups=(\
 		"Container Management" \
 		"Development Tools" \
+		"Development Libraries" \
 		"Text-based Internet")
 	}
 # }}} </define pkg groups>

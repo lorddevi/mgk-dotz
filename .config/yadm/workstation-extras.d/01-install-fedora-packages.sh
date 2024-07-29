@@ -32,7 +32,8 @@ _mordu "Starting script."
 # {{{ <define packages>
 _define_packages() {
 	_packages=(\
-		wireshark)
+		wireshark fontconfig-devel freetype-devel libX11-xcb \
+		libstdc++-static libstdc++-devel)
 }
 # }}} </define packages>
 
