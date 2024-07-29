@@ -82,4 +82,5 @@ lua require'colorizer'.setup()
 ""colorscheme solarized8_high
 
 ""colorscheme solarized
-colorscheme solarized-osaka
+
+colorscheme solarized-osaka-storm
