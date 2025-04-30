@@ -25,11 +25,11 @@ borg create                         \
     --exclude-caches                \
     --exclude 'home/*/.cache/*'     \
     --exclude 'var/tmp/*'           \
+		--exclude '/home/ld/usb'				\
+		--exclude '/home/ld/mnt'				\
                                     \
     ::'{hostname}-{now}'            \
-    /etc                            \
-    /home/ld                        \
-    /var
+    /home/ld
 
 backup_exit=$?
 
