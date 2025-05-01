@@ -30,8 +30,8 @@ _mordu "Starting script."
 # }}} </mordu debug system>
 
 # {{{ === Set ENV Variable for Sanity Proofing Init ===
-# We need to set $ENV so that if you use shell X as your login shell,
-# and then start "sh" as a non-login interactive shell the startup scripts will
+# We need to set $ENV so that if you use shell X as your login shell, and then
+# start "sh" as a non-login interactive shell the startup scripts will
 # correctly run.
 _mordu "Protecting Interactive functionality by setting ENV."
 ENV="$HOME"/.config/sh/interactive.sh
