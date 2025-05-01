@@ -46,8 +46,7 @@ umask 0077
 
 # {{{ === Source Posix Common env_local.sh ===
 # env_local is a useful place to put high priority Env Vars that could be
-# expected to be used in both interactive and non-interactive shells. (I think.
-# lol)
+# expected to be used in both interactive and non-interactive shells.
 _mordu "Sourcing Env Vars from ~/.config/posix-common/env_local.sh."
 . "$HOME"/.config/posix-common/env_local.sh
 _location=".config/posix-common/env.sh"
